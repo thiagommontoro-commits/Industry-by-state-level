@@ -94,13 +94,13 @@
         /* KPIs */
         .kpi-wrapper {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
             margin-bottom: 40px;
         }
         .kpi-card {
             background: var(--card-bg);
-            padding: 24px;
+            padding: 20px;
             border-radius: 12px;
             box-shadow: var(--shadow-soft);
             border: 1px solid var(--border-color);
@@ -115,9 +115,15 @@
             font-weight: 600;
         }
         .kpi-card .value {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 700;
             color: var(--text-heading);
+        }
+        .kpi-card .description {
+            margin-top: 8px;
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.4;
         }
         
         /* Table */
@@ -245,17 +251,53 @@
             border-radius: 12px;
             box-shadow: var(--shadow-soft);
             border: 1px solid var(--border-color);
-            margin-top: 24px;
+            margin-top: 24px; /* Mantido para o container geral */
         }
         .methodology-container h2 {
             font-size: 1.25rem;
             color: var(--text-heading);
             font-weight: 600;
+        }
+        .methodology-explanation {
+            background-color: #fdfdfd;
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 20px;
             margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--agco-red);
+        }
+        .methodology-explanation h3 {
+            font-size: 1.2rem;
+            color: var(--text-heading);
+            margin-bottom: 15px;
+        }
+        .methodology-explanation p {
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            color: var(--text-body);
+        }
+        .methodology-explanation ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .methodology-explanation li {
+            font-size: 14px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: flex-start;
+            line-height: 1.6;
+        }
+        .methodology-explanation .icon {
+            margin-right: 12px;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: var(--agco-red);
         }
         .methodology-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 20px;
         }
         .methodology-card {
@@ -272,10 +314,47 @@
         .methodology-card.positive-trend { border-left-color: var(--color-hp); }
         .methodology-card.negative-trend { border-left-color: var(--color-hn); }
         .methodology-card h3 {
-            font-size: 1rem; font-weight: 700; color: var(--text-heading); margin-bottom: 8px;
+            font-size: 1rem; font-weight: 700; color: var(--text-heading); margin-bottom: 12px;
         }
         .methodology-card p {
             font-size: 14px; line-height: 1.6; color: var(--text-body);
+        }
+        .justification-detail {
+            margin-bottom: 16px;
+        }
+        .drivers-summary .detail-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .driver-tag {
+            background-color: var(--border-color);
+            color: var(--text-muted);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .methodology-card.positive-trend .driver-tag {
+            background-color: #D1FADF;
+            color: #0B7A3B;
+        }
+        .methodology-card.negative-trend .driver-tag {
+            background-color: #FEECEC;
+            color: #C8102E;
+        }
+        .driver-tag.neutral-tag {
+            background-color: #f3f4f6;
+            color: #4b5563;
         }
     </style>
 </head>
@@ -295,18 +374,18 @@
             <div class="kpi-card">
                 <h3>Vencedores (Ganho de Share)</h3>
                 <div class="value">Sul (RS, PR, SC)</div>
-                <div style="margin-top: 10px; color: var(--text-light); font-size: 14px;">Resiliência com crescimento moderado pelo cenário de crédito.</div>
+                <div class="description">Resiliência com crescimento moderado pelo cenário de crédito.</div>
             </div>
             <div class="kpi-card">
                 <h3>Risco Hídrico (Perda de Share)</h3>
                 <div class="value">C-Oeste & MATOPIBA</div>
-                <div style="margin-top: 10px; color: var(--text-light); font-size: 14px;">MT, GO e BA aprofundam a retração.</div>
+                <div class="description">MT, GO e BA aprofundam a retração.</div>
             </div>
             <div class="kpi-card">
                 <h3>Maior Salto (PR)</h3>
                 <div class="value">+1.0%</div>
             </div>
-            <div class="kpi-card">
+             <div class="kpi-card">
                 <h3>Maior Retração (MT)</h3>
                 <div class="value">-3.0%</div>
             </div>
@@ -713,6 +792,17 @@
 
         <div class="methodology-container" style="display: none;">
             <h2>Racional da Projeção 2027 por Estado</h2>
+            <div class="methodology-explanation">
+                <h3>Metodologia Geral de Projeção</h3>
+                <p>A projeção de participação de mercado (market share) para 2027 é calculada utilizando um modelo que combina análises quantitativas e qualitativas, considerando as particularidades de cada estado. O objetivo é entender como diferentes vetores influenciam a decisão de compra e a renovação de frota de máquinas agrícolas.</p>
+                <ul>
+                    <li><span class="icon">💰</span><strong>Drivers Econômicos:</strong> Análise do cenário de crédito (juros, disponibilidade de recursos como PRONAF/Moderfrota), poder de compra do produtor, flutuações do câmbio e o impacto da inflação nos custos de produção e investimento.</li>
+                    <li><span class="icon">🌱</span><strong>Drivers Agronômicos:</strong> Avaliação das condições climáticas (impacto de fenômenos como El Niño/La Niña, secas e chuvas), a saúde e expectativa da safra (produtividade, quebras), e a rentabilidade do produtor (relação entre preço das commodities e custo de produção).</li>
+                    <li><span class="icon">🚜</span><strong>Drivers de Mercado:</strong> Estudo do ciclo de renovação de frota, tendências de expansão de área plantada, nível de adoção de novas tecnologias e o efeito de políticas de fomento regionais.</li>
+                </ul>
+                <p>Abaixo, detalhamos a justificativa específica para cada estado, que representa a síntese da interação desses fatores.</p>
+            </div>
+            <h2 style="margin-top: 40px; margin-bottom: 20px;">Análise Detalhada por Estado</h2>
             <div class="methodology-grid">
                 <!-- Cards de metodologia serão inseridos aqui pelo JavaScript -->
             </div>
@@ -733,26 +823,61 @@
 
                 methodologyGrid.innerHTML = ''; // Limpa antes de construir
 
+                const driverKeywords = {
+                    'Crédito Restrito': ['crédito', 'recursos', 'financiamento', 'bancários', 'juros', 'financeiro'],
+                    'Risco Climático': ['clima', 'chuvas', 'seca', 'estiagem', 'hídrica', 'hídrico', 'climática', 'adverso'],
+                    'Rentabilidade do Produtor': ['safra recorde', 'preço', 'margem', 'resiliência', 'demanda', 'favorecem', 'impulsiona'],
+                    'Mercado Estagnado': ['estagnado', 'marginal', 'paralisados', 'postergada', 'adiadas', 'crescimento nulo']
+                };
+
                 tableRows.forEach(row => {
                     const stateName = row.cells[1].textContent;
-                    const justification = row.cells[10].textContent;
+                    const justification = row.cells[10].textContent.toLowerCase();
+                    const originalJustification = row.cells[10].textContent;
 
                     const card = document.createElement('div');
                     card.className = 'methodology-card';
 
                     // Análise simples de tendência baseada em palavras-chave
-                    const positiveKeywords = ['aumento', 'crescimento', 'recorde', 'favorece', 'impulsiona', 'puxa forte', 'salto', 'garantem', 'garantida'];
-                    const negativeKeywords = ['queda', 'retração', 'redução', 'seca', 'risco', 'déficit', 'perda', 'derruba', 'freia', 'atraso', 'afeta', 'adverso', 'menor', 'restrição', 'limite', 'falta', 'paralisa', 'adiadas', 'travam', 'congelada'];
+                    const positiveKeywords = ['aumento', 'crescimento', 'recorde', 'favorece', 'impulsiona', 'resiliência', 'sustenta', 'favorecem'];
+                    const negativeKeywords = ['queda', 'retração', 'redução', 'seca', 'risco', 'crise', 'atraso', 'afeta', 'adverso', 'restrição', 'limite', 'falta', 'paralisa', 'adiadas', 'congela', 'aperto', 'escasso'];
+                    
+                    let hasPositive = positiveKeywords.some(keyword => justification.includes(keyword));
+                    let hasNegative = negativeKeywords.some(keyword => justification.includes(keyword));
 
-                    if (positiveKeywords.some(keyword => justification.toLowerCase().includes(keyword))) {
-                        card.classList.add('positive-trend');
-                    } else if (negativeKeywords.some(keyword => justification.toLowerCase().includes(keyword))) {
+                    if (hasNegative) {
                         card.classList.add('negative-trend');
+                    } else if (hasPositive) {
+                        card.classList.add('positive-trend');
+                    }
+
+                    let tagsHtml = '';
+                    const foundDrivers = new Set();
+                    for (const driver in driverKeywords) {
+                        if (driverKeywords[driver].some(keyword => justification.includes(keyword))) {
+                            foundDrivers.add(driver);
+                        }
+                    }
+
+                    if (foundDrivers.size > 0) {
+                        foundDrivers.forEach(driver => {
+                            tagsHtml += `<span class="driver-tag">${driver}</span>`;
+                        });
+                    } else {
+                        tagsHtml = `<span class="driver-tag neutral-tag">Cenário Misto/Outros</span>`;
                     }
 
                     card.innerHTML = `
                         <h3>${stateName} (${row.cells[0].textContent})</h3>
-                        <p>${justification}</p>
+                        <div class="justification-detail">
+                            <p>${originalJustification}</p>
+                        </div>
+                        <div class="drivers-summary">
+                            <span class="detail-label">Fatores-Chave Identificados:</span>
+                            <div class="tags-container">
+                                ${tagsHtml}
+                            </div>
+                        </div>
                     `;
 
                     methodologyGrid.appendChild(card);
