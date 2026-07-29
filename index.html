@@ -130,13 +130,16 @@
         }
         .table-scroll-container {
             overflow-x: auto;
-            /* Esconde a barra de rolagem, mas mantém a funcionalidade de scroll */
-            -ms-overflow-style: none;  /* IE e Edge */
-            scrollbar-width: none;  /* Firefox */
         }
-        .table-scroll-container::-webkit-scrollbar {
-            display: none; /* Chrome, Safari e Opera */
+        /* Estilos para a barra de rolagem superior */
+        .top-scrollbar-wrapper {
+            overflow-x: auto;
+            overflow-y: hidden;
         }
+        .top-scrollbar-content {
+            height: 1px;
+        }
+
         .table-title-wrapper {
             display: flex;
             justify-content: space-between;
@@ -199,7 +202,20 @@
             top: 0;
             z-index: 10;
         }
+        th:first-child {
+            left: 0;
+            z-index: 11; /* Acima dos outros cabeçalhos para o canto */
+        }
         tbody tr:hover td {
+            background-color: #f5f5f5;
+        }
+        td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 1;
+            background-color: var(--card-bg);
+        }
+        tbody tr:hover td:first-child {
             background-color: #f5f5f5;
         }
         .col-27 {
@@ -221,17 +237,6 @@
         }
         .positive { color: var(--color-hp); }
         .negative { color: var(--color-hn); }
-
-        /* Estilos para a barra de rolagem superior */
-        .top-scrollbar-wrapper {
-            overflow-x: auto;
-            overflow-y: hidden;
-            direction: rtl;
-        }
-        .top-scrollbar-content {
-            height: 1px;
-            direction: ltr;
-        }
 
         /* Estilos para a aba de Metodologia */
         .methodology-container {
@@ -290,20 +295,20 @@
             <div class="kpi-card">
                 <h3>Vencedores (Ganho de Share)</h3>
                 <div class="value">Sul (RS, PR, SC)</div>
-                <div style="margin-top: 10px; color: var(--text-light); font-size: 14px;">Impulsionados por recordes de safra.</div>
+                <div style="margin-top: 10px; color: var(--text-light); font-size: 14px;">Resiliência com crescimento moderado pelo cenário de crédito.</div>
             </div>
             <div class="kpi-card">
                 <h3>Risco Hídrico (Perda de Share)</h3>
-                <div class="value">Centro-Oeste & MATOPIBA</div>
-                <div style="margin-top: 10px; color: var(--text-light); font-size: 14px;">MT, GO e BA puxam a retração.</div>
+                <div class="value">C-Oeste & MATOPIBA</div>
+                <div style="margin-top: 10px; color: var(--text-light); font-size: 14px;">MT, GO e BA aprofundam a retração.</div>
             </div>
             <div class="kpi-card">
-                <h3>Maior Salto (RS)</h3>
-                <div class="value">+3.7% <span style="font-size: 14px; font-weight: normal; color: var(--text-light);">Share (Colheitadeiras)</span></div>
+                <h3>Maior Salto (PR)</h3>
+                <div class="value">+1.0%</div>
             </div>
             <div class="kpi-card">
                 <h3>Maior Retração (MT)</h3>
-                <div class="value">-4.8% <span style="font-size: 14px; font-weight: normal; color: var(--text-light);">Share (Colheitadeiras)</span></div>
+                <div class="value">-3.0%</div>
             </div>
         </div>
 
@@ -349,385 +354,358 @@
                     </tr>
                 </thead>
                 <tbody>
-
-        <tr data-region="norte">
-            <td class="uf-label">AC</td>
-            <td>Acre</td>
-            <td>0.20%</td>
-            <td class="col-27">0.16%</td>
-            <td>0.10%</td>
-            <td class="col-27">0.09%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.10%</td>
-            <td class="col-27">0.09%</td>
-            <td class="just-col">El Niño: Menor precipitação esperada gera cautela em novas aquisições.</td>
-        </tr>
-    
-        <tr data-region="nordeste">
-            <td class="uf-label">AL</td>
-            <td>Alagoas</td>
-            <td>0.60%</td>
-            <td class="col-27">0.58%</td>
-            <td>0.10%</td>
-            <td class="col-27">0.10%</td>
-            <td>0.10%</td>
-            <td class="col-27">0.11%</td>
-            <td>0.10%</td>
-            <td class="col-27">0.10%</td>
-            <td class="just-col">Estabilidade com foco no setor sucroalcooleiro litorâneo.</td>
-        </tr>
-    
-        <tr data-region="norte">
-            <td class="uf-label">AM</td>
-            <td>Amazonas</td>
-            <td>0.20%</td>
-            <td class="col-27">0.16%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td class="just-col">El Niño: Secas e irregularidade reduzem os projetos agropecuários pontuais.</td>
-        </tr>
-    
-        <tr data-region="norte">
-            <td class="uf-label">AP</td>
-            <td>Amapá</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td class="just-col">Mercado marginal, mantendo estabilidade histórica sem grandes alterações.</td>
-        </tr>
-    
-        <tr data-region="nordeste">
-            <td class="uf-label">BA</td>
-            <td>Bahia</td>
-            <td>4.30%</td>
-            <td class="col-27">3.13%</td>
-            <td>5.00%</td>
-            <td class="col-27">3.84%</td>
-            <td>7.50%</td>
-            <td class="col-27">6.25%</td>
-            <td>4.10%</td>
-            <td class="col-27">3.18%</td>
-            <td class="just-col">El Niño: Seca severa projetada para o MATOPIBA derruba agressivamente a intenção de compra (-25%).</td>
-        </tr>
-    
-        <tr data-region="nordeste">
-            <td class="uf-label">CE</td>
-            <td>Ceará</td>
-            <td>1.80%</td>
-            <td class="col-27">1.75%</td>
-            <td>0.10%</td>
-            <td class="col-27">0.10%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.60%</td>
-            <td class="col-27">0.62%</td>
-            <td class="just-col">El Niño: Seca no semiárido, mas base já é pequena mantendo estabilidade estatística.</td>
-        </tr>
-    
-        <tr data-region="centro-oeste">
-            <td class="uf-label">DF</td>
-            <td>Distrito Federal</td>
-            <td>1.00%</td>
-            <td class="col-27">0.78%</td>
-            <td>0.10%</td>
-            <td class="col-27">0.08%</td>
-            <td>0.10%</td>
-            <td class="col-27">0.09%</td>
-            <td>0.30%</td>
-            <td class="col-27">0.25%</td>
-            <td class="just-col">El Niño: Redução de investimentos acompanhando tendência de seca regional.</td>
-        </tr>
-    
-        <tr data-region="sudeste">
-            <td class="uf-label">ES</td>
-            <td>Espírito Santo</td>
-            <td>3.60%</td>
-            <td class="col-27">3.49%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.10%</td>
-            <td class="col-27">0.11%</td>
-            <td>0.10%</td>
-            <td class="col-27">0.10%</td>
-            <td class="just-col">Foco em perenes de menor porte isola o estado das perdas em grãos.</td>
-        </tr>
-    
-        <tr data-region="centro-oeste">
-            <td class="uf-label">GO</td>
-            <td>Goiás</td>
-            <td>4.10%</td>
-            <td class="col-27">3.18%</td>
-            <td>11.60%</td>
-            <td class="col-27">9.51%</td>
-            <td>12.60%</td>
-            <td class="col-27">11.19%</td>
-            <td>10.50%</td>
-            <td class="col-27">8.69%</td>
-            <td class="just-col">El Niño: Déficit de chuvas na janela ideal reduz capitalização e peso do estado.</td>
-        </tr>
-    
-        <tr data-region="nordeste">
-            <td class="uf-label">MA</td>
-            <td>Maranhão</td>
-            <td>1.40%</td>
-            <td class="col-27">1.02%</td>
-            <td>2.00%</td>
-            <td class="col-27">1.54%</td>
-            <td>2.70%</td>
-            <td class="col-27">2.25%</td>
-            <td>3.50%</td>
-            <td class="col-27">2.72%</td>
-            <td class="just-col">El Niño: Atraso das chuvas afeta negativamente as projeções de renovação de frota.</td>
-        </tr>
-    
-        <tr data-region="sudeste">
-            <td class="uf-label">MG</td>
-            <td>Minas Gerais</td>
-            <td>21.00%</td>
-            <td class="col-27">20.37%</td>
-            <td>5.40%</td>
-            <td class="col-27">5.54%</td>
-            <td>5.00%</td>
-            <td class="col-27">5.55%</td>
-            <td>7.70%</td>
-            <td class="col-27">7.97%</td>
-            <td class="just-col">Força do café isola o estado das piores variações, mantendo peso estável.</td>
-        </tr>
-    
-        <tr data-region="centro-oeste">
-            <td class="uf-label">MS</td>
-            <td>Mato Grosso Do Sul</td>
-            <td>2.50%</td>
-            <td class="col-27">1.94%</td>
-            <td>5.00%</td>
-            <td class="col-27">4.10%</td>
-            <td>5.20%</td>
-            <td class="col-27">4.62%</td>
-            <td>7.80%</td>
-            <td class="col-27">6.46%</td>
-            <td class="just-col">El Niño: Irregularidade climática afeta produtividade e causa retração no share.</td>
-        </tr>
-    
-        <tr data-region="centro-oeste">
-            <td class="uf-label">MT</td>
-            <td>Mato Grosso</td>
-            <td>5.50%</td>
-            <td class="col-27">4.27%</td>
-            <td>26.50%</td>
-            <td class="col-27">21.73%</td>
-            <td>32.10%</td>
-            <td class="col-27">28.52%</td>
-            <td>19.20%</td>
-            <td class="col-27">15.89%</td>
-            <td class="just-col">El Niño: Risco de déficit hídrico no Cerrado atrasa plantio e retrai pesadamente investimentos (-20%).</td>
-        </tr>
-    
-        <tr data-region="norte">
-            <td class="uf-label">PA</td>
-            <td>Pará</td>
-            <td>2.20%</td>
-            <td class="col-27">1.81%</td>
-            <td>1.90%</td>
-            <td class="col-27">1.66%</td>
-            <td>3.50%</td>
-            <td class="col-27">3.30%</td>
-            <td>4.30%</td>
-            <td class="col-27">3.78%</td>
-            <td class="just-col">El Niño: Clima atipicamente seco no Norte afeta pontualmente a expansão agrícola (-15%).</td>
-        </tr>
-    
-        <tr data-region="nordeste">
-            <td class="uf-label">PB</td>
-            <td>Paraíba</td>
-            <td>0.60%</td>
-            <td class="col-27">0.58%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.10%</td>
-            <td class="col-27">0.10%</td>
-            <td class="just-col">Mercado marginal sem grandes alterações de frota.</td>
-        </tr>
-    
-        <tr data-region="nordeste">
-            <td class="uf-label">PE</td>
-            <td>Pernambuco</td>
-            <td>1.70%</td>
-            <td class="col-27">1.65%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td class="just-col">Manutenção de frotas para fruticultura irrigada, sem saltos.</td>
-        </tr>
-    
-        <tr data-region="nordeste">
-            <td class="uf-label">PI</td>
-            <td>Piauí</td>
-            <td>0.50%</td>
-            <td class="col-27">0.36%</td>
-            <td>1.90%</td>
-            <td class="col-27">1.46%</td>
-            <td>2.20%</td>
-            <td class="col-27">1.83%</td>
-            <td>2.30%</td>
-            <td class="col-27">1.79%</td>
-            <td class="just-col">El Niño: Alta exposição ao risco climático retrai fortes investimentos planejados.</td>
-        </tr>
-    
-        <tr data-region="sul">
-            <td class="uf-label">PR</td>
-            <td>Paraná</td>
-            <td>9.80%</td>
-            <td class="col-27">12.36%</td>
-            <td>17.50%</td>
-            <td class="col-27">23.32%</td>
-            <td>9.70%</td>
-            <td class="col-27">14.00%</td>
-            <td>15.10%</td>
-            <td class="col-27">20.31%</td>
-            <td class="just-col">El Niño: Alta produtividade com clima úmido puxa forte demanda por renovação.</td>
-        </tr>
-    
-        <tr data-region="sudeste">
-            <td class="uf-label">RJ</td>
-            <td>Rio De Janeiro</td>
-            <td>0.40%</td>
-            <td class="col-27">0.39%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td class="just-col">Participação marginal constante, focada em pecuária.</td>
-        </tr>
-    
-        <tr data-region="nordeste">
-            <td class="uf-label">RN</td>
-            <td>Rio Grande do Norte</td>
-            <td>0.80%</td>
-            <td class="col-27">0.78%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td>0.00%</td>
-            <td class="col-27">0.00%</td>
-            <td class="just-col">Participação mantida em níveis históricos marginais.</td>
-        </tr>
-    
-        <tr data-region="norte">
-            <td class="uf-label">RO</td>
-            <td>Rondônia</td>
-            <td>1.70%</td>
-            <td class="col-27">1.40%</td>
-            <td>2.00%</td>
-            <td class="col-27">1.74%</td>
-            <td>1.30%</td>
-            <td class="col-27">1.23%</td>
-            <td>1.00%</td>
-            <td class="col-27">0.88%</td>
-            <td class="just-col">El Niño: Redução moderada da demanda devido à irregularidade hídrica.</td>
-        </tr>
-    
-        <tr data-region="norte">
-            <td class="uf-label">RR</td>
-            <td>Roraima</td>
-            <td>0.20%</td>
-            <td class="col-27">0.16%</td>
-            <td>0.30%</td>
-            <td class="col-27">0.26%</td>
-            <td>0.40%</td>
-            <td class="col-27">0.38%</td>
-            <td>0.30%</td>
-            <td class="col-27">0.26%</td>
-            <td class="just-col">El Niño: Clima adverso freia a rápida expansão vista nos anos anteriores.</td>
-        </tr>
-    
-        <tr data-region="sul">
-            <td class="uf-label">RS</td>
-            <td>Rio Grande Do Sul</td>
-            <td>10.30%</td>
-            <td class="col-27">12.99%</td>
-            <td>11.20%</td>
-            <td class="col-27">14.93%</td>
-            <td>5.40%</td>
-            <td class="col-27">7.80%</td>
-            <td>8.90%</td>
-            <td class="col-27">11.97%</td>
-            <td class="just-col">El Niño: Chuvas fartas garantem safra recorde e impulsionam agressivamente as compras (+30%).</td>
-        </tr>
-    
-        <tr data-region="sul">
-            <td class="uf-label">SC</td>
-            <td>Santa Catarina</td>
-            <td>6.30%</td>
-            <td class="col-27">7.95%</td>
-            <td>2.40%</td>
-            <td class="col-27">3.20%</td>
-            <td>1.10%</td>
-            <td class="col-27">1.59%</td>
-            <td>3.00%</td>
-            <td class="col-27">4.04%</td>
-            <td class="just-col">El Niño: Excesso de chuvas favorece culturas de verão, aumentando representatividade.</td>
-        </tr>
-    
-        <tr data-region="nordeste">
-            <td class="uf-label">SE</td>
-            <td>Sergipe</td>
-            <td>1.10%</td>
-            <td class="col-27">1.07%</td>
-            <td>0.70%</td>
-            <td class="col-27">0.72%</td>
-            <td>0.40%</td>
-            <td class="col-27">0.44%</td>
-            <td>1.10%</td>
-            <td class="col-27">1.14%</td>
-            <td class="just-col">Demanda estável de renovação pontual.</td>
-        </tr>
-    
-        <tr data-region="sudeste">
-            <td class="uf-label">SP</td>
-            <td>São Paulo</td>
-            <td>17.60%</td>
-            <td class="col-27">17.07%</td>
-            <td>4.80%</td>
-            <td class="col-27">4.92%</td>
-            <td>6.90%</td>
-            <td class="col-27">7.66%</td>
-            <td>7.30%</td>
-            <td class="col-27">7.55%</td>
-            <td class="just-col">Resiliência garantida por cana e citros, absorvendo o choque do clima nacional.</td>
-        </tr>
-    
-        <tr data-region="norte">
-            <td class="uf-label">TO</td>
-            <td>Tocantins</td>
-            <td>0.80%</td>
-            <td class="col-27">0.58%</td>
-            <td>1.50%</td>
-            <td class="col-27">1.15%</td>
-            <td>3.70%</td>
-            <td class="col-27">3.08%</td>
-            <td>2.70%</td>
-            <td class="col-27">2.10%</td>
-            <td class="just-col">El Niño: Impacto direto da seca nas produtividades reduz o peso relativo do estado.</td>
-        </tr>
-    
+                    
+                    <tr data-region="norte">
+                        <td class="uf-label">AC</td>
+                        <td>Acre</td>
+                        <td>0.20%</td>
+                        <td class="col-27">0.18%</td>
+                        <td>0.10%</td>
+                        <td class="col-27">0.10%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.10%</td>
+                        <td class="col-27">0.10%</td>
+                        <td class="just-col">Mercado estagnado. A limitação nacional de crédito e a baixa atratividade paralisam qualquer investimento.</td>
+                    </tr>
+                    <tr data-region="nordeste">
+                        <td class="uf-label">AL</td>
+                        <td>Alagoas</td>
+                        <td>0.60%</td>
+                        <td class="col-27">0.60%</td>
+                        <td>0.10%</td>
+                        <td class="col-27">0.10%</td>
+                        <td>0.10%</td>
+                        <td class="col-27">0.10%</td>
+                        <td>0.10%</td>
+                        <td class="col-27">0.10%</td>
+                        <td class="just-col">Crescimento marginal anulado pela restrição de crédito. Projeção de estabilidade.</td>
+                    </tr>
+                    <tr data-region="norte">
+                        <td class="uf-label">AM</td>
+                        <td>Amazonas</td>
+                        <td>0.20%</td>
+                        <td class="col-27">0.18%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td class="just-col">Retração acentuada. Projetos paralisados por restrição severa de caixa e financiamento.</td>
+                    </tr>
+                    <tr data-region="norte">
+                        <td class="uf-label">AP</td>
+                        <td>Amapá</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td class="just-col">Mercado inexpressivo e sem perspectiva de recuperação devido à total falta de fomento.</td>
+                    </tr>
+                    <tr data-region="nordeste">
+                        <td class="uf-label">BA</td>
+                        <td>Bahia</td>
+                        <td>4.30%</td>
+                        <td class="col-27">3.55%</td>
+                        <td>5.00%</td>
+                        <td class="col-27">4.43%</td>
+                        <td>7.50%</td>
+                        <td class="col-27">6.92%</td>
+                        <td>4.10%</td>
+                        <td class="col-27">3.62%</td>
+                        <td class="just-col">Impacto combinado de seca severa e crédito escasso aprofunda a retração do mercado.</td>
+                    </tr>
+                    <tr data-region="nordeste">
+                        <td class="uf-label">CE</td>
+                        <td>Ceará</td>
+                        <td>1.80%</td>
+                        <td class="col-27">1.81%</td>
+                        <td>0.10%</td>
+                        <td class="col-27">0.10%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.60%</td>
+                        <td class="col-27">0.62%</td>
+                        <td class="just-col">Crescimento previsto é revisado para baixo, refletindo o impacto dos limites bancários restritivos.</td>
+                    </tr>
+                    <tr data-region="centro-oeste">
+                        <td class="uf-label">DF</td>
+                        <td>Distrito Federal</td>
+                        <td>1.00%</td>
+                        <td class="col-27">0.82%</td>
+                        <td>0.10%</td>
+                        <td class="col-27">0.08%</td>
+                        <td>0.10%</td>
+                        <td class="col-27">0.08%</td>
+                        <td>0.30%</td>
+                        <td class="col-27">0.27%</td>
+                        <td class="just-col">Queda acentuada. A falta de crédito praticamente congela novos investimentos na região.</td>
+                    </tr>
+                    <tr data-region="sudeste">
+                        <td class="uf-label">ES</td>
+                        <td>Espírito Santo</td>
+                        <td>3.60%</td>
+                        <td class="col-27">3.63%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.10%</td>
+                        <td class="col-27">0.10%</td>
+                        <td>0.10%</td>
+                        <td class="col-27">0.10%</td>
+                        <td class="just-col">Culturas perenes oferecem resiliência, mas o crescimento é limitado pela conjuntura nacional de crédito.</td>
+                    </tr>
+                    <tr data-region="centro-oeste">
+                        <td class="uf-label">GO</td>
+                        <td>Goiás</td>
+                        <td>4.10%</td>
+                        <td class="col-27">3.38%</td>
+                        <td>11.60%</td>
+                        <td class="col-27">10.27%</td>
+                        <td>12.60%</td>
+                        <td class="col-27">11.63%</td>
+                        <td>10.50%</td>
+                        <td class="col-27">9.27%</td>
+                        <td class="just-col">Crise hídrica somada à escassez de crédito causa uma retração ainda mais profunda nos investimentos.</td>
+                    </tr>
+                    <tr data-region="nordeste">
+                        <td class="uf-label">MA</td>
+                        <td>Maranhão</td>
+                        <td>1.40%</td>
+                        <td class="col-27">1.16%</td>
+                        <td>2.00%</td>
+                        <td class="col-27">1.78%</td>
+                        <td>2.70%</td>
+                        <td class="col-27">2.49%</td>
+                        <td>3.50%</td>
+                        <td class="col-27">3.10%</td>
+                        <td class="just-col">Atraso nas chuvas e corte drástico de recursos agravam a queda na renovação de frota.</td>
+                    </tr>
+                    <tr data-region="sudeste">
+                        <td class="uf-label">MG</td>
+                        <td>Minas Gerais</td>
+                        <td>21.00%</td>
+                        <td class="col-27">21.19%</td>
+                        <td>5.40%</td>
+                        <td class="col-27">5.58%</td>
+                        <td>5.00%</td>
+                        <td class="col-27">5.24%</td>
+                        <td>7.70%</td>
+                        <td class="col-27">7.95%</td>
+                        <td class="just-col">Setor cafeeiro mostra resiliência, mas o teto de financiamento limita um crescimento mais robusto.</td>
+                    </tr>
+                    <tr data-region="centro-oeste">
+                        <td class="uf-label">MS</td>
+                        <td>Mato Grosso Do Sul</td>
+                        <td>2.50%</td>
+                        <td class="col-27">2.07%</td>
+                        <td>5.00%</td>
+                        <td class="col-27">4.43%</td>
+                        <td>5.20%</td>
+                        <td class="col-27">4.80%</td>
+                        <td>7.80%</td>
+                        <td class="col-27">6.89%</td>
+                        <td class="just-col">Clima adverso e crédito restrito forçam uma retração ainda mais acentuada do que o previsto.</td>
+                    </tr>
+                    <tr data-region="centro-oeste">
+                        <td class="uf-label">MT</td>
+                        <td>Mato Grosso</td>
+                        <td>5.50%</td>
+                        <td class="col-27">4.54%</td>
+                        <td>26.50%</td>
+                        <td class="col-27">23.47%</td>
+                        <td>32.10%</td>
+                        <td class="col-27">29.61%</td>
+                        <td>19.20%</td>
+                        <td class="col-27">16.97%</td>
+                        <td class="just-col">Cenário crítico: seca histórica no Cerrado e corte drástico de financiamento aprofundam a crise no estado.</td>
+                    </tr>
+                    <tr data-region="norte">
+                        <td class="uf-label">PA</td>
+                        <td>Pará</td>
+                        <td>2.20%</td>
+                        <td class="col-27">1.99%</td>
+                        <td>1.90%</td>
+                        <td class="col-27">1.84%</td>
+                        <td>3.50%</td>
+                        <td class="col-27">3.50%</td>
+                        <td>4.30%</td>
+                        <td class="col-27">4.15%</td>
+                        <td class="just-col">Expansão é freada e revertida para uma leve retração pela falta de financiamento.</td>
+                    </tr>
+                    <tr data-region="nordeste">
+                        <td class="uf-label">PB</td>
+                        <td>Paraíba</td>
+                        <td>0.60%</td>
+                        <td class="col-27">0.60%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.10%</td>
+                        <td class="col-27">0.10%</td>
+                        <td class="just-col">Mercado marginal permanece estagnado, sem sinais de crescimento.</td>
+                    </tr>
+                    <tr data-region="nordeste">
+                        <td class="uf-label">PE</td>
+                        <td>Pernambuco</td>
+                        <td>1.70%</td>
+                        <td class="col-27">1.71%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td class="just-col">Renovação de frota de fruticultura é postergada, e o crescimento esperado é anulado pela falta de crédito.</td>
+                    </tr>
+                    <tr data-region="nordeste">
+                        <td class="uf-label">PI</td>
+                        <td>Piauí</td>
+                        <td>0.50%</td>
+                        <td class="col-27">0.41%</td>
+                        <td>1.90%</td>
+                        <td class="col-27">1.68%</td>
+                        <td>2.20%</td>
+                        <td class="col-27">2.04%</td>
+                        <td>2.30%</td>
+                        <td class="col-27">2.03%</td>
+                        <td class="just-col">Risco climático elevado e teto financeiro agravam a retração do varejo regional.</td>
+                    </tr>
+                    <tr data-region="sul">
+                        <td class="uf-label">PR</td>
+                        <td>Paraná</td>
+                        <td>9.80%</td>
+                        <td class="col-27">10.09%</td>
+                        <td>17.50%</td>
+                        <td class="col-27">18.45%</td>
+                        <td>9.70%</td>
+                        <td class="col-27">10.37%</td>
+                        <td>15.10%</td>
+                        <td class="col-27">15.91%</td>
+                        <td class="just-col">Aperto no crédito e incerteza climática limitam o potencial de crescimento, resultando em projeção contida.</td>
+                    </tr>
+                    <tr data-region="sudeste">
+                        <td class="uf-label">RJ</td>
+                        <td>Rio De Janeiro</td>
+                        <td>0.40%</td>
+                        <td class="col-27">0.40%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td class="just-col">Mercado marginal permanece estagnado pela falta de fomento.</td>
+                    </tr>
+                    <tr data-region="nordeste">
+                        <td class="uf-label">RN</td>
+                        <td>Rio Grande do Norte</td>
+                        <td>0.80%</td>
+                        <td class="col-27">0.80%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td>0.00%</td>
+                        <td class="col-27">0.00%</td>
+                        <td class="just-col">Crescimento nulo. Compras são adiadas indefinidamente devido ao aperto financeiro.</td>
+                    </tr>
+                    <tr data-region="norte">
+                        <td class="uf-label">RO</td>
+                        <td>Rondônia</td>
+                        <td>1.70%</td>
+                        <td class="col-27">1.54%</td>
+                        <td>2.00%</td>
+                        <td class="col-27">1.94%</td>
+                        <td>1.30%</td>
+                        <td class="col-27">1.30%</td>
+                        <td>1.00%</td>
+                        <td class="col-27">0.97%</td>
+                        <td class="just-col">Demanda reprimida. Irregularidade hídrica e limites bancários forçam uma revisão para baixo.</td>
+                    </tr>
+                    <tr data-region="norte">
+                        <td class="uf-label">RR</td>
+                        <td>Roraima</td>
+                        <td>0.20%</td>
+                        <td class="col-27">0.18%</td>
+                        <td>0.30%</td>
+                        <td class="col-27">0.28%</td>
+                        <td>0.40%</td>
+                        <td class="col-27">0.40%</td>
+                        <td>0.30%</td>
+                        <td class="col-27">0.28%</td>
+                        <td class="just-col">Clima adverso e falta de crédito acentuam a retração no ritmo de expansão.</td>
+                    </tr>
+                    <tr data-region="sul">
+                        <td class="uf-label">RS</td>
+                        <td>Rio Grande Do Sul</td>
+                        <td>10.30%</td>
+                        <td class="col-27">10.61%</td>
+                        <td>11.20%</td>
+                        <td class="col-27">11.81%</td>
+                        <td>5.40%</td>
+                        <td class="col-27">5.77%</td>
+                        <td>8.90%</td>
+                        <td class="col-27">9.38%</td>
+                        <td class="just-col">Safra recorde impulsiona, mas o teto de recursos modera o crescimento da renovação de frota.</td>
+                    </tr>
+                    <tr data-region="sul">
+                        <td class="uf-label">SC</td>
+                        <td>Santa Catarina</td>
+                        <td>6.30%</td>
+                        <td class="col-27">6.49%</td>
+                        <td>2.40%</td>
+                        <td class="col-27">2.53%</td>
+                        <td>1.10%</td>
+                        <td class="col-27">1.18%</td>
+                        <td>3.00%</td>
+                        <td class="col-27">3.16%</td>
+                        <td class="just-col">Chuvas favorecem a safra, mas o limite de crédito restringe o potencial de novas compras.</td>
+                    </tr>
+                    <tr data-region="nordeste">
+                        <td class="uf-label">SE</td>
+                        <td>Sergipe</td>
+                        <td>1.10%</td>
+                        <td class="col-27">1.11%</td>
+                        <td>0.70%</td>
+                        <td class="col-27">0.73%</td>
+                        <td>0.40%</td>
+                        <td class="col-27">0.42%</td>
+                        <td>1.10%</td>
+                        <td class="col-27">1.14%</td>
+                        <td class="just-col">Crescimento modesto. A demanda pontual é afetada pela conjuntura nacional.</td>
+                    </tr>
+                    <tr data-region="sudeste">
+                        <td class="uf-label">SP</td>
+                        <td>São Paulo</td>
+                        <td>17.60%</td>
+                        <td class="col-27">17.76%</td>
+                        <td>4.80%</td>
+                        <td class="col-27">4.96%</td>
+                        <td>6.90%</td>
+                        <td class="col-27">7.22%</td>
+                        <td>7.30%</td>
+                        <td class="col-27">7.53%</td>
+                        <td class="just-col">Resiliência da cana sustenta o mercado, mas o aperto financeiro impede um crescimento mais expressivo.</td>
+                    </tr>
+                    <tr data-region="norte">
+                        <td class="uf-label">TO</td>
+                        <td>Tocantins</td>
+                        <td>0.80%</td>
+                        <td class="col-27">0.67%</td>
+                        <td>1.50%</td>
+                        <td class="col-27">1.34%</td>
+                        <td>3.70%</td>
+                        <td class="col-27">3.42%</td>
+                        <td>2.70%</td>
+                        <td class="col-27">2.39%</td>
+                        <td class="just-col">Impacto duplo de seca e corte de recursos intensifica a queda de participação do estado.</td>
+                    </tr>
                 </tbody>
                 </table>
             </div>
@@ -764,7 +742,7 @@
 
                     // Análise simples de tendência baseada em palavras-chave
                     const positiveKeywords = ['aumento', 'crescimento', 'recorde', 'favorece', 'impulsiona', 'puxa forte', 'salto', 'garantem', 'garantida'];
-                    const negativeKeywords = ['queda', 'retração', 'redução', 'seca', 'risco', 'déficit', 'perda', 'derruba', 'freia', 'atraso', 'afeta'];
+                    const negativeKeywords = ['queda', 'retração', 'redução', 'seca', 'risco', 'déficit', 'perda', 'derruba', 'freia', 'atraso', 'afeta', 'adverso', 'menor', 'restrição', 'limite', 'falta', 'paralisa', 'adiadas', 'travam', 'congelada'];
 
                     if (positiveKeywords.some(keyword => justification.toLowerCase().includes(keyword))) {
                         card.classList.add('positive-trend');
@@ -817,22 +795,30 @@
                         topScrollContent.style.width = table.scrollWidth + 'px';
                     };
 
-                    syncWidth(); // Sincroniza a largura na inicialização
+                    syncWidth(); // Sincronização inicial
 
-                    // Sincroniza o scroll de cima para baixo
-                    topScroll.addEventListener('scroll', () => {
-                        bottomScroll.scrollLeft = topScroll.scrollLeft;
+                    let ignoreScroll = false;
+                    const syncScroll = (source, target) => {
+                        if (ignoreScroll) {
+                            ignoreScroll = false;
+                            return;
+                        }
+                        ignoreScroll = true;
+                        target.scrollLeft = source.scrollLeft;
+                    };
+
+                    topScroll.addEventListener('scroll', () => syncScroll(topScroll, bottomScroll));
+                    bottomScroll.addEventListener('scroll', () => syncScroll(bottomScroll, topScroll));
+
+                    window.addEventListener('resize', syncWidth);
+                    
+                    filterContainer.addEventListener('click', (e) => {
+                        if (e.target.matches('.filter-btn')) {
+                            setTimeout(syncWidth, 50); // Atraso para garantir que a tabela foi renderizada
+                        }
                     });
-
-                    // Sincroniza o scroll de baixo para cima
-                    bottomScroll.addEventListener('scroll', () => {
-                        topScroll.scrollLeft = bottomScroll.scrollLeft;
-                    });
-
-                    window.addEventListener('resize', syncWidth); // Sincroniza ao redimensionar a janela
                 }
             }
-
             const exportBtn = document.getElementById('export-excel-btn');
             if (exportBtn) {
                 exportBtn.addEventListener('click', function() {
