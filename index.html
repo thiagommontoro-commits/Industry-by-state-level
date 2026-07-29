@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Executivo | Agro Brasil (27 Estados)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <style>
+        :root {
+            --agco-red: #C8102E;
+            --agco-red-hover: #A30B22;
+            --agco-black: #111111;
+            --primary-bg: #F5F5F5;
+            --card-bg: #FFFFFF;
+            --text-heading: #111111;
+            --text-body: #3A3A3A;
+            --text-muted: #6B7280;
+            --border-color: #E5E7EB;
+            --shadow-soft: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+            --color-hp: #0B7A3B;
+            --color-hn: #C8102E;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', 'Montserrat', sans-serif; }
+        body {
+            background-color: var(--primary-bg);
+            color: var(--text-body);
+            padding: 40px 20px;
+            -webkit-font-smoothing: antialiased;
+            line-height: 1.5;
+        }
+        .container { max-width: 1600px; margin: 0 auto; }
+        
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            letter-spacing: -0.5px;
+            border-left: 5px solid var(--agco-red);
+            padding-left: 15px;
+        }
+        .header p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-top: 8px;
+            padding-left: 20px;
+        }
+        .header span {
+            background: var(--agco-red) !important;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        /* Filters */
+        .filter-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background-color: var(--card-bg);
+            color: var(--text-body);
+            border: 1px solid var(--border-color);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .filter-btn:hover {
+            background-color: #e9ecef;
+            border-color: #ced4da;
+        }
+        .filter-btn.active {
+            background-color: var(--agco-red);
+            color: white;
+            border-color: var(--agco-red);
+        }
+
+        /* KPIs */
+        .kpi-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        .kpi-card {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-color);
+            border-left: 5px solid var(--agco-red);
+        }
+        .kpi-card h3 {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .kpi-card .value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-heading);
+        }
+        
+        /* Table */
+        .table-container {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-color);
+        }
+        .table-scroll-container {
+            overflow-x: auto;
+            direction: rtl;
+        }
+        .table-title-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .export-btn {
+            background-color: #0B7A3B;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.2s ease-in-out;
+        }
+        .export-btn:hover {
+            background-color: #085c2d;
+        }
+        .export-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+        .table-container h2 {
+            font-size: 1.25rem;
+            color: var(--text-heading);
+            font-weight: 600;
+            text-align: left;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1400px;
+            direction: ltr; /* Reseta a direção para a tabela */
+        }
+        th, td {
+            padding: 14px 16px;
+            text-align: right;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        th:nth-child(1), td:nth-child(1),
+        th:nth-child(2), td:nth-child(2),
+        th:last-child, td:last-child {
+            text-align: left;
+        }
+        th {
+            background-color: #f9fafb;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        tbody tr:hover td {
+            background-color: #f5f5f5;
+        }
+        .col-27 {
+            font-weight: 700;
+            color: var(--text-heading);
+            background-color: #f9fafb;
+        }
+        .uf-label {
+            font-weight: 700;
+            color: var(--text-heading);
+        }
+        .just-col {
+            color: var(--text-body);
+            font-size: 13px;
+            line-height: 1.5;
+            max-width: 350px;
+            white-space: normal;
+            text-align: left;
+        }
+        .positive { color: var(--color-hp); }
+        .negative { color: var(--color-hn); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>Indústria por UF Varejo - Brasil</h1>
+                <p>Projeção 2027</p>
+            </div>
+            <div>
+                <span>Escopo: Nacional (BR)</span>
+            </div>
+        </div>
+
+        <div class="kpi-wrapper">
+            <div class="kpi-card">
+                <h3>Vencedores (Ganho de Share)</h3>
+                <div class="value">Sul (RS, PR, SC)</div>
+                <div style="margin-top: 10px; color: var(--text-light); font-size: 14px;">Impulsionados por recordes de safra.</div>
+            </div>
+            <div class="kpi-card">
+                <h3>Risco Hídrico (Perda de Share)</h3>
+                <div class="value">Centro-Oeste & MATOPIBA</div>
+                <div style="margin-top: 10px; color: var(--text-light); font-size: 14px;">MT, GO e BA puxam a retração.</div>
+            </div>
+            <div class="kpi-card">
+                <h3>Maior Salto (RS)</h3>
+                <div class="value">+3.7% <span style="font-size: 14px; font-weight: normal; color: var(--text-light);">Share (Colheitadeiras)</span></div>
+            </div>
+            <div class="kpi-card">
+                <h3>Maior Retração (MT)</h3>
+                <div class="value">-4.8% <span style="font-size: 14px; font-weight: normal; color: var(--text-light);">Share (Colheitadeiras)</span></div>
+            </div>
+        </div>
+
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="todos">Todos</button>
+            <button class="filter-btn" data-filter="sul">Sul</button>
+            <button class="filter-btn" data-filter="sudeste">Sudeste</button>
+            <button class="filter-btn" data-filter="centro-oeste">Centro-Oeste</button>
+            <button class="filter-btn" data-filter="nordeste">Nordeste</button>
+            <button class="filter-btn" data-filter="norte">Norte</button>
+        </div>
+
+        <div class="table-container">
+            <div class="table-title-wrapper">
+                <h2>Projeção por Estado</h2>
+                <button id="export-excel-btn" class="export-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor">
+                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                    </svg>
+                    <span>Exportar Excel</span>
+                </button>
+            </div>
+            <div class="table-scroll-container">
+                <table>
+                <thead>
+                    <tr>
+                        <th>UF</th>
+                        <th>Estado</th>
+                        <th>Tratores (26)</th>
+                        <th class="col-27">Tratores (27)</th>
+                        <th>Colheit. (26)</th>
+                        <th class="col-27">Colheit. (27)</th>
+                        <th>Pulveriz. (26)</th>
+                        <th class="col-27">Pulveriz. (27)</th>
+                        <th>Plantad. (26)</th>
+                        <th class="col-27">Plantad. (27)</th>
+                        <th>Justificativa</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+        <tr data-region="norte">
+            <td class="uf-label">AC</td>
+            <td>Acre</td>
+            <td>0.20%</td>
+            <td class="col-27">0.16%</td>
+            <td>0.10%</td>
+            <td class="col-27">0.09%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.10%</td>
+            <td class="col-27">0.09%</td>
+            <td class="just-col">El Niño: Menor precipitação esperada gera cautela em novas aquisições.</td>
+        </tr>
+    
+        <tr data-region="nordeste">
+            <td class="uf-label">AL</td>
+            <td>Alagoas</td>
+            <td>0.60%</td>
+            <td class="col-27">0.58%</td>
+            <td>0.10%</td>
+            <td class="col-27">0.10%</td>
+            <td>0.10%</td>
+            <td class="col-27">0.11%</td>
+            <td>0.10%</td>
+            <td class="col-27">0.10%</td>
+            <td class="just-col">Estabilidade com foco no setor sucroalcooleiro litorâneo.</td>
+        </tr>
+    
+        <tr data-region="norte">
+            <td class="uf-label">AM</td>
+            <td>Amazonas</td>
+            <td>0.20%</td>
+            <td class="col-27">0.16%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td class="just-col">El Niño: Secas e irregularidade reduzem os projetos agropecuários pontuais.</td>
+        </tr>
+    
+        <tr data-region="norte">
+            <td class="uf-label">AP</td>
+            <td>Amapá</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td class="just-col">Mercado marginal, mantendo estabilidade histórica sem grandes alterações.</td>
+        </tr>
+    
+        <tr data-region="nordeste">
+            <td class="uf-label">BA</td>
+            <td>Bahia</td>
+            <td>4.30%</td>
+            <td class="col-27">3.13%</td>
+            <td>5.00%</td>
+            <td class="col-27">3.84%</td>
+            <td>7.50%</td>
+            <td class="col-27">6.25%</td>
+            <td>4.10%</td>
+            <td class="col-27">3.18%</td>
+            <td class="just-col">El Niño: Seca severa projetada para o MATOPIBA derruba agressivamente a intenção de compra (-25%).</td>
+        </tr>
+    
+        <tr data-region="nordeste">
+            <td class="uf-label">CE</td>
+            <td>Ceará</td>
+            <td>1.80%</td>
+            <td class="col-27">1.75%</td>
+            <td>0.10%</td>
+            <td class="col-27">0.10%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.60%</td>
+            <td class="col-27">0.62%</td>
+            <td class="just-col">El Niño: Seca no semiárido, mas base já é pequena mantendo estabilidade estatística.</td>
+        </tr>
+    
+        <tr data-region="centro-oeste">
+            <td class="uf-label">DF</td>
+            <td>Distrito Federal</td>
+            <td>1.00%</td>
+            <td class="col-27">0.78%</td>
+            <td>0.10%</td>
+            <td class="col-27">0.08%</td>
+            <td>0.10%</td>
+            <td class="col-27">0.09%</td>
+            <td>0.30%</td>
+            <td class="col-27">0.25%</td>
+            <td class="just-col">El Niño: Redução de investimentos acompanhando tendência de seca regional.</td>
+        </tr>
+    
+        <tr data-region="sudeste">
+            <td class="uf-label">ES</td>
+            <td>Espírito Santo</td>
+            <td>3.60%</td>
+            <td class="col-27">3.49%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.10%</td>
+            <td class="col-27">0.11%</td>
+            <td>0.10%</td>
+            <td class="col-27">0.10%</td>
+            <td class="just-col">Foco em perenes de menor porte isola o estado das perdas em grãos.</td>
+        </tr>
+    
+        <tr data-region="centro-oeste">
+            <td class="uf-label">GO</td>
+            <td>Goiás</td>
+            <td>4.10%</td>
+            <td class="col-27">3.18%</td>
+            <td>11.60%</td>
+            <td class="col-27">9.51%</td>
+            <td>12.60%</td>
+            <td class="col-27">11.19%</td>
+            <td>10.50%</td>
+            <td class="col-27">8.69%</td>
+            <td class="just-col">El Niño: Déficit de chuvas na janela ideal reduz capitalização e peso do estado.</td>
+        </tr>
+    
+        <tr data-region="nordeste">
+            <td class="uf-label">MA</td>
+            <td>Maranhão</td>
+            <td>1.40%</td>
+            <td class="col-27">1.02%</td>
+            <td>2.00%</td>
+            <td class="col-27">1.54%</td>
+            <td>2.70%</td>
+            <td class="col-27">2.25%</td>
+            <td>3.50%</td>
+            <td class="col-27">2.72%</td>
+            <td class="just-col">El Niño: Atraso das chuvas afeta negativamente as projeções de renovação de frota.</td>
+        </tr>
+    
+        <tr data-region="sudeste">
+            <td class="uf-label">MG</td>
+            <td>Minas Gerais</td>
+            <td>21.00%</td>
+            <td class="col-27">20.37%</td>
+            <td>5.40%</td>
+            <td class="col-27">5.54%</td>
+            <td>5.00%</td>
+            <td class="col-27">5.55%</td>
+            <td>7.70%</td>
+            <td class="col-27">7.97%</td>
+            <td class="just-col">Força do café isola o estado das piores variações, mantendo peso estável.</td>
+        </tr>
+    
+        <tr data-region="centro-oeste">
+            <td class="uf-label">MS</td>
+            <td>Mato Grosso Do Sul</td>
+            <td>2.50%</td>
+            <td class="col-27">1.94%</td>
+            <td>5.00%</td>
+            <td class="col-27">4.10%</td>
+            <td>5.20%</td>
+            <td class="col-27">4.62%</td>
+            <td>7.80%</td>
+            <td class="col-27">6.46%</td>
+            <td class="just-col">El Niño: Irregularidade climática afeta produtividade e causa retração no share.</td>
+        </tr>
+    
+        <tr data-region="centro-oeste">
+            <td class="uf-label">MT</td>
+            <td>Mato Grosso</td>
+            <td>5.50%</td>
+            <td class="col-27">4.27%</td>
+            <td>26.50%</td>
+            <td class="col-27">21.73%</td>
+            <td>32.10%</td>
+            <td class="col-27">28.52%</td>
+            <td>19.20%</td>
+            <td class="col-27">15.89%</td>
+            <td class="just-col">El Niño: Risco de déficit hídrico no Cerrado atrasa plantio e retrai pesadamente investimentos (-20%).</td>
+        </tr>
+    
+        <tr data-region="norte">
+            <td class="uf-label">PA</td>
+            <td>Pará</td>
+            <td>2.20%</td>
+            <td class="col-27">1.81%</td>
+            <td>1.90%</td>
+            <td class="col-27">1.66%</td>
+            <td>3.50%</td>
+            <td class="col-27">3.30%</td>
+            <td>4.30%</td>
+            <td class="col-27">3.78%</td>
+            <td class="just-col">El Niño: Clima atipicamente seco no Norte afeta pontualmente a expansão agrícola (-15%).</td>
+        </tr>
+    
+        <tr data-region="nordeste">
+            <td class="uf-label">PB</td>
+            <td>Paraíba</td>
+            <td>0.60%</td>
+            <td class="col-27">0.58%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.10%</td>
+            <td class="col-27">0.10%</td>
+            <td class="just-col">Mercado marginal sem grandes alterações de frota.</td>
+        </tr>
+    
+        <tr data-region="nordeste">
+            <td class="uf-label">PE</td>
+            <td>Pernambuco</td>
+            <td>1.70%</td>
+            <td class="col-27">1.65%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td class="just-col">Manutenção de frotas para fruticultura irrigada, sem saltos.</td>
+        </tr>
+    
+        <tr data-region="nordeste">
+            <td class="uf-label">PI</td>
+            <td>Piauí</td>
+            <td>0.50%</td>
+            <td class="col-27">0.36%</td>
+            <td>1.90%</td>
+            <td class="col-27">1.46%</td>
+            <td>2.20%</td>
+            <td class="col-27">1.83%</td>
+            <td>2.30%</td>
+            <td class="col-27">1.79%</td>
+            <td class="just-col">El Niño: Alta exposição ao risco climático retrai fortes investimentos planejados.</td>
+        </tr>
+    
+        <tr data-region="sul">
+            <td class="uf-label">PR</td>
+            <td>Paraná</td>
+            <td>9.80%</td>
+            <td class="col-27">12.36%</td>
+            <td>17.50%</td>
+            <td class="col-27">23.32%</td>
+            <td>9.70%</td>
+            <td class="col-27">14.00%</td>
+            <td>15.10%</td>
+            <td class="col-27">20.31%</td>
+            <td class="just-col">El Niño: Alta produtividade com clima úmido puxa forte demanda por renovação.</td>
+        </tr>
+    
+        <tr data-region="sudeste">
+            <td class="uf-label">RJ</td>
+            <td>Rio De Janeiro</td>
+            <td>0.40%</td>
+            <td class="col-27">0.39%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td class="just-col">Participação marginal constante, focada em pecuária.</td>
+        </tr>
+    
+        <tr data-region="nordeste">
+            <td class="uf-label">RN</td>
+            <td>Rio Grande do Norte</td>
+            <td>0.80%</td>
+            <td class="col-27">0.78%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td>0.00%</td>
+            <td class="col-27">0.00%</td>
+            <td class="just-col">Participação mantida em níveis históricos marginais.</td>
+        </tr>
+    
+        <tr data-region="norte">
+            <td class="uf-label">RO</td>
+            <td>Rondônia</td>
+            <td>1.70%</td>
+            <td class="col-27">1.40%</td>
+            <td>2.00%</td>
+            <td class="col-27">1.74%</td>
+            <td>1.30%</td>
+            <td class="col-27">1.23%</td>
+            <td>1.00%</td>
+            <td class="col-27">0.88%</td>
+            <td class="just-col">El Niño: Redução moderada da demanda devido à irregularidade hídrica.</td>
+        </tr>
+    
+        <tr data-region="norte">
+            <td class="uf-label">RR</td>
+            <td>Roraima</td>
+            <td>0.20%</td>
+            <td class="col-27">0.16%</td>
+            <td>0.30%</td>
+            <td class="col-27">0.26%</td>
+            <td>0.40%</td>
+            <td class="col-27">0.38%</td>
+            <td>0.30%</td>
+            <td class="col-27">0.26%</td>
+            <td class="just-col">El Niño: Clima adverso freia a rápida expansão vista nos anos anteriores.</td>
+        </tr>
+    
+        <tr data-region="sul">
+            <td class="uf-label">RS</td>
+            <td>Rio Grande Do Sul</td>
+            <td>10.30%</td>
+            <td class="col-27">12.99%</td>
+            <td>11.20%</td>
+            <td class="col-27">14.93%</td>
+            <td>5.40%</td>
+            <td class="col-27">7.80%</td>
+            <td>8.90%</td>
+            <td class="col-27">11.97%</td>
+            <td class="just-col">El Niño: Chuvas fartas garantem safra recorde e impulsionam agressivamente as compras (+30%).</td>
+        </tr>
+    
+        <tr data-region="sul">
+            <td class="uf-label">SC</td>
+            <td>Santa Catarina</td>
+            <td>6.30%</td>
+            <td class="col-27">7.95%</td>
+            <td>2.40%</td>
+            <td class="col-27">3.20%</td>
+            <td>1.10%</td>
+            <td class="col-27">1.59%</td>
+            <td>3.00%</td>
+            <td class="col-27">4.04%</td>
+            <td class="just-col">El Niño: Excesso de chuvas favorece culturas de verão, aumentando representatividade.</td>
+        </tr>
+    
+        <tr data-region="nordeste">
+            <td class="uf-label">SE</td>
+            <td>Sergipe</td>
+            <td>1.10%</td>
+            <td class="col-27">1.07%</td>
+            <td>0.70%</td>
+            <td class="col-27">0.72%</td>
+            <td>0.40%</td>
+            <td class="col-27">0.44%</td>
+            <td>1.10%</td>
+            <td class="col-27">1.14%</td>
+            <td class="just-col">Demanda estável de renovação pontual.</td>
+        </tr>
+    
+        <tr data-region="sudeste">
+            <td class="uf-label">SP</td>
+            <td>São Paulo</td>
+            <td>17.60%</td>
+            <td class="col-27">17.07%</td>
+            <td>4.80%</td>
+            <td class="col-27">4.92%</td>
+            <td>6.90%</td>
+            <td class="col-27">7.66%</td>
+            <td>7.30%</td>
+            <td class="col-27">7.55%</td>
+            <td class="just-col">Resiliência garantida por cana e citros, absorvendo o choque do clima nacional.</td>
+        </tr>
+    
+        <tr data-region="norte">
+            <td class="uf-label">TO</td>
+            <td>Tocantins</td>
+            <td>0.80%</td>
+            <td class="col-27">0.58%</td>
+            <td>1.50%</td>
+            <td class="col-27">1.15%</td>
+            <td>3.70%</td>
+            <td class="col-27">3.08%</td>
+            <td>2.70%</td>
+            <td class="col-27">2.10%</td>
+            <td class="just-col">El Niño: Impacto direto da seca nas produtividades reduz o peso relativo do estado.</td>
+        </tr>
+    
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterContainer = document.querySelector('.filter-container');
+            const tableRows = document.querySelectorAll('tbody tr');
+    
+            if (filterContainer) {
+                filterContainer.addEventListener('click', function(e) {
+                    if (!e.target.matches('.filter-btn')) {
+                        return;
+                    }
+    
+                    // Update active button state
+                    filterContainer.querySelector('.active').classList.remove('active');
+                    e.target.classList.add('active');
+    
+                    const filter = e.target.dataset.filter;
+    
+                    // Filter table rows
+                    tableRows.forEach(row => {
+                        if (filter === 'todos' || row.dataset.region === filter) {
+                            row.style.display = ''; // Show row by reverting to default
+                        } else {
+                            row.style.display = 'none'; // Hide row
+                        }
+                    });
+                });
+            }
+
+            const exportBtn = document.getElementById('export-excel-btn');
+            if (exportBtn) {
+                exportBtn.addEventListener('click', function() {
+                    const table = document.querySelector('.table-container table');
+                    if (!table) return;
+
+                    // Clone table to avoid modifying the one in the DOM
+                    const tableClone = table.cloneNode(true);
+
+                    // Remove rows hidden by the filter from the clone
+                    tableClone.querySelectorAll('tbody tr[style*="display: none"]').forEach(row => row.remove());
+
+                    const wb = XLSX.utils.table_to_book(tableClone, { sheet: "Projeção por Estado" });
+                    XLSX.writeFile(wb, "Projecao_por_Estado_2027.xlsx");
+                });
+            }
+        });
+    </script>
+</body>
+</html>
