@@ -130,7 +130,12 @@
         }
         .table-scroll-container {
             overflow-x: auto;
-            direction: rtl;
+            /* Esconde a barra de rolagem, mas mantém a funcionalidade de scroll */
+            -ms-overflow-style: none;  /* IE e Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .table-scroll-container::-webkit-scrollbar {
+            display: none; /* Chrome, Safari e Opera */
         }
         .table-title-wrapper {
             display: flex;
@@ -170,7 +175,6 @@
             width: 100%;
             border-collapse: collapse;
             min-width: 1400px;
-            direction: ltr; /* Reseta a direção para a tabela */
         }
         th, td {
             padding: 14px 16px;
@@ -217,6 +221,57 @@
         }
         .positive { color: var(--color-hp); }
         .negative { color: var(--color-hn); }
+
+        /* Estilos para a barra de rolagem superior */
+        .top-scrollbar-wrapper {
+            overflow-x: auto;
+            overflow-y: hidden;
+            direction: rtl;
+        }
+        .top-scrollbar-content {
+            height: 1px;
+            direction: ltr;
+        }
+
+        /* Estilos para a aba de Metodologia */
+        .methodology-container {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid var(--border-color);
+            margin-top: 24px;
+        }
+        .methodology-container h2 {
+            font-size: 1.25rem;
+            color: var(--text-heading);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+        .methodology-card {
+            background-color: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--text-muted);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .methodology-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+        .methodology-card.positive-trend { border-left-color: var(--color-hp); }
+        .methodology-card.negative-trend { border-left-color: var(--color-hn); }
+        .methodology-card h3 {
+            font-size: 1rem; font-weight: 700; color: var(--text-heading); margin-bottom: 8px;
+        }
+        .methodology-card p {
+            font-size: 14px; line-height: 1.6; color: var(--text-body);
+        }
     </style>
 </head>
 <body>
@@ -259,6 +314,7 @@
             <button class="filter-btn" data-filter="centro-oeste">Centro-Oeste</button>
             <button class="filter-btn" data-filter="nordeste">Nordeste</button>
             <button class="filter-btn" data-filter="norte">Norte</button>
+            <button class="filter-btn" data-filter="metodologia">Metodologia</button>
         </div>
 
         <div class="table-container">
@@ -271,6 +327,9 @@
                     </svg>
                     <span>Exportar Excel</span>
                 </button>
+            </div>
+            <div class="top-scrollbar-wrapper">
+                <div class="top-scrollbar-content"></div>
             </div>
             <div class="table-scroll-container">
                 <table>
@@ -673,33 +732,105 @@
                 </table>
             </div>
         </div>
+
+        <div class="methodology-container" style="display: none;">
+            <h2>Racional da Projeção 2027 por Estado</h2>
+            <div class="methodology-grid">
+                <!-- Cards de metodologia serão inseridos aqui pelo JavaScript -->
+            </div>
+        </div>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const filterContainer = document.querySelector('.filter-container');
             const tableRows = document.querySelectorAll('tbody tr');
     
+            const tableContainer = document.querySelector('.table-container');
+            const topScrollbar = document.querySelector('.top-scrollbar-wrapper');
+            const methodologyContainer = document.querySelector('.methodology-container');
+
+            function buildMethodologyTab() {
+                const methodologyGrid = document.querySelector('.methodology-grid');
+                if (!methodologyGrid) return;
+
+                methodologyGrid.innerHTML = ''; // Limpa antes de construir
+
+                tableRows.forEach(row => {
+                    const stateName = row.cells[1].textContent;
+                    const justification = row.cells[10].textContent;
+
+                    const card = document.createElement('div');
+                    card.className = 'methodology-card';
+
+                    // Análise simples de tendência baseada em palavras-chave
+                    const positiveKeywords = ['aumento', 'crescimento', 'recorde', 'favorece', 'impulsiona', 'puxa forte', 'salto', 'garantem', 'garantida'];
+                    const negativeKeywords = ['queda', 'retração', 'redução', 'seca', 'risco', 'déficit', 'perda', 'derruba', 'freia', 'atraso', 'afeta'];
+
+                    if (positiveKeywords.some(keyword => justification.toLowerCase().includes(keyword))) {
+                        card.classList.add('positive-trend');
+                    } else if (negativeKeywords.some(keyword => justification.toLowerCase().includes(keyword))) {
+                        card.classList.add('negative-trend');
+                    }
+
+                    card.innerHTML = `
+                        <h3>${stateName} (${row.cells[0].textContent})</h3>
+                        <p>${justification}</p>
+                    `;
+
+                    methodologyGrid.appendChild(card);
+                });
+            }
+
             if (filterContainer) {
                 filterContainer.addEventListener('click', function(e) {
-                    if (!e.target.matches('.filter-btn')) {
-                        return;
-                    }
+                    if (!e.target.matches('.filter-btn')) return;
     
-                    // Update active button state
                     filterContainer.querySelector('.active').classList.remove('active');
                     e.target.classList.add('active');
     
                     const filter = e.target.dataset.filter;
     
-                    // Filter table rows
-                    tableRows.forEach(row => {
-                        if (filter === 'todos' || row.dataset.region === filter) {
-                            row.style.display = ''; // Show row by reverting to default
-                        } else {
-                            row.style.display = 'none'; // Hide row
-                        }
-                    });
+                    if (filter === 'metodologia') {
+                        tableContainer.style.display = 'none';
+                        topScrollbar.style.display = 'none';
+                        methodologyContainer.style.display = 'block';
+                    } else {
+                        tableContainer.style.display = 'block';
+                        topScrollbar.style.display = 'block';
+                        methodologyContainer.style.display = 'none';
+                        tableRows.forEach(row => {
+                            row.style.display = (filter === 'todos' || row.dataset.region === filter) ? '' : 'none';
+                        });
+                    }
                 });
+            }
+
+            // Lógica para sincronizar as barras de rolagem superior e inferior
+            const topScroll = document.querySelector('.top-scrollbar-wrapper');
+            const bottomScroll = document.querySelector('.table-scroll-container');
+            const topScrollContent = document.querySelector('.top-scrollbar-content');
+            
+            if (topScroll && bottomScroll && topScrollContent) {
+                const table = bottomScroll.querySelector('table');
+                if (table) {
+                    const syncWidth = () => {
+                        topScrollContent.style.width = table.scrollWidth + 'px';
+                    };
+
+                    syncWidth(); // Sincroniza a largura na inicialização
+
+                    // Sincroniza o scroll de cima para baixo
+                    topScroll.addEventListener('scroll', () => {
+                        bottomScroll.scrollLeft = topScroll.scrollLeft;
+                    });
+
+                    // Sincroniza o scroll de baixo para cima
+                    bottomScroll.addEventListener('scroll', () => {
+                        topScroll.scrollLeft = bottomScroll.scrollLeft;
+                    });
+
+                    window.addEventListener('resize', syncWidth); // Sincroniza ao redimensionar a janela
+                }
             }
 
             const exportBtn = document.getElementById('export-excel-btn');
@@ -718,6 +849,9 @@
                     XLSX.writeFile(wb, "Projecao_por_Estado_2027.xlsx");
                 });
             }
+
+            // Constrói a aba de metodologia na inicialização da página
+            buildMethodologyTab();
         });
     </script>
 </body>
