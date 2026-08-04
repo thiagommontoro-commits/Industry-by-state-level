@@ -1,996 +1,646 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AGCO Forecast Intelligence | Análise por UF</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
-    <style>
-        :root {
-            --agco-red: #C8102E;
-            --agco-red-hover: #A30B22;
-            --agco-red-dark: #8B0A1D;
-            --agco-black: #111111;
-            --agco-dark: #1F1F1F;
-            --agco-gray-dark: #2B2B2B;
-            --agco-gray: #F4F4F4;
-            --agco-silver: #D8D8D8;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGCO Forecast Intelligence | Projeção 2027 por UF</title>
+https://fonts.googleapis.com
+wght@300;400;500;600;700&display=swap" rel="stylesheet">
+/dist/xlsx.full.min.js"></script>
+<style>
+:root{
+ --red:#C8102E; --red-dark:#8B0A1D; --red-soft:#FDE8EB;
+ --ink:#0E1116; --ink-2:#2B303B; --muted:#6B7280;
+ --bg:#EEF1F5; --card:#FFFFFF; --line:#E6E9EF;
+ --up:#0B7A3B; --up-bg:#E4F7EC; --down:#C8102E; --down-bg:#FDE8EB; --flat:#8A93A2;
+ --shadow:0 1px 2px rgba(16,17,22,.04),0 6px 20px -8px rgba(16,17,22,.12);
+ --shadow-lg:0 20px 45px -20px rgba(16,17,22,.28);
+}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter','Sora',sans-serif;}
+h1,h2,h3,.brand{font-family:'Sora','Inter',sans-serif;}
+body{background:
+ radial-gradient(1200px 500px at 100% -10%,rgba(200,16,46,.06),transparent 60%),
+ radial-gradient(900px 500px at -10% 0%,rgba(14,17,22,.05),transparent 55%),
+ var(--bg);
+ color:var(--ink-2);padding:34px 22px 70px;-webkit-font-smoothing:antialiased;line-height:1.5;}
+.container{max-width:1640px;margin:0 auto;}
 
-            --primary-bg: #F5F5F5;
-            --card-bg: #FFFFFF;
-            --text-heading: #111111;
-            --text-body: #3A3A3A;
-            --text-muted: #6B7280;
+/* HERO HEADER */
+.hero{position:relative;overflow:hidden;border-radius:22px;padding:34px 38px;
+ background:linear-gradient(135deg,#141821 0%,#1d222d 55%,#241016 100%);
+ color:#fff;box-shadow:var(--shadow-lg);margin-bottom:26px;}
+.hero::after{content:"";position:absolute;right:-60px;top:-80px;width:340px;height:340px;
+ background:radial-gradient(circle,rgba(200,16,46,.55),transparent 62%);filter:blur(6px);}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;position:relative;z-index:2;flex-wrap:wrap;}
+.brand-row{display:flex;align-items:center;gap:16px;}
+.logo-badge{width:52px;height:52px;border-radius:14px;background:linear-gradient(145deg,var(--red),var(--red-dark));
+ display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px -6px rgba(200,16,46,.7);}
+.logo-badge svg{width:30px;height:30px;}
+.hero h1{font-size:1.65rem;font-weight:800;letter-spacing:-.6px;}
+.hero .sub{color:#B7BECC;font-size:.98rem;margin-top:4px;}
+.hero .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);
+ border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(6px);padding:9px 15px;border-radius:999px;
+ font-size:.82rem;font-weight:600;color:#EAEDF3;}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:#34d17f;box-shadow:0 0 0 4px rgba(52,209,127,.2);}
+.hero-meta{display:flex;gap:26px;margin-top:24px;position:relative;z-index:2;flex-wrap:wrap;}
+.hero-meta .m{display:flex;flex-direction:column;}
+.hero-meta .m .k{font-size:.72rem;text-transform:uppercase;letter-spacing:1.2px;color:#8B93A3;}
+.hero-meta .m .v{font-size:1.05rem;font-weight:700;color:#fff;margin-top:2px;}
 
-            --border-color: #E5E7EB;
-            --shadow-soft: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
-            --shadow-hover: 0 6px 12px -3px rgba(200, 16, 46, 0.10), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-            
-            --color-hp: #0B7A3B;
-            --bg-hp: #D1FADF;
-            --color-mp: #22A05B;
-            --bg-mp: #E6FBEE;
-            --color-n: #6B7280;
-            --bg-n: #F1F2F4;
-            --color-mn: #E5484D;
-            --bg-mn: #FEECEC;
-            --color-hn: #C8102E;
-            --bg-hn: #FDE2E4;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', 'Montserrat', sans-serif; }
-        body {
-            background-color: var(--primary-bg);
-            color: var(--text-body);
-            padding: 40px 20px;
-            -webkit-font-smoothing: antialiased;
-            line-height: 1.5;
-        }
-        .container { max-width: 1600px; margin: 0 auto; }
-        .logo {
-            height: 32px;
-            width: 32px;
-        }
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--border-color);
-        }
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .header h1 {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--text-heading);
-            letter-spacing: -0.5px;
-        }
-        .header p {
-            color: var(--text-muted);
-            font-size: 1rem;
-            margin-top: 4px;
-        }
-        .header-right span {
-            background: var(--agco-red);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-        }
-        
-        /* Filters */
-        .filter-container {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-        }
-        .filter-btn {
-            background-color: var(--card-bg);
-            color: var(--text-body);
-            border: 1px solid var(--border-color);
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-        }
-        .filter-btn:hover {
-            background-color: #e9ecef;
-            border-color: #ced4da;
-        }
-        .filter-btn.active {
-            background-color: var(--agco-red);
-            color: white;
-            border-color: var(--agco-red);
-        }
+/* KPI */
+.kpi-wrapper{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-bottom:30px;}
+.kpi-card{background:var(--card);padding:20px 22px;border-radius:16px;box-shadow:var(--shadow);
+ border:1px solid var(--line);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;}
+.kpi-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
+.kpi-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--red);}
+.kpi-card.win::before{background:var(--up);} .kpi-card.loss::before{background:var(--down);}
+.kpi-ico{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+ font-size:20px;margin-bottom:12px;background:var(--red-soft);}
+.kpi-card.win .kpi-ico{background:var(--up-bg);} .kpi-card.loss .kpi-ico{background:var(--down-bg);}
+.kpi-card h3{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.1px;font-weight:600;margin-bottom:8px;}
+.kpi-card .value{font-size:1.4rem;font-weight:800;color:var(--ink);letter-spacing:-.4px;line-height:1.15;}
+.kpi-card .value small{font-size:.9rem;font-weight:700;}
+.kpi-card .value small.up{color:var(--up);} .kpi-card .value small.down{color:var(--down);}
+.kpi-card .description{margin-top:8px;color:var(--muted);font-size:.82rem;line-height:1.45;}
 
-        /* KPIs */
-        .kpi-wrapper {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        .kpi-card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid var(--border-color);
-            border-left: 5px solid var(--agco-red);
-        }
-        .kpi-card h3 {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
-        .kpi-card .value {
-            font-size: 22px;
-            font-weight: 700;
-            color: var(--text-heading);
-        }
-        .kpi-card .description {
-            margin-top: 8px;
-            color: var(--text-muted);
-            font-size: 13px;
-            line-height: 1.4;
-        }
-        
-        /* Table */
-        .table-container {
-            background: var(--card-bg);
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid var(--border-color);
-        }
-        .table-scroll-container {
-            overflow-x: auto;
-        }
-        /* Estilos para a barra de rolagem superior */
-        .top-scrollbar-wrapper {
-            overflow-x: auto;
-            overflow-y: hidden;
-        }
-        .top-scrollbar-content {
-            height: 1px;
-        }
+/* FILTERS */
+.filter-container{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap;}
+.filter-btn{background:var(--card);color:var(--ink-2);border:1px solid var(--line);padding:9px 18px;
+ border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .18s;}
+.filter-btn:hover{border-color:var(--red);color:var(--red);}
+.filter-btn.active{background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;border-color:transparent;
+ box-shadow:0 8px 18px -8px rgba(200,16,46,.6);}
 
-        .table-title-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .export-btn {
-            background-color: #0B7A3B;
-            color: white;
-            border: none;
-            padding: 10px 18px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: background-color 0.2s ease-in-out;
-        }
-        .export-btn:hover {
-            background-color: #085c2d;
-        }
-        .export-btn svg {
-            width: 16px;
-            height: 16px;
-            fill: currentColor;
-        }
-        .table-container h2 {
-            font-size: 1.25rem;
-            color: var(--text-heading);
-            font-weight: 600;
-            text-align: left;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 1400px;
-        }
-        th, td {
-            padding: 14px 16px;
-            text-align: right;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
-            white-space: nowrap;
-        }
-        th:nth-child(1), td:nth-child(1),
-        th:nth-child(2), td:nth-child(2),
-        th:last-child, td:last-child {
-            text-align: left;
-        }
-        th {
-            background-color: #f9fafb;
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 12px;
-            letter-spacing: 0.5px;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-        th:first-child {
-            left: 0;
-            z-index: 11; /* Acima dos outros cabeçalhos para o canto */
-        }
-        tbody tr:hover td {
-            background-color: #f5f5f5;
-        }
-        td:first-child {
-            position: sticky;
-            left: 0;
-            z-index: 1;
-            background-color: var(--card-bg);
-        }
-        tbody tr:hover td:first-child {
-            background-color: #f5f5f5;
-        }
-        .col-27 {
-            font-weight: 700;
-            color: var(--text-heading);
-            background-color: #f9fafb;
-        }
-        .uf-label {
-            font-weight: 700;
-            color: var(--text-heading);
-        }
-        .just-col {
-            color: var(--text-body);
-            font-size: 13px;
-            line-height: 1.5;
-            max-width: 350px;
-            white-space: normal;
-            text-align: left;
-        }
-        .positive { color: var(--color-hp); }
-        .negative { color: var(--color-hn); }
+/* TABLE */
+.table-container{background:var(--card);padding:24px;border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--line);}
+.table-title-wrapper{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:14px;flex-wrap:wrap;}
+.table-title-wrapper h2{font-size:1.2rem;color:var(--ink);font-weight:700;}
+.table-title-wrapper .hint{font-size:.8rem;color:var(--muted);margin-top:3px;font-weight:400;}
+.export-btn{background:linear-gradient(135deg,#0B7A3B,#0a6c35);color:#fff;border:none;padding:10px 18px;border-radius:10px;
+ font-size:.85rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:8px;transition:filter .2s,transform .2s;}
+.export-btn:hover{filter:brightness(1.08);transform:translateY(-1px);}
+.export-btn svg{width:16px;height:16px;fill:currentColor;}
+.top-scrollbar-wrapper{overflow-x:auto;overflow-y:hidden;}
+.top-scrollbar-content{height:1px;}
+.table-scroll-container{overflow-x:auto;border-radius:12px;border:1px solid var(--line);}
+.table-scroll-container::-webkit-scrollbar{height:10px;}
+.table-scroll-container::-webkit-scrollbar-thumb{background:#cfd5df;border-radius:10px;}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1440px;}
+th,td{padding:13px 16px;text-align:right;border-bottom:1px solid var(--line);font-size:.86rem;white-space:nowrap;}
+th:nth-child(1),td:nth-child(1),th:nth-child(2),td:nth-child(2),th:last-child,td:last-child{text-align:left;}
+thead th{background:#F7F8FA;color:var(--muted);font-weight:700;text-transform:uppercase;font-size:.7rem;letter-spacing:.6px;
+ position:sticky;top:0;z-index:10;border-bottom:2px solid var(--line);}
+thead th.col-27{color:var(--red);background:#FCF3F4;}
+th:first-child{left:0;z-index:11;}
+td:first-child{position:sticky;left:0;z-index:1;background:var(--card);}
+tbody tr{transition:background .15s;}
+tbody tr:hover td{background:#FBFCFE;}
+tbody tr:hover td:first-child{background:#FBFCFE;}
+.col-27{font-weight:700;color:var(--ink);background:#FDFBFB;}
+.v27{font-weight:700;}
+.delta{font-size:.7rem;font-weight:700;margin-left:2px;}
+.delta.up{color:var(--up);} .delta.down{color:var(--down);} .delta.flat{color:var(--flat);}
+.uf-chip{display:inline-block;font-weight:800;font-size:.78rem;color:#fff;padding:3px 9px;border-radius:8px;letter-spacing:.4px;}
+.r-sul{background:#0B7A3B;} .r-sudeste{background:#C8102E;} .r-centro-oeste{background:#B8860B;}
+.r-nordeste{background:#7A3FB0;} .r-norte{background:#0E7C86;}
+.state-name{font-weight:600;color:var(--ink);}
+.share-badge{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:7px;vertical-align:middle;}
+.share-badge.win{background:var(--up-bg);color:var(--up);}
+.share-badge.loss{background:var(--down-bg);color:var(--down);}
+.share-badge.flat{background:#EEF0F3;color:var(--flat);}
+.just-col{color:var(--ink-2);font-size:.82rem;line-height:1.55;max-width:400px;white-space:normal;text-align:left;}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;font-size:.76rem;color:var(--muted);}
+.legend span{display:inline-flex;align-items:center;gap:6px;}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block;}
 
-        /* Estilos para a aba de Metodologia */
-        .methodology-container {
-            background: var(--card-bg);
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid var(--border-color);
-            margin-top: 24px; /* Mantido para o container geral */
-        }
-        .methodology-container h2 {
-            font-size: 1.25rem;
-            color: var(--text-heading);
-            font-weight: 600;
-        }
-        .methodology-explanation {
-            background-color: #fdfdfd;
-            padding: 24px;
-            border-radius: 12px;
-            margin-top: 20px;
-            margin-bottom: 20px;
-            border: 1px solid var(--border-color);
-            border-left: 4px solid var(--agco-red);
-        }
-        .methodology-explanation h3 {
-            font-size: 1.2rem;
-            color: var(--text-heading);
-            margin-bottom: 15px;
-        }
-        .methodology-explanation p {
-            font-size: 14px;
-            line-height: 1.7;
-            margin-bottom: 20px;
-            color: var(--text-body);
-        }
-        .methodology-explanation ul {
-            list-style: none;
-            padding-left: 0;
-        }
-        .methodology-explanation li {
-            font-size: 14px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: flex-start;
-            line-height: 1.6;
-        }
-        .methodology-explanation .icon {
-            margin-right: 12px;
-            font-size: 1.3rem;
-            line-height: 1.6;
-            color: var(--agco-red);
-        }
-        .methodology-grid {
-            display: grid; 
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .methodology-card {
-            background-color: #f9fafb;
-            padding: 20px;
-            border-radius: 8px;
-            border-left: 4px solid var(--text-muted);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        .methodology-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-        }
-        .methodology-card.positive-trend { border-left-color: var(--color-hp); }
-        .methodology-card.negative-trend { border-left-color: var(--color-hn); }
-        .methodology-card h3 {
-            font-size: 1rem; font-weight: 700; color: var(--text-heading); margin-bottom: 12px;
-        }
-        .methodology-card p {
-            font-size: 14px; line-height: 1.6; color: var(--text-body);
-        }
-        .justification-detail {
-            margin-bottom: 16px;
-        }
-        .drivers-summary .detail-label {
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            display: block;
-            margin-bottom: 8px;
-        }
-        .tags-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .driver-tag {
-            background-color: var(--border-color);
-            color: var(--text-muted);
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-        .methodology-card.positive-trend .driver-tag {
-            background-color: var(--bg-hp);
-            color: var(--color-hp);
-        }
-        .methodology-card.negative-trend .driver-tag {
-            background-color: var(--bg-mn);
-            color: var(--color-hn);
-        }
-        .driver-tag.neutral-tag {
-            background-color: #f3f4f6;
-            color: #4b5563;
-        }
-    </style>
+/* METHODOLOGY */
+.methodology-container{background:var(--card);padding:26px;border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--line);}
+.methodology-container>h2{font-size:1.25rem;color:var(--ink);font-weight:700;}
+.methodology-explanation{background:linear-gradient(180deg,#FCFCFD,#F7F8FA);padding:26px;border-radius:14px;margin:18px 0 26px;
+ border:1px solid var(--line);border-left:5px solid var(--red);}
+.methodology-explanation h3{font-size:1.15rem;color:var(--ink);margin-bottom:12px;}
+.methodology-explanation p{font-size:.9rem;line-height:1.7;margin-bottom:16px;color:var(--ink-2);}
+.methodology-explanation .mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;}
+.mfeat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+.mfeat .ic{font-size:1.4rem;} .mfeat h4{font-size:.92rem;margin:8px 0 6px;color:var(--ink);}
+.mfeat p{font-size:.82rem;color:var(--muted);margin:0;line-height:1.55;}
+.formula-note{margin-top:18px;font-size:.82rem;color:var(--muted);background:#F7F8FA;border-radius:10px;padding:14px 16px;border:1px dashed #D4D9E1;}
+.formula-note code{background:#141821;color:#EAEDF3;padding:2px 8px;border-radius:6px;font-size:.8rem;}
+.methodology-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:8px;}
+.methodology-card{background:#fff;padding:20px;border-radius:14px;border:1px solid var(--line);border-left:5px solid var(--flat);
+ transition:transform .2s,box-shadow .2s;}
+.methodology-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.methodology-card.positive-trend{border-left-color:var(--up);}
+.methodology-card.negative-trend{border-left-color:var(--down);}
+.mc-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:10px;}
+.mc-head h3{font-size:1rem;font-weight:700;color:var(--ink);}
+.mc-uf{font-size:.72rem;background:#F0F2F5;color:var(--muted);padding:2px 7px;border-radius:6px;margin-left:5px;font-weight:700;}
+.mc-delta{font-size:.82rem;font-weight:800;}
+.mc-delta.up{color:var(--up);} .mc-delta.down{color:var(--down);} .mc-delta.flat{color:var(--flat);}
+.mc-just{font-size:.84rem;line-height:1.6;color:var(--ink-2);margin-bottom:14px;}
+.mc-scores{display:flex;flex-direction:column;gap:7px;margin-bottom:14px;}
+.score-row{display:flex;align-items:center;gap:10px;}
+.score-lab{font-size:.7rem;color:var(--muted);width:56px;font-weight:600;text-transform:uppercase;letter-spacing:.3px;}
+.score-track{flex:1;height:7px;background:#EEF0F3;border-radius:99px;overflow:hidden;}
+.score-fill{display:block;height:100%;border-radius:99px;}
+.score-fill.f-pos{background:linear-gradient(90deg,#34d17f,#0B7A3B);}
+.score-fill.f-neg{background:linear-gradient(90deg,#f28a8d,#C8102E);}
+.score-fill.f-neu{background:linear-gradient(90deg,#c4cad3,#9aa2ae);}
+.tags-container{display:flex;flex-wrap:wrap;gap:7px;}
+.driver-tag{padding:4px 11px;border-radius:999px;font-size:.72rem;font-weight:600;}
+.driver-tag.t-neg{background:var(--down-bg);color:var(--down);}
+.driver-tag.t-pos{background:var(--up-bg);color:var(--up);}
+.driver-tag.t-neu{background:#F0F2F5;color:#4b5563;}
+.foot{text-align:center;color:var(--muted);font-size:.76rem;margin-top:30px;}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <div class="header-left">
-                <svg class="logo" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M50 0L100 100H80L50 40L20 100H0L50 0Z" fill="#C8102E"/>
-                </svg>
-                <div>
-                    <h1>Forecast Intelligence | Análise por UF</h1>
-                    <p>Projeção de Market Share 2027 - Varejo Brasil</p>
-                </div>
-            </div>
-            <div class="header-right">
-                <span>Escopo: Nacional (BR)</span>
-            </div>
-        </div>
+<div class="container">
 
-        <div class="kpi-wrapper">
-            <div class="kpi-card">
-                <h3>Vencedores (Ganho de Share)</h3>
-                <div class="value">Sul (RS, PR, SC)</div>
-                <div class="description">Resiliência com crescimento moderado pelo cenário de crédito.</div>
-            </div>
-            <div class="kpi-card">
-                <h3>Risco Hídrico (Perda de Share)</h3>
-                <div class="value">C-Oeste & MATOPIBA</div>
-                <div class="description">MT, GO e BA aprofundam a retração.</div>
-            </div>
-            <div class="kpi-card">
-                <h3>Maior Salto (PR)</h3>
-                <div class="value">+1.0%</div>
-            </div>
-             <div class="kpi-card">
-                <h3>Maior Retração (MT)</h3>
-                <div class="value">-3.0%</div>
-            </div>
-        </div>
+ <div class="hero">
+   <div class="hero-top">
+     <div class="brand-row">
+       <div class="logo-badge">
+         <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+           <path d="M50 8L92 92H72L50 44L28 92H8L50 8Z" fill="#fff"/></svg>
+       </div>
+       <div>
+         <h1 class="brand">Forecast Intelligence — Análise por UF</h1>
+         <div class="sub">Projeção de Market Share 2027 · Varejo Brasil · Modelo multi-fator</div>
+       </div>
+     </div>
+     <span class="pill"><span class="dot"></span>Escopo Nacional (BR) · Base 2026 → Projeção 2027</span>
+   </div>
+   <div class="hero-meta">
+     <div class="m"><span class="k">Cobertura</span><span class="v">27 UFs · 4 linhas</span></div>
+     <div class="m"><span class="k">UFs em ganho de share</span><span class="v">6 estados</span></div>
+     <div class="m"><span class="k">UFs em perda de share</span><span class="v">14 estados</span></div>
+     <div class="m"><span class="k">Atualizado</span><span class="v">Ago/2026</span></div>
+   </div>
+ </div>
 
-        <div class="filter-container">
-            <button class="filter-btn active" data-filter="todos">Todos</button>
-            <button class="filter-btn" data-filter="sul">Sul</button>
-            <button class="filter-btn" data-filter="sudeste">Sudeste</button>
-            <button class="filter-btn" data-filter="centro-oeste">Centro-Oeste</button>
-            <button class="filter-btn" data-filter="nordeste">Nordeste</button>
-            <button class="filter-btn" data-filter="norte">Norte</button>
-            <button class="filter-btn" data-filter="metodologia">Metodologia</button>
-        </div>
+ <div class="kpi-wrapper">
+   <div class="kpi-card win">
+     <div class="kpi-ico">🏆</div>
+     <h3>Maior Ganho de Share</h3>
+     <div class="value">Minas Gerais <small class="up">+0.78 pp</small></div>
+     <div class="description">Rentabilidade resiliente das culturas perenes e ciclo de renovação sustentam a liderança.</div>
+   </div>
+   <div class="kpi-card loss">
+     <div class="kpi-ico">⚠️</div>
+     <h3>Maior Retração</h3>
+     <div class="value">Mato Grosso <small class="down">-0.91 pp</small></div>
+     <div class="description">Estiagem histórica no Cerrado somada ao aperto de crédito aprofunda a perda de participação.</div>
+   </div>
+   <div class="kpi-card win">
+     <div class="kpi-ico">🌾</div>
+     <h3>Cinturão Resiliente</h3>
+     <div class="value">Sul + Café/Cana</div>
+     <div class="description">RS, PR, SC, MG e SP concentram o crescimento relativo apoiados em safra e diversificação.</div>
+   </div>
+   <div class="kpi-card loss">
+     <div class="kpi-ico">💧</div>
+     <h3>Risco Hídrico + Crédito</h3>
+     <div class="value">MT · BA · GO · MS</div>
+     <div class="description">MATOPIBA e Centro-Oeste de grãos são os mais expostos ao duplo choque de 2027.</div>
+   </div>
+ </div>
 
-        <div class="table-container">
-            <div class="table-title-wrapper">
-                <h2>Projeção por Estado</h2>
-                <button id="export-excel-btn" class="export-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor">
-                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-                    </svg>
-                    <span>Exportar Excel</span>
-                </button>
-            </div>
-            <div class="top-scrollbar-wrapper">
-                <div class="top-scrollbar-content"></div>
-            </div>
-            <div class="table-scroll-container">
-                <table>
-                <thead>
-                    <tr>
-                        <th>UF</th>
-                        <th>Estado</th>
-                        <th>Tratores (26)</th>
-                        <th class="col-27">Tratores (27)</th>
-                        <th>Colheit. (26)</th>
-                        <th class="col-27">Colheit. (27)</th>
-                        <th>Pulveriz. (26)</th>
-                        <th class="col-27">Pulveriz. (27)</th>
-                        <th>Plantad. (26)</th>
-                        <th class="col-27">Plantad. (27)</th>
-                        <th>Justificativa</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    <tr data-region="norte">
-                        <td class="uf-label">AC</td>
-                        <td>Acre</td>
-                        <td>0.20%</td>
-                        <td class="col-27">0.18%</td>
-                        <td>0.10%</td>
-                        <td class="col-27">0.10%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.10%</td>
-                        <td class="col-27">0.10%</td>
-                        <td class="just-col">Mercado estagnado. A limitação nacional de crédito e a baixa atratividade paralisam qualquer investimento.</td>
-                    </tr>
-                    <tr data-region="nordeste">
-                        <td class="uf-label">AL</td>
-                        <td>Alagoas</td>
-                        <td>0.60%</td>
-                        <td class="col-27">0.60%</td>
-                        <td>0.10%</td>
-                        <td class="col-27">0.10%</td>
-                        <td>0.10%</td>
-                        <td class="col-27">0.10%</td>
-                        <td>0.10%</td>
-                        <td class="col-27">0.10%</td>
-                        <td class="just-col">Crescimento marginal anulado pela restrição de crédito. Projeção de estabilidade.</td>
-                    </tr>
-                    <tr data-region="norte">
-                        <td class="uf-label">AM</td>
-                        <td>Amazonas</td>
-                        <td>0.20%</td>
-                        <td class="col-27">0.18%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td class="just-col">Retração acentuada. Projetos paralisados por restrição severa de caixa e financiamento.</td>
-                    </tr>
-                    <tr data-region="norte">
-                        <td class="uf-label">AP</td>
-                        <td>Amapá</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td class="just-col">Mercado inexpressivo e sem perspectiva de recuperação devido à total falta de fomento.</td>
-                    </tr>
-                    <tr data-region="nordeste">
-                        <td class="uf-label">BA</td>
-                        <td>Bahia</td>
-                        <td>4.30%</td>
-                        <td class="col-27">3.55%</td>
-                        <td>5.00%</td>
-                        <td class="col-27">4.43%</td>
-                        <td>7.50%</td>
-                        <td class="col-27">6.92%</td>
-                        <td>4.10%</td>
-                        <td class="col-27">3.62%</td>
-                        <td class="just-col">Impacto combinado de seca severa e crédito escasso aprofunda a retração do mercado.</td>
-                    </tr>
-                    <tr data-region="nordeste">
-                        <td class="uf-label">CE</td>
-                        <td>Ceará</td>
-                        <td>1.80%</td>
-                        <td class="col-27">1.81%</td>
-                        <td>0.10%</td>
-                        <td class="col-27">0.10%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.60%</td>
-                        <td class="col-27">0.62%</td>
-                        <td class="just-col">Crescimento previsto é revisado para baixo, refletindo o impacto dos limites bancários restritivos.</td>
-                    </tr>
-                    <tr data-region="centro-oeste">
-                        <td class="uf-label">DF</td>
-                        <td>Distrito Federal</td>
-                        <td>1.00%</td>
-                        <td class="col-27">0.82%</td>
-                        <td>0.10%</td>
-                        <td class="col-27">0.08%</td>
-                        <td>0.10%</td>
-                        <td class="col-27">0.08%</td>
-                        <td>0.30%</td>
-                        <td class="col-27">0.27%</td>
-                        <td class="just-col">Queda acentuada. A falta de crédito praticamente congela novos investimentos na região.</td>
-                    </tr>
-                    <tr data-region="sudeste">
-                        <td class="uf-label">ES</td>
-                        <td>Espírito Santo</td>
-                        <td>3.60%</td>
-                        <td class="col-27">3.63%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.10%</td>
-                        <td class="col-27">0.10%</td>
-                        <td>0.10%</td>
-                        <td class="col-27">0.10%</td>
-                        <td class="just-col">Culturas perenes oferecem resiliência, mas o crescimento é limitado pela conjuntura nacional de crédito.</td>
-                    </tr>
-                    <tr data-region="centro-oeste">
-                        <td class="uf-label">GO</td>
-                        <td>Goiás</td>
-                        <td>4.10%</td>
-                        <td class="col-27">3.38%</td>
-                        <td>11.60%</td>
-                        <td class="col-27">10.27%</td>
-                        <td>12.60%</td>
-                        <td class="col-27">11.63%</td>
-                        <td>10.50%</td>
-                        <td class="col-27">9.27%</td>
-                        <td class="just-col">Crise hídrica somada à escassez de crédito causa uma retração ainda mais profunda nos investimentos.</td>
-                    </tr>
-                    <tr data-region="nordeste">
-                        <td class="uf-label">MA</td>
-                        <td>Maranhão</td>
-                        <td>1.40%</td>
-                        <td class="col-27">1.16%</td>
-                        <td>2.00%</td>
-                        <td class="col-27">1.78%</td>
-                        <td>2.70%</td>
-                        <td class="col-27">2.49%</td>
-                        <td>3.50%</td>
-                        <td class="col-27">3.10%</td>
-                        <td class="just-col">Atraso nas chuvas e corte drástico de recursos agravam a queda na renovação de frota.</td>
-                    </tr>
-                    <tr data-region="sudeste">
-                        <td class="uf-label">MG</td>
-                        <td>Minas Gerais</td>
-                        <td>21.00%</td>
-                        <td class="col-27">21.19%</td>
-                        <td>5.40%</td>
-                        <td class="col-27">5.58%</td>
-                        <td>5.00%</td>
-                        <td class="col-27">5.24%</td>
-                        <td>7.70%</td>
-                        <td class="col-27">7.95%</td>
-                        <td class="just-col">Setor cafeeiro mostra resiliência, mas o teto de financiamento limita um crescimento mais robusto.</td>
-                    </tr>
-                    <tr data-region="centro-oeste">
-                        <td class="uf-label">MS</td>
-                        <td>Mato Grosso Do Sul</td>
-                        <td>2.50%</td>
-                        <td class="col-27">2.07%</td>
-                        <td>5.00%</td>
-                        <td class="col-27">4.43%</td>
-                        <td>5.20%</td>
-                        <td class="col-27">4.80%</td>
-                        <td>7.80%</td>
-                        <td class="col-27">6.89%</td>
-                        <td class="just-col">Clima adverso e crédito restrito forçam uma retração ainda mais acentuada do que o previsto.</td>
-                    </tr>
-                    <tr data-region="centro-oeste">
-                        <td class="uf-label">MT</td>
-                        <td>Mato Grosso</td>
-                        <td>5.50%</td>
-                        <td class="col-27">4.54%</td>
-                        <td>26.50%</td>
-                        <td class="col-27">23.47%</td>
-                        <td>32.10%</td>
-                        <td class="col-27">29.61%</td>
-                        <td>19.20%</td>
-                        <td class="col-27">16.97%</td>
-                        <td class="just-col">Cenário crítico: seca histórica no Cerrado e corte drástico de financiamento aprofundam a crise no estado.</td>
-                    </tr>
-                    <tr data-region="norte">
-                        <td class="uf-label">PA</td>
-                        <td>Pará</td>
-                        <td>2.20%</td>
-                        <td class="col-27">1.99%</td>
-                        <td>1.90%</td>
-                        <td class="col-27">1.84%</td>
-                        <td>3.50%</td>
-                        <td class="col-27">3.50%</td>
-                        <td>4.30%</td>
-                        <td class="col-27">4.15%</td>
-                        <td class="just-col">Expansão é freada e revertida para uma leve retração pela falta de financiamento.</td>
-                    </tr>
-                    <tr data-region="nordeste">
-                        <td class="uf-label">PB</td>
-                        <td>Paraíba</td>
-                        <td>0.60%</td>
-                        <td class="col-27">0.60%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.10%</td>
-                        <td class="col-27">0.10%</td>
-                        <td class="just-col">Mercado marginal permanece estagnado, sem sinais de crescimento.</td>
-                    </tr>
-                    <tr data-region="nordeste">
-                        <td class="uf-label">PE</td>
-                        <td>Pernambuco</td>
-                        <td>1.70%</td>
-                        <td class="col-27">1.71%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td class="just-col">Renovação de frota de fruticultura é postergada, e o crescimento esperado é anulado pela falta de crédito.</td>
-                    </tr>
-                    <tr data-region="nordeste">
-                        <td class="uf-label">PI</td>
-                        <td>Piauí</td>
-                        <td>0.50%</td>
-                        <td class="col-27">0.41%</td>
-                        <td>1.90%</td>
-                        <td class="col-27">1.68%</td>
-                        <td>2.20%</td>
-                        <td class="col-27">2.04%</td>
-                        <td>2.30%</td>
-                        <td class="col-27">2.03%</td>
-                        <td class="just-col">Risco climático elevado e teto financeiro agravam a retração do varejo regional.</td>
-                    </tr>
-                    <tr data-region="sul">
-                        <td class="uf-label">PR</td>
-                        <td>Paraná</td>
-                        <td>9.80%</td>
-                        <td class="col-27">10.09%</td>
-                        <td>17.50%</td>
-                        <td class="col-27">18.45%</td>
-                        <td>9.70%</td>
-                        <td class="col-27">10.37%</td>
-                        <td>15.10%</td>
-                        <td class="col-27">15.91%</td>
-                        <td class="just-col">Aperto no crédito e incerteza climática limitam o potencial de crescimento, resultando em projeção contida.</td>
-                    </tr>
-                    <tr data-region="sudeste">
-                        <td class="uf-label">RJ</td>
-                        <td>Rio De Janeiro</td>
-                        <td>0.40%</td>
-                        <td class="col-27">0.40%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td class="just-col">Mercado marginal permanece estagnado pela falta de fomento.</td>
-                    </tr>
-                    <tr data-region="nordeste">
-                        <td class="uf-label">RN</td>
-                        <td>Rio Grande do Norte</td>
-                        <td>0.80%</td>
-                        <td class="col-27">0.80%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td>0.00%</td>
-                        <td class="col-27">0.00%</td>
-                        <td class="just-col">Crescimento nulo. Compras são adiadas indefinidamente devido ao aperto financeiro.</td>
-                    </tr>
-                    <tr data-region="norte">
-                        <td class="uf-label">RO</td>
-                        <td>Rondônia</td>
-                        <td>1.70%</td>
-                        <td class="col-27">1.54%</td>
-                        <td>2.00%</td>
-                        <td class="col-27">1.94%</td>
-                        <td>1.30%</td>
-                        <td class="col-27">1.30%</td>
-                        <td>1.00%</td>
-                        <td class="col-27">0.97%</td>
-                        <td class="just-col">Demanda reprimida. Irregularidade hídrica e limites bancários forçam uma revisão para baixo.</td>
-                    </tr>
-                    <tr data-region="norte">
-                        <td class="uf-label">RR</td>
-                        <td>Roraima</td>
-                        <td>0.20%</td>
-                        <td class="col-27">0.18%</td>
-                        <td>0.30%</td>
-                        <td class="col-27">0.28%</td>
-                        <td>0.40%</td>
-                        <td class="col-27">0.40%</td>
-                        <td>0.30%</td>
-                        <td class="col-27">0.28%</td>
-                        <td class="just-col">Clima adverso e falta de crédito acentuam a retração no ritmo de expansão.</td>
-                    </tr>
-                    <tr data-region="sul">
-                        <td class="uf-label">RS</td>
-                        <td>Rio Grande Do Sul</td>
-                        <td>10.30%</td>
-                        <td class="col-27">10.61%</td>
-                        <td>11.20%</td>
-                        <td class="col-27">11.81%</td>
-                        <td>5.40%</td>
-                        <td class="col-27">5.77%</td>
-                        <td>8.90%</td>
-                        <td class="col-27">9.38%</td>
-                        <td class="just-col">Safra recorde impulsiona, mas o teto de recursos modera o crescimento da renovação de frota.</td>
-                    </tr>
-                    <tr data-region="sul">
-                        <td class="uf-label">SC</td>
-                        <td>Santa Catarina</td>
-                        <td>6.30%</td>
-                        <td class="col-27">6.49%</td>
-                        <td>2.40%</td>
-                        <td class="col-27">2.53%</td>
-                        <td>1.10%</td>
-                        <td class="col-27">1.18%</td>
-                        <td>3.00%</td>
-                        <td class="col-27">3.16%</td>
-                        <td class="just-col">Chuvas favorecem a safra, mas o limite de crédito restringe o potencial de novas compras.</td>
-                    </tr>
-                    <tr data-region="nordeste">
-                        <td class="uf-label">SE</td>
-                        <td>Sergipe</td>
-                        <td>1.10%</td>
-                        <td class="col-27">1.11%</td>
-                        <td>0.70%</td>
-                        <td class="col-27">0.73%</td>
-                        <td>0.40%</td>
-                        <td class="col-27">0.42%</td>
-                        <td>1.10%</td>
-                        <td class="col-27">1.14%</td>
-                        <td class="just-col">Crescimento modesto. A demanda pontual é afetada pela conjuntura nacional.</td>
-                    </tr>
-                    <tr data-region="sudeste">
-                        <td class="uf-label">SP</td>
-                        <td>São Paulo</td>
-                        <td>17.60%</td>
-                        <td class="col-27">17.76%</td>
-                        <td>4.80%</td>
-                        <td class="col-27">4.96%</td>
-                        <td>6.90%</td>
-                        <td class="col-27">7.22%</td>
-                        <td>7.30%</td>
-                        <td class="col-27">7.53%</td>
-                        <td class="just-col">Resiliência da cana sustenta o mercado, mas o aperto financeiro impede um crescimento mais expressivo.</td>
-                    </tr>
-                    <tr data-region="norte">
-                        <td class="uf-label">TO</td>
-                        <td>Tocantins</td>
-                        <td>0.80%</td>
-                        <td class="col-27">0.67%</td>
-                        <td>1.50%</td>
-                        <td class="col-27">1.34%</td>
-                        <td>3.70%</td>
-                        <td class="col-27">3.42%</td>
-                        <td>2.70%</td>
-                        <td class="col-27">2.39%</td>
-                        <td class="just-col">Impacto duplo de seca e corte de recursos intensifica a queda de participação do estado.</td>
-                    </tr>
-                </tbody>
-                </table>
-            </div>
-        </div>
+ <div class="filter-container">
+   <button class="filter-btn active" data-filter="todos">Todos</button>
+   <button class="filter-btn" data-filter="sul">Sul</button>
+   <button class="filter-btn" data-filter="sudeste">Sudeste</button>
+   <button class="filter-btn" data-filter="centro-oeste">Centro-Oeste</button>
+   <button class="filter-btn" data-filter="nordeste">Nordeste</button>
+   <button class="filter-btn" data-filter="norte">Norte</button>
+   <button class="filter-btn" data-filter="metodologia">Metodologia</button>
+ </div>
 
-        <div class="methodology-container" style="display: none;">
-            <h2>Racional da Projeção 2027 por Estado</h2>
-            <div class="methodology-explanation">
-                <h3>Metodologia Geral de Projeção</h3>
-                <p>A projeção de participação de mercado (market share) para 2027 é calculada utilizando um modelo que combina análises quantitativas e qualitativas, considerando as particularidades de cada estado. O objetivo é entender como diferentes vetores influenciam a decisão de compra e a renovação de frota de máquinas agrícolas.</p>
-                <ul>
-                    <li><span class="icon">💰</span><strong>Drivers Econômicos:</strong> Análise do cenário de crédito (juros, disponibilidade de recursos como PRONAF/Moderfrota), poder de compra do produtor, flutuações do câmbio e o impacto da inflação nos custos de produção e investimento.</li>
-                    <li><span class="icon">🌱</span><strong>Drivers Agronômicos:</strong> Avaliação das condições climáticas (impacto de fenômenos como El Niño/La Niña, secas e chuvas), a saúde e expectativa da safra (produtividade, quebras), e a rentabilidade do produtor (relação entre preço das commodities e custo de produção).</li>
-                    <li><span class="icon">🚜</span><strong>Drivers de Mercado:</strong> Estudo do ciclo de renovação de frota, tendências de expansão de área plantada, nível de adoção de novas tecnologias e o efeito de políticas de fomento regionais.</li>
-                </ul>
-                <p>Abaixo, detalhamos a justificativa específica para cada estado, que representa a síntese da interação desses fatores.</p>
-            </div>
-            <h2 style="margin-top: 40px; margin-bottom: 20px;">Análise Detalhada por Estado</h2>
-            <div class="methodology-grid">
-                <!-- Cards de metodologia serão inseridos aqui pelo JavaScript -->
-            </div>
-        </div>
+ <div class="table-container">
+   <div class="table-title-wrapper">
+     <div><h2>Projeção por Estado</h2><div class="hint">Valores em % de participação nacional · setas indicam a variação 2026 → 2027</div></div>
+     <button id="export-excel-btn" class="export-btn">
+       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
+       <span>Exportar Excel</span>
+     </button>
+   </div>
+   <div class="top-scrollbar-wrapper"><div class="top-scrollbar-content"></div></div>
+   <div class="table-scroll-container">
+     <table>
+       <thead><tr>
+         <th>UF</th><th>Estado</th>
+         <th>Tratores 26</th><th class="col-27">Tratores 27</th>
+         <th>Colheit. 26</th><th class="col-27">Colheit. 27</th>
+         <th>Pulveriz. 26</th><th class="col-27">Pulveriz. 27</th>
+         <th>Plantad. 26</th><th class="col-27">Plantad. 27</th>
+         <th>Justificativa (comentário analítico)</th>
+       </tr></thead>
+       <tbody>
+<tr data-region="norte">
+      <td class="uf-cell"><span class="uf-chip r-norte">AC</span></td>
+      <td class="state-name">Acre <span class="share-badge flat">estável</span></td>
+      <td>0.20%</td><td class="col-27"><span class="v27">0.18%</span> <span class="delta down">▼</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.10%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.10%</span> <span class="delta flat">▬</span></td>
+      <td class="just-col">Mercado de baixa densidade e sem fomento relevante permanece estagnado.</td>
+    </tr>
+<tr data-region="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">AL</span></td>
+      <td class="state-name">Alagoas <span class="share-badge flat">estável</span></td>
+      <td>0.60%</td><td class="col-27"><span class="v27">0.58%</span> <span class="delta down">▼</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.10%</span> <span class="delta flat">▬</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.11%</span> <span class="delta up">▲</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.10%</span> <span class="delta flat">▬</span></td>
+      <td class="just-col">A cana nordestina oferece sustentação, permitindo estabilidade alagoana mesmo sob juros elevados.</td>
+    </tr>
+<tr data-region="norte">
+      <td class="uf-cell"><span class="uf-chip r-norte">AM</span></td>
+      <td class="state-name">Amazonas <span class="share-badge flat">estável</span></td>
+      <td>0.20%</td><td class="col-27"><span class="v27">0.18%</span> <span class="delta down">▼</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td>
+      <td class="just-col">Restrição severa de caixa paralisa projetos e aprofunda a retração amazonense.</td>
+    </tr>
+<tr data-region="norte">
+      <td class="uf-cell"><span class="uf-chip r-norte">AP</span></td>
+      <td class="state-name">Amapá <span class="share-badge flat">estável</span></td>
+      <td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td>
+      <td class="just-col">Mercado inexpressivo, sem vetores de recuperação no horizonte de 2027.</td>
+    </tr>
+<tr data-region="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">BA</span></td>
+      <td class="state-name">Bahia <span class="share-badge loss">-0.58 pp</span></td>
+      <td>4.30%</td><td class="col-27"><span class="v27">3.72%</span> <span class="delta down">▼</span></td><td>5.00%</td><td class="col-27"><span class="v27">4.42%</span> <span class="delta down">▼</span></td><td>7.50%</td><td class="col-27"><span class="v27">6.93%</span> <span class="delta down">▼</span></td><td>4.10%</td><td class="col-27"><span class="v27">3.62%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">O oeste baiano (MATOPIBA) sofre o duplo impacto de seca prolongada e financiamento escasso, aprofundando a queda de share.</td>
+    </tr>
+<tr data-region="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">CE</span></td>
+      <td class="state-name">Ceará <span class="share-badge loss">-0.12 pp</span></td>
+      <td>1.80%</td><td class="col-27"><span class="v27">1.68%</span> <span class="delta down">▼</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.10%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.60%</td><td class="col-27"><span class="v27">0.59%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">A resiliência da fruticultura irrigada é neutralizada pelo aperto de crédito, mantendo o Ceará praticamente estável.</td>
+    </tr>
+<tr data-region="centro-oeste">
+      <td class="uf-cell"><span class="uf-chip r-centro-oeste">DF</span></td>
+      <td class="state-name">Distrito Federal <span class="share-badge loss">-0.11 pp</span></td>
+      <td>1.00%</td><td class="col-27"><span class="v27">0.89%</span> <span class="delta down">▼</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.09%</span> <span class="delta down">▼</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.10%</span> <span class="delta flat">▬</span></td><td>0.30%</td><td class="col-27"><span class="v27">0.28%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">A combinação de seca e crédito restrito praticamente congela a renovação de frota no entorno do Distrito Federal.</td>
+    </tr>
+<tr data-region="sudeste">
+      <td class="uf-cell"><span class="uf-chip r-sudeste">ES</span></td>
+      <td class="state-name">Espírito Santo <span class="share-badge win">+0.06 pp</span></td>
+      <td>3.60%</td><td class="col-27"><span class="v27">3.66%</span> <span class="delta up">▲</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.11%</span> <span class="delta up">▲</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.11%</span> <span class="delta up">▲</span></td>
+      <td class="just-col">Culturas perenes garantem estabilidade ao Espírito Santo; o crescimento existe, mas é calibrado pela conjuntura nacional de juros.</td>
+    </tr>
+<tr data-region="centro-oeste">
+      <td class="uf-cell"><span class="uf-chip r-centro-oeste">GO</span></td>
+      <td class="state-name">Goiás <span class="share-badge loss">-0.54 pp</span></td>
+      <td>4.10%</td><td class="col-27"><span class="v27">3.56%</span> <span class="delta down">▼</span></td><td>11.60%</td><td class="col-27"><span class="v27">10.34%</span> <span class="delta down">▼</span></td><td>12.60%</td><td class="col-27"><span class="v27">11.73%</span> <span class="delta down">▼</span></td><td>10.50%</td><td class="col-27"><span class="v27">9.34%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">A crise hídrica e a escassez de crédito comprimem os investimentos goianos, revertendo o patamar histórico de participação.</td>
+    </tr>
+<tr data-region="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">MA</span></td>
+      <td class="state-name">Maranhão <span class="share-badge loss">-0.17 pp</span></td>
+      <td>1.40%</td><td class="col-27"><span class="v27">1.23%</span> <span class="delta down">▼</span></td><td>2.00%</td><td class="col-27"><span class="v27">1.81%</span> <span class="delta down">▼</span></td><td>2.70%</td><td class="col-27"><span class="v27">2.55%</span> <span class="delta down">▼</span></td><td>3.50%</td><td class="col-27"><span class="v27">3.15%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">O atraso das chuvas e o corte de recursos adiam a renovação de frota, pressionando a participação maranhense para baixo.</td>
+    </tr>
+<tr data-region="sudeste">
+      <td class="uf-cell"><span class="uf-chip r-sudeste">MG</span></td>
+      <td class="state-name">Minas Gerais <span class="share-badge win">+0.78 pp</span></td>
+      <td>21.00%</td><td class="col-27"><span class="v27">21.78%</span> <span class="delta up">▲</span></td><td>5.40%</td><td class="col-27"><span class="v27">6.05%</span> <span class="delta up">▲</span></td><td>5.00%</td><td class="col-27"><span class="v27">5.85%</span> <span class="delta up">▲</span></td><td>7.70%</td><td class="col-27"><span class="v27">8.53%</span> <span class="delta up">▲</span></td>
+      <td class="just-col">O café em ciclo de alta rentabilidade blinda Minas do cenário macro e amplia levemente sua liderança nacional de tratores.</td>
+    </tr>
+<tr data-region="centro-oeste">
+      <td class="uf-cell"><span class="uf-chip r-centro-oeste">MS</span></td>
+      <td class="state-name">Mato Grosso Do Sul <span class="share-badge loss">-0.27 pp</span></td>
+      <td>2.50%</td><td class="col-27"><span class="v27">2.23%</span> <span class="delta down">▼</span></td><td>5.00%</td><td class="col-27"><span class="v27">4.63%</span> <span class="delta down">▼</span></td><td>5.20%</td><td class="col-27"><span class="v27">5.03%</span> <span class="delta down">▼</span></td><td>7.80%</td><td class="col-27"><span class="v27">7.20%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Clima adverso e custo de capital elevado forçam retração acentuada, especialmente nas linhas de grão em larga escala.</td>
+    </tr>
+<tr data-region="centro-oeste">
+      <td class="uf-cell"><span class="uf-chip r-centro-oeste">MT</span></td>
+      <td class="state-name">Mato Grosso <span class="share-badge loss">-0.91 pp</span></td>
+      <td>5.50%</td><td class="col-27"><span class="v27">4.59%</span> <span class="delta down">▼</span></td><td>26.50%</td><td class="col-27"><span class="v27">22.31%</span> <span class="delta down">▼</span></td><td>32.10%</td><td class="col-27"><span class="v27">28.22%</span> <span class="delta down">▼</span></td><td>19.20%</td><td class="col-27"><span class="v27">16.19%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Cenário mais crítico do país: estiagem histórica no Cerrado somada ao corte de financiamento aprofunda a perda de share em todas as linhas.</td>
+    </tr>
+<tr data-region="norte">
+      <td class="uf-cell"><span class="uf-chip r-norte">PA</span></td>
+      <td class="state-name">Pará <span class="share-badge loss">-0.14 pp</span></td>
+      <td>2.20%</td><td class="col-27"><span class="v27">2.06%</span> <span class="delta down">▼</span></td><td>1.90%</td><td class="col-27"><span class="v27">1.88%</span> <span class="delta down">▼</span></td><td>3.50%</td><td class="col-27"><span class="v27">3.62%</span> <span class="delta up">▲</span></td><td>4.30%</td><td class="col-27"><span class="v27">4.23%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">A fronteira agrícola paraense mantém fôlego de expansão, mas o financiamento limitado transforma o avanço em quase estabilidade.</td>
+    </tr>
+<tr data-region="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">PB</span></td>
+      <td class="state-name">Paraíba <span class="share-badge loss">-0.03 pp</span></td>
+      <td>0.60%</td><td class="col-27"><span class="v27">0.57%</span> <span class="delta down">▼</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.10%</span> <span class="delta flat">▬</span></td>
+      <td class="just-col">Mercado marginal permanece estagnado, sem gatilhos de expansão.</td>
+    </tr>
+<tr data-region="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">PE</span></td>
+      <td class="state-name">Pernambuco <span class="share-badge loss">-0.06 pp</span></td>
+      <td>1.70%</td><td class="col-27"><span class="v27">1.64%</span> <span class="delta down">▼</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td>
+      <td class="just-col">A fruticultura pernambucana adia a renovação de frota, e o crescimento esperado é diluído pela falta de crédito.</td>
+    </tr>
+<tr data-region="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">PI</span></td>
+      <td class="state-name">Piauí <span class="share-badge loss">-0.06 pp</span></td>
+      <td>0.50%</td><td class="col-27"><span class="v27">0.44%</span> <span class="delta down">▼</span></td><td>1.90%</td><td class="col-27"><span class="v27">1.70%</span> <span class="delta down">▼</span></td><td>2.20%</td><td class="col-27"><span class="v27">2.06%</span> <span class="delta down">▼</span></td><td>2.30%</td><td class="col-27"><span class="v27">2.06%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Alto risco climático e teto financeiro restritivo intensificam a retração do varejo piauiense.</td>
+    </tr>
+<tr data-region="sul">
+      <td class="uf-cell"><span class="uf-chip r-sul">PR</span></td>
+      <td class="state-name">Paraná <span class="share-badge win">+0.76 pp</span></td>
+      <td>9.80%</td><td class="col-27"><span class="v27">10.56%</span> <span class="delta up">▲</span></td><td>17.50%</td><td class="col-27"><span class="v27">20.74%</span> <span class="delta up">▲</span></td><td>9.70%</td><td class="col-27"><span class="v27">12.01%</span> <span class="delta up">▲</span></td><td>15.10%</td><td class="col-27"><span class="v27">17.67%</span> <span class="delta up">▲</span></td>
+      <td class="just-col">Matriz agrícola diversificada e ciclo de renovação aquecido consolidam o Paraná como o principal ganho relativo de share, mesmo com o custo de capital mais alto.</td>
+    </tr>
+<tr data-region="sudeste">
+      <td class="uf-cell"><span class="uf-chip r-sudeste">RJ</span></td>
+      <td class="state-name">Rio De Janeiro <span class="share-badge flat">estável</span></td>
+      <td>0.40%</td><td class="col-27"><span class="v27">0.38%</span> <span class="delta down">▼</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td>
+      <td class="just-col">Mercado marginal segue estável, sem sensibilidade relevante aos vetores de 2027.</td>
+    </tr>
+<tr data-region="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">RN</span></td>
+      <td class="state-name">Rio Grande do Norte <span class="share-badge loss">-0.03 pp</span></td>
+      <td>0.80%</td><td class="col-27"><span class="v27">0.77%</span> <span class="delta down">▼</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td>
+      <td class="just-col">Compras são postergadas pelo aperto financeiro, mantendo a participação estável no piso.</td>
+    </tr>
+<tr data-region="norte">
+      <td class="uf-cell"><span class="uf-chip r-norte">RO</span></td>
+      <td class="state-name">Rondônia <span class="share-badge loss">-0.15 pp</span></td>
+      <td>1.70%</td><td class="col-27"><span class="v27">1.55%</span> <span class="delta down">▼</span></td><td>2.00%</td><td class="col-27"><span class="v27">1.91%</span> <span class="delta down">▼</span></td><td>1.30%</td><td class="col-27"><span class="v27">1.30%</span> <span class="delta flat">▬</span></td><td>1.00%</td><td class="col-27"><span class="v27">0.95%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Irregularidade hídrica e limites bancários seguram a demanda reprimida de Rondônia, resultando em leve recuo.</td>
+    </tr>
+<tr data-region="norte">
+      <td class="uf-cell"><span class="uf-chip r-norte">RR</span></td>
+      <td class="state-name">Roraima <span class="share-badge flat">estável</span></td>
+      <td>0.20%</td><td class="col-27"><span class="v27">0.18%</span> <span class="delta down">▼</span></td><td>0.30%</td><td class="col-27"><span class="v27">0.29%</span> <span class="delta down">▼</span></td><td>0.40%</td><td class="col-27"><span class="v27">0.40%</span> <span class="delta flat">▬</span></td><td>0.30%</td><td class="col-27"><span class="v27">0.29%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Clima adverso e crédito escasso desaceleram o ritmo de expansão roraimense.</td>
+    </tr>
+<tr data-region="sul">
+      <td class="uf-cell"><span class="uf-chip r-sul">RS</span></td>
+      <td class="state-name">Rio Grande Do Sul <span class="share-badge win">+0.77 pp</span></td>
+      <td>10.30%</td><td class="col-27"><span class="v27">11.07%</span> <span class="delta up">▲</span></td><td>11.20%</td><td class="col-27"><span class="v27">13.31%</span> <span class="delta up">▲</span></td><td>5.40%</td><td class="col-27"><span class="v27">6.70%</span> <span class="delta up">▲</span></td><td>8.90%</td><td class="col-27"><span class="v27">10.43%</span> <span class="delta up">▲</span></td>
+      <td class="just-col">Safra recorde e recuperação após anos de estiagem sustentam a maior base de tratores do país; o único freio é o teto de crédito, que modera o ritmo de renovação.</td>
+    </tr>
+<tr data-region="sul">
+      <td class="uf-cell"><span class="uf-chip r-sul">SC</span></td>
+      <td class="state-name">Santa Catarina <span class="share-badge win">+0.37 pp</span></td>
+      <td>6.30%</td><td class="col-27"><span class="v27">6.67%</span> <span class="delta up">▲</span></td><td>2.40%</td><td class="col-27"><span class="v27">2.79%</span> <span class="delta up">▲</span></td><td>1.10%</td><td class="col-27"><span class="v27">1.34%</span> <span class="delta up">▲</span></td><td>3.00%</td><td class="col-27"><span class="v27">3.45%</span> <span class="delta up">▲</span></td>
+      <td class="just-col">Chuvas bem distribuídas e forte adoção tecnológica ampliam a participação catarinense, com o crédito atuando apenas como limitador marginal.</td>
+    </tr>
+<tr data-region="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">SE</span></td>
+      <td class="state-name">Sergipe <span class="share-badge flat">estável</span></td>
+      <td>1.10%</td><td class="col-27"><span class="v27">1.08%</span> <span class="delta down">▼</span></td><td>0.70%</td><td class="col-27"><span class="v27">0.74%</span> <span class="delta up">▲</span></td><td>0.40%</td><td class="col-27"><span class="v27">0.44%</span> <span class="delta up">▲</span></td><td>1.10%</td><td class="col-27"><span class="v27">1.15%</span> <span class="delta up">▲</span></td>
+      <td class="just-col">Demanda pontual e mix de cana sustentam leve avanço sergipano dentro de um cenário nacional contido.</td>
+    </tr>
+<tr data-region="sudeste">
+      <td class="uf-cell"><span class="uf-chip r-sudeste">SP</span></td>
+      <td class="state-name">São Paulo <span class="share-badge win">+0.45 pp</span></td>
+      <td>17.60%</td><td class="col-27"><span class="v27">18.05%</span> <span class="delta up">▲</span></td><td>4.80%</td><td class="col-27"><span class="v27">5.33%</span> <span class="delta up">▲</span></td><td>6.90%</td><td class="col-27"><span class="v27">8.00%</span> <span class="delta up">▲</span></td><td>7.30%</td><td class="col-27"><span class="v27">8.02%</span> <span class="delta up">▲</span></td>
+      <td class="just-col">A resiliência da cana e o adensamento tecnológico preservam a liderança paulista em tratores, ainda que o aperto financeiro contenha um avanço mais agressivo.</td>
+    </tr>
+<tr data-region="norte">
+      <td class="uf-cell"><span class="uf-chip r-norte">TO</span></td>
+      <td class="state-name">Tocantins <span class="share-badge loss">-0.10 pp</span></td>
+      <td>0.80%</td><td class="col-27"><span class="v27">0.70%</span> <span class="delta down">▼</span></td><td>1.50%</td><td class="col-27"><span class="v27">1.36%</span> <span class="delta down">▼</span></td><td>3.70%</td><td class="col-27"><span class="v27">3.50%</span> <span class="delta down">▼</span></td><td>2.70%</td><td class="col-27"><span class="v27">2.44%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Seca e menor oferta de crédito atuam em conjunto para reduzir a participação tocantinense em grãos.</td>
+    </tr>
+       </tbody>
+     </table>
+   </div>
+   <div class="legend">
+     <span><i style="background:#0B7A3B"></i>Sul</span>
+     <span><i style="background:#C8102E"></i>Sudeste</span>
+     <span><i style="background:#B8860B"></i>Centro-Oeste</span>
+     <span><i style="background:#7A3FB0"></i>Nordeste</span>
+     <span><i style="background:#0E7C86"></i>Norte</span>
+     <span><i style="background:#0B7A3B"></i>▲ ganho de share &nbsp;·&nbsp; <i style="background:#C8102E"></i>▼ perda de share</span>
+   </div>
+ </div>
+
+ <div class="methodology-container" style="display:none;">
+   <h2>Racional da Projeção 2027</h2>
+   <div class="methodology-explanation">
+     <h3>Como o modelo projeta 2027</h3>
+     <p>A participação de mercado é uma medida <strong>relativa</strong>: se um estado ganha share, outro necessariamente perde. Por isso a projeção 2027 não aplica um corte linear — ela pontua cada UF em quatro vetores, calcula um <strong>índice de momento</strong> específico por produto e depois <strong>renormaliza</strong> todas as colunas para fechar exatamente 100%.</p>
+     <div class="mgrid">
+       <div class="mfeat"><div class="ic">💰</div><h4>Crédito</h4><p>Sensibilidade ao aperto nacional de financiamento (juros, teto de recursos Moderfrota/PRONAF).</p></div>
+       <div class="mfeat"><div class="ic">🌦️</div><h4>Clima</h4><p>Perspectiva hídrica 2027: recuperação no Sul vs. risco de estiagem no Cerrado e MATOPIBA.</p></div>
+       <div class="mfeat"><div class="ic">📈</div><h4>Rentabilidade</h4><p>Resiliência da margem pela matriz de culturas (café, cana e perenes vs. grãos expostos a preço).</p></div>
+       <div class="mfeat"><div class="ic">🚜</div><h4>Renovação</h4><p>Momento do ciclo de troca de frota e expansão de área plantada em cada região.</p></div>
+     </div>
+     <div class="formula-note">Fórmula essencial: <code>share27 = share26 × (1 + Σ pesoᵢ·driverᵢ)</code>, seguida de renormalização por coluna. Os pesos variam por produto — colheitadeiras, pulverizadores e plantadeiras são mais sensíveis ao clima de grãos; tratores respondem mais ao crédito por atenderem uma base agrícola mais ampla.</div>
+   </div>
+   <h2 style="margin:34px 0 6px;">Análise Detalhada por Estado <span style="font-size:.8rem;color:var(--muted);font-weight:400;">(ordenado do maior ganho à maior perda de share)</span></h2>
+   <div class="methodology-grid">
+<div class="methodology-card positive-trend" data-region="sudeste">
+       <div class="mc-head"><h3>Minas Gerais <span class="mc-uf">MG</span></h3><span class="mc-delta up">+0.78 pp</span></div>
+       <p class="mc-just">O café em ciclo de alta rentabilidade blinda Minas do cenário macro e amplia levemente sua liderança nacional de tratores.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:62%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:85%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:72%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-pos">Rentabilidade Alta</span><span class="driver-tag t-pos">Renovação Aquecida</span></div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const filterContainer = document.querySelector('.filter-container');
-            const tableRows = document.querySelectorAll('tbody tr');
-    
-            const tableContainer = document.querySelector('.table-container');
-            const topScrollbar = document.querySelector('.top-scrollbar-wrapper');
-            const methodologyContainer = document.querySelector('.methodology-container');
+<div class="methodology-card positive-trend" data-region="sul">
+       <div class="mc-head"><h3>Rio Grande Do Sul <span class="mc-uf">RS</span></h3><span class="mc-delta up">+0.77 pp</span></div>
+       <p class="mc-just">Safra recorde e recuperação após anos de estiagem sustentam a maior base de tratores do país; o único freio é o teto de crédito, que modera o ritmo de renovação.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:88%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:80%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:82%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-pos">Clima Favorável</span><span class="driver-tag t-pos">Rentabilidade Alta</span><span class="driver-tag t-pos">Renovação Aquecida</span></div>
+    </div>
+<div class="methodology-card positive-trend" data-region="sul">
+       <div class="mc-head"><h3>Paraná <span class="mc-uf">PR</span></h3><span class="mc-delta up">+0.76 pp</span></div>
+       <p class="mc-just">Matriz agrícola diversificada e ciclo de renovação aquecido consolidam o Paraná como o principal ganho relativo de share, mesmo com o custo de capital mais alto.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:80%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:85%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:88%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-pos">Clima Favorável</span><span class="driver-tag t-pos">Rentabilidade Alta</span><span class="driver-tag t-pos">Renovação Aquecida</span></div>
+    </div>
+<div class="methodology-card positive-trend" data-region="sudeste">
+       <div class="mc-head"><h3>São Paulo <span class="mc-uf">SP</span></h3><span class="mc-delta up">+0.45 pp</span></div>
+       <p class="mc-just">A resiliência da cana e o adensamento tecnológico preservam a liderança paulista em tratores, ainda que o aperto financeiro contenha um avanço mais agressivo.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:65%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:38%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:82%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:68%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-pos">Rentabilidade Alta</span></div>
+    </div>
+<div class="methodology-card positive-trend" data-region="sul">
+       <div class="mc-head"><h3>Santa Catarina <span class="mc-uf">SC</span></h3><span class="mc-delta up">+0.37 pp</span></div>
+       <p class="mc-just">Chuvas bem distribuídas e forte adoção tecnológica ampliam a participação catarinense, com o crédito atuando apenas como limitador marginal.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:82%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:45%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:75%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:75%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-pos">Clima Favorável</span><span class="driver-tag t-pos">Rentabilidade Alta</span><span class="driver-tag t-pos">Renovação Aquecida</span></div>
+    </div>
+<div class="methodology-card positive-trend" data-region="sudeste">
+       <div class="mc-head"><h3>Espírito Santo <span class="mc-uf">ES</span></h3><span class="mc-delta up">+0.06 pp</span></div>
+       <p class="mc-just">Culturas perenes garantem estabilidade ao Espírito Santo; o crescimento existe, mas é calibrado pela conjuntura nacional de juros.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:60%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:78%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:62%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-pos">Rentabilidade Alta</span></div>
+    </div>
+<div class="methodology-card " data-region="norte">
+       <div class="mc-head"><h3>Amapá <span class="mc-uf">AP</span></h3><span class="mc-delta flat">0.00 pp</span></div>
+       <p class="mc-just">Mercado inexpressivo, sem vetores de recuperação no horizonte de 2027.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:38%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neu">Mercado Marginal</span></div>
+    </div>
+<div class="methodology-card " data-region="norte">
+       <div class="mc-head"><h3>Acre <span class="mc-uf">AC</span></h3><span class="mc-delta flat">-0.02 pp</span></div>
+       <p class="mc-just">Mercado de baixa densidade e sem fomento relevante permanece estagnado.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:35%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:45%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:45%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neu">Mercado Marginal</span></div>
+    </div>
+<div class="methodology-card " data-region="nordeste">
+       <div class="mc-head"><h3>Alagoas <span class="mc-uf">AL</span></h3><span class="mc-delta flat">-0.02 pp</span></div>
+       <p class="mc-just">A cana nordestina oferece sustentação, permitindo estabilidade alagoana mesmo sob juros elevados.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:55%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:60%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:52%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neu">Cenário Misto</span></div>
+    </div>
+<div class="methodology-card " data-region="norte">
+       <div class="mc-head"><h3>Amazonas <span class="mc-uf">AM</span></h3><span class="mc-delta flat">-0.02 pp</span></div>
+       <p class="mc-just">Restrição severa de caixa paralisa projetos e aprofunda a retração amazonense.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:25%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:28%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:38%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito Restrito</span><span class="driver-tag t-neg">Risco Climático</span><span class="driver-tag t-neu">Mercado Marginal</span></div>
+    </div>
+<div class="methodology-card " data-region="sudeste">
+       <div class="mc-head"><h3>Rio De Janeiro <span class="mc-uf">RJ</span></h3><span class="mc-delta flat">-0.02 pp</span></div>
+       <p class="mc-just">Mercado marginal segue estável, sem sensibilidade relevante aos vetores de 2027.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neu">Mercado Marginal</span></div>
+    </div>
+<div class="methodology-card " data-region="norte">
+       <div class="mc-head"><h3>Roraima <span class="mc-uf">RR</span></h3><span class="mc-delta flat">-0.02 pp</span></div>
+       <p class="mc-just">Clima adverso e crédito escasso desaceleram o ritmo de expansão roraimense.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:35%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:35%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:48%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neu">Cenário Misto</span></div>
+    </div>
+<div class="methodology-card " data-region="nordeste">
+       <div class="mc-head"><h3>Sergipe <span class="mc-uf">SE</span></h3><span class="mc-delta flat">-0.02 pp</span></div>
+       <p class="mc-just">Demanda pontual e mix de cana sustentam leve avanço sergipano dentro de um cenário nacional contido.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:55%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:60%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:55%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neu">Cenário Misto</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="nordeste">
+       <div class="mc-head"><h3>Paraíba <span class="mc-uf">PB</span></h3><span class="mc-delta down">-0.03 pp</span></div>
+       <p class="mc-just">Mercado marginal permanece estagnado, sem gatilhos de expansão.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neu" style="width:52%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neu">Cenário Misto</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="nordeste">
+       <div class="mc-head"><h3>Rio Grande do Norte <span class="mc-uf">RN</span></h3><span class="mc-delta down">-0.03 pp</span></div>
+       <p class="mc-just">Compras são postergadas pelo aperto financeiro, mantendo a participação estável no piso.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neu" style="width:52%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:55%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neu">Cenário Misto</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="nordeste">
+       <div class="mc-head"><h3>Pernambuco <span class="mc-uf">PE</span></h3><span class="mc-delta down">-0.06 pp</span></div>
+       <p class="mc-just">A fruticultura pernambucana adia a renovação de frota, e o crescimento esperado é diluído pela falta de crédito.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neu" style="width:52%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:57%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neu">Cenário Misto</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="nordeste">
+       <div class="mc-head"><h3>Piauí <span class="mc-uf">PI</span></h3><span class="mc-delta down">-0.06 pp</span></div>
+       <p class="mc-just">Alto risco climático e teto financeiro restritivo intensificam a retração do varejo piauiense.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:18%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:28%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito Restrito</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="norte">
+       <div class="mc-head"><h3>Tocantins <span class="mc-uf">TO</span></h3><span class="mc-delta down">-0.10 pp</span></div>
+       <p class="mc-just">Seca e menor oferta de crédito atuam em conjunto para reduzir a participação tocantinense em grãos.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:20%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:28%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:45%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito Restrito</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="centro-oeste">
+       <div class="mc-head"><h3>Distrito Federal <span class="mc-uf">DF</span></h3><span class="mc-delta down">-0.11 pp</span></div>
+       <p class="mc-just">A combinação de seca e crédito restrito praticamente congela a renovação de frota no entorno do Distrito Federal.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:30%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:28%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito Restrito</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="nordeste">
+       <div class="mc-head"><h3>Ceará <span class="mc-uf">CE</span></h3><span class="mc-delta down">-0.12 pp</span></div>
+       <p class="mc-just">A resiliência da fruticultura irrigada é neutralizada pelo aperto de crédito, mantendo o Ceará praticamente estável.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:38%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:32%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:57%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito Restrito</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="norte">
+       <div class="mc-head"><h3>Pará <span class="mc-uf">PA</span></h3><span class="mc-delta down">-0.14 pp</span></div>
+       <p class="mc-just">A fronteira agrícola paraense mantém fôlego de expansão, mas o financiamento limitado transforma o avanço em quase estabilidade.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:32%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:55%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:52%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito Restrito</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="norte">
+       <div class="mc-head"><h3>Rondônia <span class="mc-uf">RO</span></h3><span class="mc-delta down">-0.15 pp</span></div>
+       <p class="mc-just">Irregularidade hídrica e limites bancários seguram a demanda reprimida de Rondônia, resultando em leve recuo.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:32%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:32%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:45%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito Restrito</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="nordeste">
+       <div class="mc-head"><h3>Maranhão <span class="mc-uf">MA</span></h3><span class="mc-delta down">-0.17 pp</span></div>
+       <p class="mc-just">O atraso das chuvas e o corte de recursos adiam a renovação de frota, pressionando a participação maranhense para baixo.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:20%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:28%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito Restrito</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="centro-oeste">
+       <div class="mc-head"><h3>Mato Grosso Do Sul <span class="mc-uf">MS</span></h3><span class="mc-delta down">-0.27 pp</span></div>
+       <p class="mc-just">Clima adverso e custo de capital elevado forçam retração acentuada, especialmente nas linhas de grão em larga escala.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:25%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:30%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:45%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito Restrito</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="centro-oeste">
+       <div class="mc-head"><h3>Goiás <span class="mc-uf">GO</span></h3><span class="mc-delta down">-0.54 pp</span></div>
+       <p class="mc-just">A crise hídrica e a escassez de crédito comprimem os investimentos goianos, revertendo o patamar histórico de participação.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:18%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:28%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:38%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito Restrito</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="nordeste">
+       <div class="mc-head"><h3>Bahia <span class="mc-uf">BA</span></h3><span class="mc-delta down">-0.58 pp</span></div>
+       <p class="mc-just">O oeste baiano (MATOPIBA) sofre o duplo impacto de seca prolongada e financiamento escasso, aprofundando a queda de share.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:15%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:28%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:38%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito Restrito</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-region="centro-oeste">
+       <div class="mc-head"><h3>Mato Grosso <span class="mc-uf">MT</span></h3><span class="mc-delta down">-0.91 pp</span></div>
+       <p class="mc-just">Cenário mais crítico do país: estiagem histórica no Cerrado somada ao corte de financiamento aprofunda a perda de share em todas as linhas.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:5%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:25%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:30%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:35%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito Restrito</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
+   </div>
+ </div>
 
-            function buildMethodologyTab() {
-                const methodologyGrid = document.querySelector('.methodology-grid');
-                if (!methodologyGrid) return;
+ <div class="foot">AGCO Forecast Intelligence · Modelo multi-fator de market share · Projeção interna 2027 (varejo). Valores sujeitos a revisão conforme Plano Safra e evolução climática.</div>
+</div>
 
-                methodologyGrid.innerHTML = ''; // Limpa antes de construir
+<script>
+document.addEventListener('DOMContentLoaded',function(){
+ const fc=document.querySelector('.filter-container');
+ const rows=document.querySelectorAll('tbody tr');
+ const tableC=document.querySelector('.table-container');
+ const topSb=document.querySelector('.top-scrollbar-wrapper');
+ const methC=document.querySelector('.methodology-container');
+ const cards=document.querySelectorAll('.methodology-card');
 
-                const driverKeywords = {
-                    'Crédito Restrito': ['crédito', 'recursos', 'financiamento', 'bancários', 'juros', 'financeiro'],
-                    'Risco Climático': ['clima', 'chuvas', 'seca', 'estiagem', 'hídrica', 'hídrico', 'climática', 'adverso'],
-                    'Rentabilidade do Produtor': ['safra recorde', 'preço', 'margem', 'resiliência', 'demanda', 'favorecem', 'impulsiona'],
-                    'Mercado Estagnado': ['estagnado', 'marginal', 'paralisados', 'postergada', 'adiadas', 'crescimento nulo']
-                };
+ fc.addEventListener('click',function(e){
+   if(!e.target.matches('.filter-btn'))return;
+   fc.querySelector('.active').classList.remove('active');
+   e.target.classList.add('active');
+   const f=e.target.dataset.filter;
+   if(f==='metodologia'){
+     tableC.style.display='none';topSb.style.display='none';methC.style.display='block';
+     cards.forEach(c=>c.style.display='');
+   }else{
+     tableC.style.display='block';topSb.style.display='block';methC.style.display='none';
+     rows.forEach(r=>r.style.display=(f==='todos'||r.dataset.region===f)?'':'none');
+     cards.forEach(c=>c.style.display=(f==='todos'||c.dataset.region===f)?'':'none');
+     setTimeout(syncWidth,50);
+   }
+ });
 
-                tableRows.forEach(row => {
-                    const stateName = row.cells[1].textContent;
-                    const justification = row.cells[10].textContent.toLowerCase();
-                    const originalJustification = row.cells[10].textContent;
+ const topScroll=document.querySelector('.top-scrollbar-wrapper');
+ const botScroll=document.querySelector('.table-scroll-container');
+ const topContent=document.querySelector('.top-scrollbar-content');
+ const table=botScroll.querySelector('table');
+ function syncWidth(){if(table)topContent.style.width=table.scrollWidth+'px';}
+ syncWidth();
+ let ign=false;
+ function sync(s,t){if(ign){ign=false;return;}ign=true;t.scrollLeft=s.scrollLeft;}
+ topScroll.addEventListener('scroll',()=>sync(topScroll,botScroll));
+ botScroll.addEventListener('scroll',()=>sync(botScroll,topScroll));
+ window.addEventListener('resize',syncWidth);
 
-                    const card = document.createElement('div');
-                    card.className = 'methodology-card';
-
-                    // Análise simples de tendência baseada em palavras-chave
-                    const positiveKeywords = ['aumento', 'crescimento', 'recorde', 'favorece', 'impulsiona', 'resiliência', 'sustenta', 'favorecem'];
-                    const negativeKeywords = ['queda', 'retração', 'redução', 'seca', 'risco', 'crise', 'atraso', 'afeta', 'adverso', 'restrição', 'limite', 'falta', 'paralisa', 'adiadas', 'congela', 'aperto', 'escasso'];
-                    
-                    let hasPositive = positiveKeywords.some(keyword => justification.includes(keyword));
-                    let hasNegative = negativeKeywords.some(keyword => justification.includes(keyword));
-
-                    if (hasNegative) {
-                        card.classList.add('negative-trend');
-                    } else if (hasPositive) {
-                        card.classList.add('positive-trend');
-                    }
-
-                    let tagsHtml = '';
-                    const foundDrivers = new Set();
-                    for (const driver in driverKeywords) {
-                        if (driverKeywords[driver].some(keyword => justification.includes(keyword))) {
-                            foundDrivers.add(driver);
-                        }
-                    }
-
-                    if (foundDrivers.size > 0) {
-                        foundDrivers.forEach(driver => {
-                            tagsHtml += `<span class="driver-tag">${driver}</span>`;
-                        });
-                    } else {
-                        tagsHtml = `<span class="driver-tag neutral-tag">Cenário Misto/Outros</span>`;
-                    }
-
-                    card.innerHTML = `
-                        <h3>${stateName} (${row.cells[0].textContent})</h3>
-                        <div class="justification-detail">
-                            <p>${originalJustification}</p>
-                        </div>
-                        <div class="drivers-summary">
-                            <span class="detail-label">Fatores-Chave Identificados:</span>
-                            <div class="tags-container">
-                                ${tagsHtml}
-                            </div>
-                        </div>
-                    `;
-
-                    methodologyGrid.appendChild(card);
-                });
-            }
-
-            if (filterContainer) {
-                filterContainer.addEventListener('click', function(e) {
-                    if (!e.target.matches('.filter-btn')) return;
-    
-                    filterContainer.querySelector('.active').classList.remove('active');
-                    e.target.classList.add('active');
-    
-                    const filter = e.target.dataset.filter;
-    
-                    if (filter === 'metodologia') {
-                        tableContainer.style.display = 'none';
-                        topScrollbar.style.display = 'none';
-                        methodologyContainer.style.display = 'block';
-                    } else {
-                        tableContainer.style.display = 'block';
-                        topScrollbar.style.display = 'block';
-                        methodologyContainer.style.display = 'none';
-                        tableRows.forEach(row => {
-                            row.style.display = (filter === 'todos' || row.dataset.region === filter) ? '' : 'none';
-                        });
-                    }
-                });
-            }
-
-            // Lógica para sincronizar as barras de rolagem superior e inferior
-            const topScroll = document.querySelector('.top-scrollbar-wrapper');
-            const bottomScroll = document.querySelector('.table-scroll-container');
-            const topScrollContent = document.querySelector('.top-scrollbar-content');
-            
-            if (topScroll && bottomScroll && topScrollContent) {
-                const table = bottomScroll.querySelector('table');
-                if (table) {
-                    const syncWidth = () => {
-                        topScrollContent.style.width = table.scrollWidth + 'px';
-                    };
-
-                    syncWidth(); // Sincronização inicial
-
-                    let ignoreScroll = false;
-                    const syncScroll = (source, target) => {
-                        if (ignoreScroll) {
-                            ignoreScroll = false;
-                            return;
-                        }
-                        ignoreScroll = true;
-                        target.scrollLeft = source.scrollLeft;
-                    };
-
-                    topScroll.addEventListener('scroll', () => syncScroll(topScroll, bottomScroll));
-                    bottomScroll.addEventListener('scroll', () => syncScroll(bottomScroll, topScroll));
-
-                    window.addEventListener('resize', syncWidth);
-                    
-                    filterContainer.addEventListener('click', (e) => {
-                        if (e.target.matches('.filter-btn')) {
-                            setTimeout(syncWidth, 50); // Atraso para garantir que a tabela foi renderizada
-                        }
-                    });
-                }
-            }
-            const exportBtn = document.getElementById('export-excel-btn');
-            if (exportBtn) {
-                exportBtn.addEventListener('click', function() {
-                    const table = document.querySelector('.table-container table');
-                    if (!table) return;
-
-                    // Clone table to avoid modifying the one in the DOM
-                    const tableClone = table.cloneNode(true);
-
-                    // Remove rows hidden by the filter from the clone
-                    tableClone.querySelectorAll('tbody tr[style*="display: none"]').forEach(row => row.remove());
-
-                    const wb = XLSX.utils.table_to_book(tableClone, { sheet: "Projeção por Estado" });
-                    XLSX.writeFile(wb, "Projecao_por_Estado_2027.xlsx");
-                });
-            }
-
-            // Constrói a aba de metodologia na inicialização da página
-            buildMethodologyTab();
-        });
-    </script>
+ const eb=document.getElementById('export-excel-btn');
+ eb.addEventListener('click',function(){
+   const t=document.querySelector('.table-container table');
+   if(!t)return;
+   const clone=t.cloneNode(true);
+   clone.querySelectorAll('tbody tr[style*="display: none"]').forEach(r=>r.remove());
+   const wb=XLSX.utils.table_to_book(clone,{sheet:"Projecao 2027"});
+   XLSX.writeFile(wb,"AGCO_Projecao_MarketShare_2027.xlsx");
+ });
+});
+</script>
 </body>
 </html>
