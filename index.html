@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AGCO Forecast Intelligence | Projeção 2027 por UF</title>
-https://fonts.googleapis.com
-wght@300;400;500;600;700&display=swap" rel="stylesheet">
-/dist/xlsx.full.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 <style>
 :root{
  --red:#C8102E; --red-dark:#8B0A1D; --red-soft:#FDE8EB;
@@ -15,9 +13,9 @@ wght@300;400;500;600;700&display=swap" rel="stylesheet">
  --up:#0B7A3B; --up-bg:#E4F7EC; --down:#C8102E; --down-bg:#FDE8EB; --flat:#8A93A2;
  --shadow:0 1px 2px rgba(16,17,22,.04),0 6px 20px -8px rgba(16,17,22,.12);
  --shadow-lg:0 20px 45px -20px rgba(16,17,22,.28);
+ --font-ui:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Inter','Sora',sans-serif;}
-h1,h2,h3,.brand{font-family:'Sora','Inter',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:var(--font-ui);}
 body{background:
  radial-gradient(1200px 500px at 100% -10%,rgba(200,16,46,.06),transparent 60%),
  radial-gradient(900px 500px at -10% 0%,rgba(14,17,22,.05),transparent 55%),
