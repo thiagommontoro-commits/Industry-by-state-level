@@ -11,6 +11,7 @@
  --ink:#0E1116; --ink-2:#2B303B; --muted:#6B7280;
  --bg:#EEF1F5; --card:#FFFFFF; --line:#E6E9EF;
  --up:#0B7A3B; --up-bg:#E4F7EC; --down:#C8102E; --down-bg:#FDE8EB; --flat:#8A93A2;
+ --gold:#B8860B; --gold-bg:#FBF3DF;
  --shadow:0 1px 2px rgba(16,17,22,.04),0 6px 20px -8px rgba(16,17,22,.12);
  --shadow-lg:0 20px 45px -20px rgba(16,17,22,.28);
  --font-ui:'Segoe UI',system-ui,-apple-system,Roboto,Helvetica,Arial,sans-serif;
@@ -22,8 +23,6 @@ body{background:
  var(--bg);
  color:var(--ink-2);padding:34px 22px 70px;-webkit-font-smoothing:antialiased;line-height:1.5;}
 .container{max-width:1640px;margin:0 auto;}
-
-/* HERO HEADER */
 .hero{position:relative;overflow:hidden;border-radius:22px;padding:34px 38px;
  background:linear-gradient(135deg,#141821 0%,#1d222d 55%,#241016 100%);
  color:#fff;box-shadow:var(--shadow-lg);margin-bottom:26px;}
@@ -44,33 +43,30 @@ body{background:
 .hero-meta .m{display:flex;flex-direction:column;}
 .hero-meta .m .k{font-size:.72rem;text-transform:uppercase;letter-spacing:1.2px;color:#8B93A3;}
 .hero-meta .m .v{font-size:1.05rem;font-weight:700;color:#fff;margin-top:2px;}
-
-/* KPI */
 .kpi-wrapper{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-bottom:30px;}
 .kpi-card{background:var(--card);padding:20px 22px;border-radius:16px;box-shadow:var(--shadow);
  border:1px solid var(--line);position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s;}
 .kpi-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);}
 .kpi-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--red);}
-.kpi-card.win::before{background:var(--up);} .kpi-card.loss::before{background:var(--down);}
+.kpi-card.win::before{background:var(--up);} .kpi-card.loss::before{background:var(--down);} .kpi-card.gold::before{background:var(--gold);}
 .kpi-ico{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;
  font-size:20px;margin-bottom:12px;background:var(--red-soft);}
-.kpi-card.win .kpi-ico{background:var(--up-bg);} .kpi-card.loss .kpi-ico{background:var(--down-bg);}
+.kpi-card.win .kpi-ico{background:var(--up-bg);} .kpi-card.loss .kpi-ico{background:var(--down-bg);} .kpi-card.gold .kpi-ico{background:var(--gold-bg);}
 .kpi-card h3{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.1px;font-weight:600;margin-bottom:8px;}
 .kpi-card .value{font-size:1.4rem;font-weight:800;color:var(--ink);letter-spacing:-.4px;line-height:1.15;}
 .kpi-card .value small{font-size:.9rem;font-weight:700;}
 .kpi-card .value small.up{color:var(--up);} .kpi-card .value small.down{color:var(--down);}
 .kpi-card .description{margin-top:8px;color:var(--muted);font-size:.82rem;line-height:1.45;}
-
-/* FILTERS */
 .filter-container{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap;}
 .filter-btn{background:var(--card);color:var(--ink-2);border:1px solid var(--line);padding:9px 18px;
  border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer;transition:all .18s;}
 .filter-btn:hover{border-color:var(--red);color:var(--red);}
 .filter-btn.active{background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;border-color:transparent;
  box-shadow:0 8px 18px -8px rgba(200,16,46,.6);}
-
-/* TABLE */
-.table-container{background:var(--card);padding:24px;border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--line);}
+.filter-btn.premium-tab{border-color:var(--gold);color:var(--gold);}
+.filter-btn.premium-tab.active{background:linear-gradient(135deg,var(--gold),#946c08);color:#fff;border-color:transparent;box-shadow:0 8px 18px -8px rgba(184,134,11,.6);}
+.table-container,.premium-container{background:var(--card);padding:24px;border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--line);}
+.premium-container{border-top:4px solid var(--gold);}
 .table-title-wrapper{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:14px;flex-wrap:wrap;}
 .table-title-wrapper h2{font-size:1.2rem;color:var(--ink);font-weight:700;}
 .table-title-wrapper .hint{font-size:.8rem;color:var(--muted);margin-top:3px;font-weight:400;}
@@ -84,17 +80,21 @@ body{background:
 .table-scroll-container::-webkit-scrollbar{height:10px;}
 .table-scroll-container::-webkit-scrollbar-thumb{background:#cfd5df;border-radius:10px;}
 table{width:100%;border-collapse:separate;border-spacing:0;min-width:1440px;}
+.premium-table{min-width:1600px;}
 th,td{padding:13px 16px;text-align:right;border-bottom:1px solid var(--line);font-size:.86rem;white-space:nowrap;}
 th:nth-child(1),td:nth-child(1),th:nth-child(2),td:nth-child(2),th:last-child,td:last-child{text-align:left;}
 thead th{background:#F7F8FA;color:var(--muted);font-weight:700;text-transform:uppercase;font-size:.7rem;letter-spacing:.6px;
  position:sticky;top:0;z-index:10;border-bottom:2px solid var(--line);}
 thead th.col-27{color:var(--red);background:#FCF3F4;}
+.premium-table thead th.col-27{color:var(--gold);background:#FBF6E8;}
+.premium-table thead th.seg-group{color:var(--ink);background:#F0F2F5;text-align:center;border-left:2px solid var(--line);}
 th:first-child{left:0;z-index:11;}
 td:first-child{position:sticky;left:0;z-index:1;background:var(--card);}
 tbody tr{transition:background .15s;}
 tbody tr:hover td{background:#FBFCFE;}
 tbody tr:hover td:first-child{background:#FBFCFE;}
 .col-27{font-weight:700;color:var(--ink);background:#FDFBFB;}
+.premium-table .col-27{background:#FDFAF1;}
 .v27{font-weight:700;}
 .delta{font-size:.7rem;font-weight:700;margin-left:2px;}
 .delta.up{color:var(--up);} .delta.down{color:var(--down);} .delta.flat{color:var(--flat);}
@@ -106,19 +106,18 @@ tbody tr:hover td:first-child{background:#FBFCFE;}
 .share-badge.win{background:var(--up-bg);color:var(--up);}
 .share-badge.loss{background:var(--down-bg);color:var(--down);}
 .share-badge.flat{background:#EEF0F3;color:var(--flat);}
-.just-col{color:var(--ink-2);font-size:.82rem;line-height:1.55;max-width:400px;white-space:normal;text-align:left;}
+.just-col{color:var(--ink-2);font-size:.82rem;line-height:1.55;max-width:420px;white-space:normal;text-align:left;}
 .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;font-size:.76rem;color:var(--muted);}
 .legend span{display:inline-flex;align-items:center;gap:6px;}
 .legend i{width:11px;height:11px;border-radius:3px;display:inline-block;}
-
-/* METHODOLOGY */
 .methodology-container{background:var(--card);padding:26px;border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--line);}
 .methodology-container>h2{font-size:1.25rem;color:var(--ink);font-weight:700;}
 .methodology-explanation{background:linear-gradient(180deg,#FCFCFD,#F7F8FA);padding:26px;border-radius:14px;margin:18px 0 26px;
  border:1px solid var(--line);border-left:5px solid var(--red);}
+.premium-container .methodology-explanation{border-left-color:var(--gold);}
 .methodology-explanation h3{font-size:1.15rem;color:var(--ink);margin-bottom:12px;}
 .methodology-explanation p{font-size:.9rem;line-height:1.7;margin-bottom:16px;color:var(--ink-2);}
-.methodology-explanation .mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;}
+.methodology-explanation .mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
 .mfeat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
 .mfeat .ic{font-size:1.4rem;} .mfeat h4{font-size:.92rem;margin:8px 0 6px;color:var(--ink);}
 .mfeat p{font-size:.82rem;color:var(--muted);margin:0;line-height:1.55;}
@@ -158,19 +157,13 @@ tbody tr:hover td:first-child{background:#FBFCFE;}
  <div class="hero">
    <div class="hero-top">
      <div class="brand-row">
-       <div class="logo-badge">
-         <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-           <path d="M50 8L92 92H72L50 44L28 92H8L50 8Z" fill="#fff"/></svg>
-       </div>
-       <div>
-         <h1 class="brand">Forecast Intelligence — Análise por UF</h1>
-         <div class="sub">Projeção de Market Share 2027 · Varejo Brasil · Modelo multi-fator</div>
-       </div>
+       <div class="logo-badge"><svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M50 8L92 92H72L50 44L28 92H8L50 8Z" fill="#fff"/></svg></div>
+       <div><h1 class="brand">Forecast Intelligence — Análise por UF</h1><div class="sub">Projeção de Market Share 2027 · Varejo Brasil · Modelo multi-fator</div></div>
      </div>
      <span class="pill"><span class="dot"></span>Escopo Nacional (BR) · Base 2026 → Projeção 2027</span>
    </div>
    <div class="hero-meta">
-     <div class="m"><span class="k">Cobertura</span><span class="v">27 UFs · 4 linhas</span></div>
+     <div class="m"><span class="k">Cobertura</span><span class="v">27 UFs · 4 linhas + Alta Potência</span></div>
      <div class="m"><span class="k">UFs em ganho de share</span><span class="v">6 estados</span></div>
      <div class="m"><span class="k">UFs em perda de share</span><span class="v">14 estados</span></div>
      <div class="m"><span class="k">Atualizado</span><span class="v">Ago/2026</span></div>
@@ -178,30 +171,10 @@ tbody tr:hover td:first-child{background:#FBFCFE;}
  </div>
 
  <div class="kpi-wrapper">
-   <div class="kpi-card win">
-     <div class="kpi-ico">🏆</div>
-     <h3>Maior Ganho de Share</h3>
-     <div class="value">Minas Gerais <small class="up">+0.78 pp</small></div>
-     <div class="description">Rentabilidade resiliente das culturas perenes e ciclo de renovação sustentam a liderança.</div>
-   </div>
-   <div class="kpi-card loss">
-     <div class="kpi-ico">⚠️</div>
-     <h3>Maior Retração</h3>
-     <div class="value">Mato Grosso <small class="down">-0.91 pp</small></div>
-     <div class="description">Estiagem histórica no Cerrado somada ao aperto de crédito aprofunda a perda de participação.</div>
-   </div>
-   <div class="kpi-card win">
-     <div class="kpi-ico">🌾</div>
-     <h3>Cinturão Resiliente</h3>
-     <div class="value">Sul + Café/Cana</div>
-     <div class="description">RS, PR, SC, MG e SP concentram o crescimento relativo apoiados em safra e diversificação.</div>
-   </div>
-   <div class="kpi-card loss">
-     <div class="kpi-ico">💧</div>
-     <h3>Risco Hídrico + Crédito</h3>
-     <div class="value">MT · BA · GO · MS</div>
-     <div class="description">MATOPIBA e Centro-Oeste de grãos são os mais expostos ao duplo choque de 2027.</div>
-   </div>
+   <div class="kpi-card win"><div class="kpi-ico">🏆</div><h3>Maior Ganho de Share</h3><div class="value">Minas Gerais <small class="up">+0.78 pp</small></div><div class="description">Rentabilidade resiliente das culturas perenes e ciclo de renovação sustentam a liderança.</div></div>
+   <div class="kpi-card loss"><div class="kpi-ico">⚠️</div><h3>Maior Retração</h3><div class="value">Mato Grosso <small class="down">-0.91 pp</small></div><div class="description">Estiagem histórica no Cerrado somada ao aperto de crédito aprofunda a perda de participação.</div></div>
+   <div class="kpi-card gold"><div class="kpi-ico">⚙️</div><h3>Destaque Alta Potência</h3><div class="value">Paraná <small class="up">+1.23 pp</small></div><div class="description">Maior avanço em tratores ≥340HP e colheitadeiras Classe 8+ (ver aba Alta Potência).</div></div>
+   <div class="kpi-card loss"><div class="kpi-ico">💧</div><h3>Risco Hídrico + Crédito</h3><div class="value">MT · BA · GO · MS</div><div class="description">MATOPIBA e Centro-Oeste de grãos são os mais expostos ao duplo choque de 2027.</div></div>
  </div>
 
  <div class="filter-container">
@@ -211,16 +184,14 @@ tbody tr:hover td:first-child{background:#FBFCFE;}
    <button class="filter-btn" data-filter="centro-oeste">Centro-Oeste</button>
    <button class="filter-btn" data-filter="nordeste">Nordeste</button>
    <button class="filter-btn" data-filter="norte">Norte</button>
+   <button class="filter-btn premium-tab" data-filter="premium">⚙️ Alta Potência</button>
    <button class="filter-btn" data-filter="metodologia">Metodologia</button>
  </div>
 
  <div class="table-container">
    <div class="table-title-wrapper">
      <div><h2>Projeção por Estado</h2><div class="hint">Valores em % de participação nacional · setas indicam a variação 2026 → 2027</div></div>
-     <button id="export-excel-btn" class="export-btn">
-       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
-       <span>Exportar Excel</span>
-     </button>
+     <button id="export-excel-btn" class="export-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg><span>Exportar Excel</span></button>
    </div>
    <div class="top-scrollbar-wrapper"><div class="top-scrollbar-content"></div></div>
    <div class="table-scroll-container">
@@ -400,12 +371,278 @@ tbody tr:hover td:first-child{background:#FBFCFE;}
      </table>
    </div>
    <div class="legend">
-     <span><i style="background:#0B7A3B"></i>Sul</span>
-     <span><i style="background:#C8102E"></i>Sudeste</span>
-     <span><i style="background:#B8860B"></i>Centro-Oeste</span>
-     <span><i style="background:#7A3FB0"></i>Nordeste</span>
-     <span><i style="background:#0E7C86"></i>Norte</span>
+     <span><i style="background:#0B7A3B"></i>Sul</span><span><i style="background:#C8102E"></i>Sudeste</span><span><i style="background:#B8860B"></i>Centro-Oeste</span><span><i style="background:#7A3FB0"></i>Nordeste</span><span><i style="background:#0E7C86"></i>Norte</span>
      <span><i style="background:#0B7A3B"></i>▲ ganho de share &nbsp;·&nbsp; <i style="background:#C8102E"></i>▼ perda de share</span>
+   </div>
+ </div>
+
+ <div class="premium-container" style="display:none;">
+   <div class="table-title-wrapper">
+     <div><h2>⚙️ Segmentos de Alta Potência — Projeção por Estado</h2><div class="hint">Tratores 260–339 HP e ≥340 HP · Colheitadeiras Classe 7 e Classe 8+ · Plantadeiras &gt;20 linhas · % de participação nacional (base real 2026)</div></div>
+     <button id="export-premium-btn" class="export-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg><span>Exportar Excel</span></button>
+   </div>
+   <div class="kpi-wrapper" style="margin-bottom:22px;">
+     <div class="kpi-card gold"><div class="kpi-ico">🚜</div><h3>Líder Absoluto (Premium)</h3><div class="value">Mato Grosso</div><div class="description">Concentra 36% dos tratores ≥340HP e 54% das colheitadeiras Classe 8+ do país (dados reais 2026).</div></div>
+     <div class="kpi-card win"><div class="kpi-ico">📈</div><h3>Maior Ganho ≥340HP</h3><div class="value">Paraná <small class="up">+1.23 pp</small></div><div class="description">Renovação aquecida e clima favorável impulsionam a alta potência no Sul.</div></div>
+     <div class="kpi-card loss"><div class="kpi-ico">📉</div><h3>Maior Retração ≥340HP</h3><div class="value">Mato Grosso <small class="down">-3.38 pp</small></div><div class="description">Seca no Cerrado e crédito de ticket alto derrubam o share premium.</div></div>
+     <div class="kpi-card gold"><div class="kpi-ico">🌾</div><h3>Concentração Classe 8+</h3><div class="value">82% em 4 UFs</div><div class="description">MT · GO · MS · BA somam 82% das colheitadeiras Classe 8+ do Brasil.</div></div>
+   </div>
+   <div class="top-scrollbar-wrapper" id="ptop"><div class="top-scrollbar-content"></div></div>
+   <div class="table-scroll-container" id="pbot">
+     <table class="premium-table">
+       <thead>
+       <tr>
+         <th rowspan="2">UF</th><th rowspan="2">Estado</th>
+         <th class="seg-group" colspan="2">Trator 260–339 HP</th>
+         <th class="seg-group" colspan="2">Trator ≥340 HP</th>
+         <th class="seg-group" colspan="2">Colheit. Classe 7</th>
+         <th class="seg-group" colspan="2">Colheit. Classe 8+</th>
+         <th class="seg-group" colspan="2">Plantad. &gt;20 linhas</th>
+         <th rowspan="2">Insight (comentário analítico)</th>
+       </tr>
+       <tr>
+         <th>26</th><th class="col-27">27</th><th>26</th><th class="col-27">27</th>
+         <th>26</th><th class="col-27">27</th><th>26</th><th class="col-27">27</th>
+         <th>26</th><th class="col-27">27</th>
+       </tr>
+       </thead>
+       <tbody>
+<tr data-pregion="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">AL</span></td>
+      <td class="state-name">Alagoas <span class="share-badge flat">estável</span></td>
+      <td>0.57%</td><td class="col-27"><span class="v27">0.56%</span> <span class="delta down">▼</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.10%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td>
+      <td class="just-col">Participação marginal (apenas leve presença em 260–339HP e ≥340HP), sustentada pela cana; estabilidade no cenário premium.</td>
+    </tr>
+<tr data-pregion="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">BA</span></td>
+      <td class="state-name">Bahia <span class="share-badge loss">-0.49 pp</span></td>
+      <td>1.42%</td><td class="col-27"><span class="v27">1.24%</span> <span class="delta down">▼</span></td><td>11.16%</td><td class="col-27"><span class="v27">10.67%</span> <span class="delta down">▼</span></td><td>2.53%</td><td class="col-27"><span class="v27">2.22%</span> <span class="delta down">▼</span></td><td>13.37%</td><td class="col-27"><span class="v27">12.53%</span> <span class="delta down">▼</span></td><td>8.33%</td><td class="col-27"><span class="v27">7.28%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Oeste baiano forte em Classe 8+ (13%) e ≥340HP (11%), mas o duplo choque de estiagem no MATOPIBA e financiamento escasso derruba a compra de máquinas de ponta.</td>
+    </tr>
+<tr data-pregion="centro-oeste">
+      <td class="uf-cell"><span class="uf-chip r-centro-oeste">DF</span></td>
+      <td class="state-name">Distrito Federal <span class="share-badge flat">estável</span></td>
+      <td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.12%</td><td class="col-27"><span class="v27">0.11%</span> <span class="delta down">▼</span></td><td>0.26%</td><td class="col-27"><span class="v27">0.23%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Nicho reduzido em Classe 8+ e plantadeiras; a seca e o congelamento de investimentos de ticket alto reduzem o já pequeno share premium.</td>
+    </tr>
+<tr data-pregion="centro-oeste">
+      <td class="uf-cell"><span class="uf-chip r-centro-oeste">GO</span></td>
+      <td class="state-name">Goiás <span class="share-badge loss">-0.47 pp</span></td>
+      <td>12.50%</td><td class="col-27"><span class="v27">11.66%</span> <span class="delta down">▼</span></td><td>12.98%</td><td class="col-27"><span class="v27">12.51%</span> <span class="delta down">▼</span></td><td>16.19%</td><td class="col-27"><span class="v27">15.16%</span> <span class="delta down">▼</span></td><td>10.81%</td><td class="col-27"><span class="v27">10.19%</span> <span class="delta down">▼</span></td><td>19.97%</td><td class="col-27"><span class="v27">18.01%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Segundo maior polo premium (12–20% por segmento). A crise hídrica e o custo de capital elevado retraem fortemente colheitadeiras Classe 7/8+ e, sobretudo, plantadeiras de grande porte (20% do país).</td>
+    </tr>
+<tr data-pregion="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">MA</span></td>
+      <td class="state-name">Maranhão <span class="share-badge loss">-0.17 pp</span></td>
+      <td>0.28%</td><td class="col-27"><span class="v27">0.25%</span> <span class="delta down">▼</span></td><td>3.82%</td><td class="col-27"><span class="v27">3.65%</span> <span class="delta down">▼</span></td><td>2.70%</td><td class="col-27"><span class="v27">2.54%</span> <span class="delta down">▼</span></td><td>3.14%</td><td class="col-27"><span class="v27">2.99%</span> <span class="delta down">▼</span></td><td>3.97%</td><td class="col-27"><span class="v27">3.59%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Fronteira de grãos com presença relevante em ≥340HP (3,8%) e Classe 8+ (3,1%) perde tração com o atraso das chuvas e o corte de recursos para investimentos vultosos.</td>
+    </tr>
+<tr data-pregion="sudeste">
+      <td class="uf-cell"><span class="uf-chip r-sudeste">MG</span></td>
+      <td class="state-name">Minas Gerais <span class="share-badge win">+0.78 pp</span></td>
+      <td>7.39%</td><td class="col-27"><span class="v27">7.71%</span> <span class="delta up">▲</span></td><td>3.34%</td><td class="col-27"><span class="v27">4.12%</span> <span class="delta up">▲</span></td><td>4.38%</td><td class="col-27"><span class="v27">5.20%</span> <span class="delta up">▲</span></td><td>1.74%</td><td class="col-27"><span class="v27">2.09%</span> <span class="delta up">▲</span></td><td>3.04%</td><td class="col-27"><span class="v27">3.45%</span> <span class="delta up">▲</span></td>
+      <td class="just-col">Forte em 260–339HP (7,4%) e Classe 7 (4,4%); café e grãos em alta rentabilidade blindam Minas e ampliam a participação em máquinas de ponta.</td>
+    </tr>
+<tr data-pregion="centro-oeste">
+      <td class="uf-cell"><span class="uf-chip r-centro-oeste">MS</span></td>
+      <td class="state-name">Mato Grosso Do Sul <span class="share-badge loss">-0.34 pp</span></td>
+      <td>3.41%</td><td class="col-27"><span class="v27">3.19%</span> <span class="delta down">▼</span></td><td>7.06%</td><td class="col-27"><span class="v27">6.72%</span> <span class="delta down">▼</span></td><td>9.11%</td><td class="col-27"><span class="v27">8.58%</span> <span class="delta down">▼</span></td><td>3.72%</td><td class="col-27"><span class="v27">3.52%</span> <span class="delta down">▼</span></td><td>5.03%</td><td class="col-27"><span class="v27">4.55%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Base sólida de máquinas de escala (7% em ≥340HP e Classe 7). Clima adverso e ticket elevado amplificam o efeito do aperto de crédito sobre a renovação premium.</td>
+    </tr>
+<tr data-pregion="centro-oeste">
+      <td class="uf-cell"><span class="uf-chip r-centro-oeste">MT</span></td>
+      <td class="state-name">Mato Grosso <span class="share-badge loss">-3.38 pp</span></td>
+      <td>26.42%</td><td class="col-27"><span class="v27">22.13%</span> <span class="delta down">▼</span></td><td>36.45%</td><td class="col-27"><span class="v27">33.07%</span> <span class="delta down">▼</span></td><td>33.90%</td><td class="col-27"><span class="v27">29.71%</span> <span class="delta down">▼</span></td><td>53.60%</td><td class="col-27"><span class="v27">50.43%</span> <span class="delta down">▼</span></td><td>38.76%</td><td class="col-27"><span class="v27">35.89%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Domínio absoluto do país: 36% dos tratores ≥340HP, 54% das colheitadeiras Classe 8+ e 39% das plantadeiras >20 linhas. Justamente por concentrar tanto, a seca no Cerrado e o crédito de ticket alto provocam a maior erosão de share em todas as linhas de ponta.</td>
+    </tr>
+<tr data-pregion="norte">
+      <td class="uf-cell"><span class="uf-chip r-norte">PA</span></td>
+      <td class="state-name">Pará <span class="share-badge loss">-0.11 pp</span></td>
+      <td>1.70%</td><td class="col-27"><span class="v27">1.59%</span> <span class="delta down">▼</span></td><td>3.15%</td><td class="col-27"><span class="v27">3.04%</span> <span class="delta down">▼</span></td><td>4.38%</td><td class="col-27"><span class="v27">4.28%</span> <span class="delta down">▼</span></td><td>0.93%</td><td class="col-27"><span class="v27">0.90%</span> <span class="delta down">▼</span></td><td>5.03%</td><td class="col-27"><span class="v27">4.79%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Fronteira paraense mantém apetite por máquinas de escala (Classe 7 com 4,4%), mas o financiamento limitado para tickets altos segura o avanço.</td>
+    </tr>
+<tr data-pregion="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">PE</span></td>
+      <td class="state-name">Pernambuco <span class="share-badge flat">estável</span></td>
+      <td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.10%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td>
+      <td class="just-col">Presença mínima em ≥340HP; sem vetores relevantes de expansão no segmento de ponta.</td>
+    </tr>
+<tr data-pregion="nordeste">
+      <td class="uf-cell"><span class="uf-chip r-nordeste">PI</span></td>
+      <td class="state-name">Piauí <span class="share-badge loss">-0.12 pp</span></td>
+      <td>1.70%</td><td class="col-27"><span class="v27">1.50%</span> <span class="delta down">▼</span></td><td>5.15%</td><td class="col-27"><span class="v27">5.03%</span> <span class="delta down">▼</span></td><td>1.85%</td><td class="col-27"><span class="v27">1.74%</span> <span class="delta down">▼</span></td><td>4.77%</td><td class="col-27"><span class="v27">4.55%</span> <span class="delta down">▼</span></td><td>4.37%</td><td class="col-27"><span class="v27">3.95%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Destaque em ≥340HP (5,2%) e Classe 8+ (4,8%) para o porte do estado, mas o risco climático elevado e o teto financeiro postergam a expansão premium.</td>
+    </tr>
+<tr data-pregion="sul">
+      <td class="uf-cell"><span class="uf-chip r-sul">PR</span></td>
+      <td class="state-name">Paraná <span class="share-badge win">+1.23 pp</span></td>
+      <td>7.10%</td><td class="col-27"><span class="v27">7.43%</span> <span class="delta up">▲</span></td><td>4.01%</td><td class="col-27"><span class="v27">5.24%</span> <span class="delta up">▲</span></td><td>9.95%</td><td class="col-27"><span class="v27">11.85%</span> <span class="delta up">▲</span></td><td>1.86%</td><td class="col-27"><span class="v27">2.24%</span> <span class="delta up">▲</span></td><td>1.06%</td><td class="col-27"><span class="v27">1.20%</span> <span class="delta up">▲</span></td>
+      <td class="just-col">Maior ganho de share premium do país: já lidera colheitadeiras Classe 7 fora do MT (9,9%) e avança forte em ≥340HP e Classe 8+ com renovação aquecida e adoção tecnológica.</td>
+    </tr>
+<tr data-pregion="norte">
+      <td class="uf-cell"><span class="uf-chip r-norte">RO</span></td>
+      <td class="state-name">Rondônia <span class="share-badge loss">-0.03 pp</span></td>
+      <td>0.85%</td><td class="col-27"><span class="v27">0.79%</span> <span class="delta down">▼</span></td><td>1.15%</td><td class="col-27"><span class="v27">1.11%</span> <span class="delta down">▼</span></td><td>3.71%</td><td class="col-27"><span class="v27">3.63%</span> <span class="delta down">▼</span></td><td>1.40%</td><td class="col-27"><span class="v27">1.35%</span> <span class="delta down">▼</span></td><td>1.98%</td><td class="col-27"><span class="v27">1.89%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Nicho relevante em Classe 7 (3,7%); a irregularidade hídrica e os limites de crédito para equipamentos de maior valor seguram a demanda.</td>
+    </tr>
+<tr data-pregion="norte">
+      <td class="uf-cell"><span class="uf-chip r-norte">RR</span></td>
+      <td class="state-name">Roraima <span class="share-badge flat">estável</span></td>
+      <td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.10%</td><td class="col-27"><span class="v27">0.09%</span> <span class="delta down">▼</span></td><td>1.01%</td><td class="col-27"><span class="v27">0.99%</span> <span class="delta down">▼</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>0.40%</td><td class="col-27"><span class="v27">0.38%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Presença incipiente em Classe 7 (1,0%) desacelera com clima adverso e crédito escasso.</td>
+    </tr>
+<tr data-pregion="sul">
+      <td class="uf-cell"><span class="uf-chip r-sul">RS</span></td>
+      <td class="state-name">Rio Grande Do Sul <span class="share-badge win">+1.22 pp</span></td>
+      <td>9.09%</td><td class="col-27"><span class="v27">9.51%</span> <span class="delta up">▲</span></td><td>3.91%</td><td class="col-27"><span class="v27">5.13%</span> <span class="delta up">▲</span></td><td>4.72%</td><td class="col-27"><span class="v27">5.62%</span> <span class="delta up">▲</span></td><td>3.37%</td><td class="col-27"><span class="v27">4.06%</span> <span class="delta up">▲</span></td><td>2.91%</td><td class="col-27"><span class="v27">3.30%</span> <span class="delta up">▲</span></td>
+      <td class="just-col">Safra recorde e recuperação climática elevam a participação gaúcha em máquinas de ponta (Classe 7 com 4,7%, ≥340HP com 3,9%), com o crédito como freio apenas marginal.</td>
+    </tr>
+<tr data-pregion="sul">
+      <td class="uf-cell"><span class="uf-chip r-sul">SC</span></td>
+      <td class="state-name">Santa Catarina <span class="share-badge win">+0.04 pp</span></td>
+      <td>1.42%</td><td class="col-27"><span class="v27">1.49%</span> <span class="delta up">▲</span></td><td>0.29%</td><td class="col-27"><span class="v27">0.38%</span> <span class="delta up">▲</span></td><td>1.18%</td><td class="col-27"><span class="v27">1.41%</span> <span class="delta up">▲</span></td><td>0.12%</td><td class="col-27"><span class="v27">0.14%</span> <span class="delta up">▲</span></td><td>0.53%</td><td class="col-27"><span class="v27">0.60%</span> <span class="delta up">▲</span></td>
+      <td class="just-col">Base menor, mas o adensamento tecnológico e o clima favorável ampliam o share catarinense nos segmentos de alta potência.</td>
+    </tr>
+<tr data-pregion="sudeste">
+      <td class="uf-cell"><span class="uf-chip r-sudeste">SP</span></td>
+      <td class="state-name">São Paulo <span class="share-badge win">+0.89 pp</span></td>
+      <td>23.30%</td><td class="col-27"><span class="v27">24.35%</span> <span class="delta up">▲</span></td><td>4.01%</td><td class="col-27"><span class="v27">4.90%</span> <span class="delta up">▲</span></td><td>2.87%</td><td class="col-27"><span class="v27">3.42%</span> <span class="delta up">▲</span></td><td>0.00%</td><td class="col-27"><span class="v27">0.00%</span> <span class="delta flat">▬</span></td><td>1.06%</td><td class="col-27"><span class="v27">1.20%</span> <span class="delta up">▲</span></td>
+      <td class="just-col">Líder nacional em tratores 260–339HP (23%!), sustentado por cana e grãos em ciclo rentável; avança também em Classe 7 e mantém a dianteira no trator médio-premium.</td>
+    </tr>
+<tr data-pregion="norte">
+      <td class="uf-cell"><span class="uf-chip r-norte">TO</span></td>
+      <td class="state-name">Tocantins <span class="share-badge loss">-0.18 pp</span></td>
+      <td>1.14%</td><td class="col-27"><span class="v27">1.06%</span> <span class="delta down">▼</span></td><td>3.24%</td><td class="col-27"><span class="v27">3.09%</span> <span class="delta down">▼</span></td><td>1.52%</td><td class="col-27"><span class="v27">1.43%</span> <span class="delta down">▼</span></td><td>1.05%</td><td class="col-27"><span class="v27">1.00%</span> <span class="delta down">▼</span></td><td>3.31%</td><td class="col-27"><span class="v27">2.99%</span> <span class="delta down">▼</span></td>
+      <td class="just-col">Presença consistente em grãos de escala; seca e crédito restrito reduzem a participação tocantinense, com plantadeiras >20 linhas entre as mais afetadas.</td>
+    </tr>
+       </tbody>
+     </table>
+   </div>
+   <div class="legend">
+     <span><i style="background:#0B7A3B"></i>Sul</span><span><i style="background:#C8102E"></i>Sudeste</span><span><i style="background:#B8860B"></i>Centro-Oeste</span><span><i style="background:#7A3FB0"></i>Nordeste</span><span><i style="background:#0E7C86"></i>Norte</span>
+     <span>Exibindo apenas UFs com presença nos segmentos premium · badge = variação em tratores ≥340HP</span>
+   </div>
+   <div class="methodology-explanation" style="margin-top:26px;">
+     <h3>Por que os segmentos de alta potência se movem mais?</h3>
+     <p>Máquinas de ponta — tratores acima de 260 HP, colheitadeiras Classe 7/8+ e plantadeiras de mais de 20 linhas — atendem quase exclusivamente à <strong>agricultura de grãos em larga escala</strong>. Por isso respondem de forma <strong>amplificada</strong> aos mesmos vetores da aba principal: o ticket elevado torna a compra muito mais sensível ao crédito, e a concentração no Cerrado/MATOPIBA expõe o segmento ao risco climático de forma desproporcional. Seus dados reais de 2026 confirmam essa concentração: <strong>82% das colheitadeiras Classe 8+</strong> estão em apenas quatro estados.</p>
+     <div class="mgrid">
+       <div class="mfeat"><div class="ic">💳</div><h4>Crédito de Ticket Alto</h4><p>Equipamentos premium têm valor unitário muito maior — o aperto de financiamento pesa proporcionalmente mais na decisão.</p></div>
+       <div class="mfeat"><div class="ic">🌦️</div><h4>Exposição ao Cerrado</h4><p>A base instalada está concentrada em MT, GO, MS e BA, ampliando o impacto da estiagem sobre o share.</p></div>
+       <div class="mfeat"><div class="ic">🛰️</div><h4>Adoção Tecnológica</h4><p>Sul e SP ganham share via precisão/automação, deslocando participação relativa do Centro-Oeste.</p></div>
+       <div class="mfeat"><div class="ic">🔄</div><h4>Ciclo de Renovação</h4><p>Frotas de grande porte têm ciclos de troca mais longos; atrasos de renovação afetam fortemente o mix anual.</p></div>
+     </div>
+     <div class="formula-note">Mesma mecânica da aba principal: <code>share27 = share26 × (1 + Σ pesoᵢ·driverᵢ)</code> com renormalização por coluna. Aqui os pesos de <strong>clima</strong> e <strong>crédito</strong> são maiores, refletindo a natureza premium e a concentração geográfica dos segmentos.</div>
+   </div>
+   <h2 style="margin:30px 0 6px;">Insights por Estado — Alta Potência <span style="font-size:.8rem;color:var(--muted);font-weight:400;">(ordenado pela variação em tratores ≥340HP)</span></h2>
+   <div class="methodology-grid">
+<div class="methodology-card positive-trend" data-pregion="sul">
+       <div class="mc-head"><h3>Paraná <span class="mc-uf">PR</span></h3><span class="mc-delta up">+1.23 pp</span></div>
+       <p class="mc-just">Maior ganho de share premium do país: já lidera colheitadeiras Classe 7 fora do MT (9,9%) e avança forte em ≥340HP e Classe 8+ com renovação aquecida e adoção tecnológica.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:80%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:85%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:88%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-pos">Clima Favorável</span><span class="driver-tag t-pos">Rentabilidade Alta</span><span class="driver-tag t-pos">Renovação Aquecida</span></div>
+    </div>
+<div class="methodology-card positive-trend" data-pregion="sul">
+       <div class="mc-head"><h3>Rio Grande Do Sul <span class="mc-uf">RS</span></h3><span class="mc-delta up">+1.22 pp</span></div>
+       <p class="mc-just">Safra recorde e recuperação climática elevam a participação gaúcha em máquinas de ponta (Classe 7 com 4,7%, ≥340HP com 3,9%), com o crédito como freio apenas marginal.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:88%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:80%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:82%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-pos">Clima Favorável</span><span class="driver-tag t-pos">Rentabilidade Alta</span><span class="driver-tag t-pos">Renovação Aquecida</span></div>
+    </div>
+<div class="methodology-card positive-trend" data-pregion="sudeste">
+       <div class="mc-head"><h3>São Paulo <span class="mc-uf">SP</span></h3><span class="mc-delta up">+0.89 pp</span></div>
+       <p class="mc-just">Líder nacional em tratores 260–339HP (23%!), sustentado por cana e grãos em ciclo rentável; avança também em Classe 7 e mantém a dianteira no trator médio-premium.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:65%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:35%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:82%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:68%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-pos">Rentabilidade Alta</span></div>
+    </div>
+<div class="methodology-card positive-trend" data-pregion="sudeste">
+       <div class="mc-head"><h3>Minas Gerais <span class="mc-uf">MG</span></h3><span class="mc-delta up">+0.78 pp</span></div>
+       <p class="mc-just">Forte em 260–339HP (7,4%) e Classe 7 (4,4%); café e grãos em alta rentabilidade blindam Minas e ampliam a participação em máquinas de ponta.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:62%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:38%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:85%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:72%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-pos">Rentabilidade Alta</span></div>
+    </div>
+<div class="methodology-card positive-trend" data-pregion="sul">
+       <div class="mc-head"><h3>Santa Catarina <span class="mc-uf">SC</span></h3><span class="mc-delta up">+0.04 pp</span></div>
+       <p class="mc-just">Base menor, mas o adensamento tecnológico e o clima favorável ampliam o share catarinense nos segmentos de alta potência.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:82%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:75%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:75%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-pos">Clima Favorável</span><span class="driver-tag t-pos">Rentabilidade Alta</span><span class="driver-tag t-pos">Renovação Aquecida</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="norte">
+       <div class="mc-head"><h3>Rondônia <span class="mc-uf">RO</span></h3><span class="mc-delta down">-0.03 pp</span></div>
+       <p class="mc-just">Nicho relevante em Classe 7 (3,7%); a irregularidade hídrica e os limites de crédito para equipamentos de maior valor seguram a demanda.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:32%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:30%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:45%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito de Ticket Alto</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="nordeste">
+       <div class="mc-head"><h3>Paraíba <span class="mc-uf">PB</span></h3><span class="mc-delta flat">estável</span></div>
+       <p class="mc-just"></p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:38%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neu" style="width:52%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neu">Cenário Misto</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="nordeste">
+       <div class="mc-head"><h3>Pernambuco <span class="mc-uf">PE</span></h3><span class="mc-delta flat">estável</span></div>
+       <p class="mc-just">Presença mínima em ≥340HP; sem vetores relevantes de expansão no segmento de ponta.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neu" style="width:52%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:38%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:57%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neu">Cenário Misto</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="nordeste">
+       <div class="mc-head"><h3>Alagoas <span class="mc-uf">AL</span></h3><span class="mc-delta flat">estável</span></div>
+       <p class="mc-just">Participação marginal (apenas leve presença em 260–339HP e ≥340HP), sustentada pela cana; estabilidade no cenário premium.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:55%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:38%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:60%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:52%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neu">Cenário Misto</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="centro-oeste">
+       <div class="mc-head"><h3>Distrito Federal <span class="mc-uf">DF</span></h3><span class="mc-delta flat">estável</span></div>
+       <p class="mc-just">Nicho reduzido em Classe 8+ e plantadeiras; a seca e o congelamento de investimentos de ticket alto reduzem o já pequeno share premium.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:30%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:25%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito de Ticket Alto</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="norte">
+       <div class="mc-head"><h3>Roraima <span class="mc-uf">RR</span></h3><span class="mc-delta flat">estável</span></div>
+       <p class="mc-just">Presença incipiente em Classe 7 (1,0%) desacelera com clima adverso e crédito escasso.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:35%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:32%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:48%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito de Ticket Alto</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="norte">
+       <div class="mc-head"><h3>Pará <span class="mc-uf">PA</span></h3><span class="mc-delta down">-0.11 pp</span></div>
+       <p class="mc-just">Fronteira paraense mantém apetite por máquinas de escala (Classe 7 com 4,4%), mas o financiamento limitado para tickets altos segura o avanço.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:30%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:55%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:52%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito de Ticket Alto</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="nordeste">
+       <div class="mc-head"><h3>Maranhão <span class="mc-uf">MA</span></h3><span class="mc-delta down">-0.17 pp</span></div>
+       <p class="mc-just">Fronteira de grãos com presença relevante em ≥340HP (3,8%) e Classe 8+ (3,1%) perde tração com o atraso das chuvas e o corte de recursos para investimentos vultosos.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:20%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:25%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito de Ticket Alto</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="norte">
+       <div class="mc-head"><h3>Tocantins <span class="mc-uf">TO</span></h3><span class="mc-delta down">-0.18 pp</span></div>
+       <p class="mc-just">Presença consistente em grãos de escala; seca e crédito restrito reduzem a participação tocantinense, com plantadeiras >20 linhas entre as mais afetadas.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:20%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:25%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:45%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito de Ticket Alto</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="centro-oeste">
+       <div class="mc-head"><h3>Mato Grosso Do Sul <span class="mc-uf">MS</span></h3><span class="mc-delta down">-0.34 pp</span></div>
+       <p class="mc-just">Base sólida de máquinas de escala (7% em ≥340HP e Classe 7). Clima adverso e ticket elevado amplificam o efeito do aperto de crédito sobre a renovação premium.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:25%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:25%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:45%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito de Ticket Alto</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="centro-oeste">
+       <div class="mc-head"><h3>Goiás <span class="mc-uf">GO</span></h3><span class="mc-delta down">-0.47 pp</span></div>
+       <p class="mc-just">Segundo maior polo premium (12–20% por segmento). A crise hídrica e o custo de capital elevado retraem fortemente colheitadeiras Classe 7/8+ e, sobretudo, plantadeiras de grande porte (20% do país).</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:18%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:25%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:38%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito de Ticket Alto</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="nordeste">
+       <div class="mc-head"><h3>Bahia <span class="mc-uf">BA</span></h3><span class="mc-delta down">-0.49 pp</span></div>
+       <p class="mc-just">Oeste baiano forte em Classe 8+ (13%) e ≥340HP (11%), mas o duplo choque de estiagem no MATOPIBA e financiamento escasso derruba a compra de máquinas de ponta.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:15%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:22%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:40%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:38%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito de Ticket Alto</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
+<div class="methodology-card negative-trend" data-pregion="centro-oeste">
+       <div class="mc-head"><h3>Mato Grosso <span class="mc-uf">MT</span></h3><span class="mc-delta down">-3.38 pp</span></div>
+       <p class="mc-just">Domínio absoluto do país: 36% dos tratores ≥340HP, 54% das colheitadeiras Classe 8+ e 39% das plantadeiras >20 linhas. Justamente por concentrar tanto, a seca no Cerrado e o crédito de ticket alto provocam a maior erosão de share em todas as linhas de ponta.</p>
+       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:5%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:18%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neg" style="width:30%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neg" style="width:35%"></span></span></div></div>
+       <div class="tags-container"><span class="driver-tag t-neg">Crédito de Ticket Alto</span><span class="driver-tag t-neg">Risco Climático</span></div>
+    </div>
    </div>
  </div>
 
@@ -489,18 +726,6 @@ tbody tr:hover td:first-child{background:#FBFCFE;}
        <p class="mc-just">Mercado marginal segue estável, sem sensibilidade relevante aos vetores de 2027.</p>
        <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div></div>
        <div class="tags-container"><span class="driver-tag t-neu">Mercado Marginal</span></div>
-    </div>
-<div class="methodology-card " data-region="norte">
-       <div class="mc-head"><h3>Roraima <span class="mc-uf">RR</span></h3><span class="mc-delta flat">-0.02 pp</span></div>
-       <p class="mc-just">Clima adverso e crédito escasso desaceleram o ritmo de expansão roraimense.</p>
-       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-neg" style="width:35%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:35%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-neu" style="width:50%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-neu" style="width:48%"></span></span></div></div>
-       <div class="tags-container"><span class="driver-tag t-neu">Cenário Misto</span></div>
-    </div>
-<div class="methodology-card " data-region="nordeste">
-       <div class="mc-head"><h3>Sergipe <span class="mc-uf">SE</span></h3><span class="mc-delta flat">-0.02 pp</span></div>
-       <p class="mc-just">Demanda pontual e mix de cana sustentam leve avanço sergipano dentro de um cenário nacional contido.</p>
-       <div class="mc-scores"><div class="score-row"><span class="score-lab">Clima</span><span class="score-track"><span class="score-fill f-pos" style="width:55%"></span></span></div><div class="score-row"><span class="score-lab">Crédito</span><span class="score-track"><span class="score-fill f-neg" style="width:42%"></span></span></div><div class="score-row"><span class="score-lab">Rentab.</span><span class="score-track"><span class="score-fill f-pos" style="width:60%"></span></span></div><div class="score-row"><span class="score-lab">Renov.</span><span class="score-track"><span class="score-fill f-pos" style="width:55%"></span></span></div></div>
-       <div class="tags-container"><span class="driver-tag t-neu">Cenário Misto</span></div>
     </div>
 <div class="methodology-card negative-trend" data-region="nordeste">
        <div class="mc-head"><h3>Paraíba <span class="mc-uf">PB</span></h3><span class="mc-delta down">-0.03 pp</span></div>
@@ -589,54 +814,47 @@ tbody tr:hover td:first-child{background:#FBFCFE;}
    </div>
  </div>
 
- <div class="foot">AGCO Forecast Intelligence · Modelo multi-fator de market share · Projeção interna 2027 (varejo). Valores sujeitos a revisão conforme Plano Safra e evolução climática.</div>
+ <div class="foot">AGCO Forecast Intelligence · Modelo multi-fator de market share · Projeção interna 2027 (varejo). Segmentos de alta potência com base real 2026 (Segmentos.xlsx). Valores sujeitos a revisão conforme Plano Safra e evolução climática.</div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded',function(){
  const fc=document.querySelector('.filter-container');
- const rows=document.querySelectorAll('tbody tr');
+ const rows=document.querySelectorAll('.table-container tbody tr');
+ const prows=document.querySelectorAll('.premium-container .premium-table tbody tr');
+ const pcards=document.querySelectorAll('.premium-container .methodology-card');
  const tableC=document.querySelector('.table-container');
- const topSb=document.querySelector('.top-scrollbar-wrapper');
+ const premiumC=document.querySelector('.premium-container');
  const methC=document.querySelector('.methodology-container');
- const cards=document.querySelectorAll('.methodology-card');
-
+ const cards=document.querySelectorAll('.methodology-container .methodology-card');
  fc.addEventListener('click',function(e){
    if(!e.target.matches('.filter-btn'))return;
    fc.querySelector('.active').classList.remove('active');
    e.target.classList.add('active');
    const f=e.target.dataset.filter;
-   if(f==='metodologia'){
-     tableC.style.display='none';topSb.style.display='none';methC.style.display='block';
-     cards.forEach(c=>c.style.display='');
-   }else{
-     tableC.style.display='block';topSb.style.display='block';methC.style.display='none';
-     rows.forEach(r=>r.style.display=(f==='todos'||r.dataset.region===f)?'':'none');
-     cards.forEach(c=>c.style.display=(f==='todos'||c.dataset.region===f)?'':'none');
-     setTimeout(syncWidth,50);
-   }
+   tableC.style.display='none';premiumC.style.display='none';methC.style.display='none';
+   if(f==='metodologia'){methC.style.display='block'; cards.forEach(c=>c.style.display='');}
+   else if(f==='premium'){premiumC.style.display='block'; prows.forEach(r=>r.style.display=''); pcards.forEach(c=>c.style.display=''); setTimeout(syncP,50);}
+   else{tableC.style.display='block'; rows.forEach(r=>r.style.display=(f==='todos'||r.dataset.region===f)?'':'none'); setTimeout(syncM,50);}
  });
-
- const topScroll=document.querySelector('.top-scrollbar-wrapper');
- const botScroll=document.querySelector('.table-scroll-container');
- const topContent=document.querySelector('.top-scrollbar-content');
- const table=botScroll.querySelector('table');
- function syncWidth(){if(table)topContent.style.width=table.scrollWidth+'px';}
- syncWidth();
- let ign=false;
- function sync(s,t){if(ign){ign=false;return;}ign=true;t.scrollLeft=s.scrollLeft;}
- topScroll.addEventListener('scroll',()=>sync(topScroll,botScroll));
- botScroll.addEventListener('scroll',()=>sync(botScroll,topScroll));
- window.addEventListener('resize',syncWidth);
-
- const eb=document.getElementById('export-excel-btn');
- eb.addEventListener('click',function(){
-   const t=document.querySelector('.table-container table');
-   if(!t)return;
-   const clone=t.cloneNode(true);
-   clone.querySelectorAll('tbody tr[style*="display: none"]').forEach(r=>r.remove());
-   const wb=XLSX.utils.table_to_book(clone,{sheet:"Projecao 2027"});
-   XLSX.writeFile(wb,"AGCO_Projecao_MarketShare_2027.xlsx");
+ const mTop=tableC.querySelector('.top-scrollbar-wrapper'), mBot=tableC.querySelector('.table-scroll-container'), mContent=tableC.querySelector('.top-scrollbar-content'), mTable=mBot.querySelector('table');
+ function syncM(){if(mTable)mContent.style.width=mTable.scrollWidth+'px';}
+ syncM();
+ let i1=false; function s1(a,b){if(i1){i1=false;return;}i1=true;b.scrollLeft=a.scrollLeft;}
+ mTop.addEventListener('scroll',()=>s1(mTop,mBot)); mBot.addEventListener('scroll',()=>s1(mBot,mTop));
+ const pTop=document.getElementById('ptop'), pBot=document.getElementById('pbot'), pContent=pTop.querySelector('.top-scrollbar-content'), pTable=pBot.querySelector('table');
+ function syncP(){if(pTable)pContent.style.width=pTable.scrollWidth+'px';}
+ let i2=false; function s2(a,b){if(i2){i2=false;return;}i2=true;b.scrollLeft=a.scrollLeft;}
+ pTop.addEventListener('scroll',()=>s2(pTop,pBot)); pBot.addEventListener('scroll',()=>s2(pBot,pTop));
+ window.addEventListener('resize',()=>{syncM();syncP();});
+ document.getElementById('export-excel-btn').addEventListener('click',function(){
+   const t=tableC.querySelector('table'); if(!t)return;
+   const c=t.cloneNode(true); c.querySelectorAll('tbody tr[style*="display: none"]').forEach(r=>r.remove());
+   const wb=XLSX.utils.table_to_book(c,{sheet:"Projecao 2027"}); XLSX.writeFile(wb,"AGCO_Projecao_MarketShare_2027.xlsx");
+ });
+ document.getElementById('export-premium-btn').addEventListener('click',function(){
+   const t=premiumC.querySelector('table'); if(!t)return;
+   const wb=XLSX.utils.table_to_book(t,{sheet:"Alta Potencia 2027"}); XLSX.writeFile(wb,"AGCO_AltaPotencia_2027.xlsx");
  });
 });
 </script>
