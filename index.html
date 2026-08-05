@@ -88,44 +88,55 @@ tbody tr:hover td{background:#FBFCFE}
 .fl.p{background:linear-gradient(90deg,#34d17f,#0B7A3B)}.fl.n{background:linear-gradient(90deg,#f28a8d,#C8102E)}.fl.u{background:linear-gradient(90deg,#c4cad3,#9aa2ae)}
 .tags{display:flex;flex-wrap:wrap;gap:7px}.tag{padding:4px 11px;border-radius:999px;font-size:.72rem;font-weight:600}
 .tag.n{background:var(--down-bg);color:var(--down)}.tag.p{background:var(--up-bg);color:var(--up)}.tag.u{background:#F0F2F5;color:#4b5563}
-/* ======= METODOLOGIA ======= */
-.meth-intro{font-size:.9rem;line-height:1.7;color:var(--ink-2);background:#F7F8FA;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:8px}
-.meth-sec{margin-top:26px}
-.meth-bar{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:14px 14px 0 0;background:linear-gradient(135deg,#FCF3F4,#fff);border:1px solid var(--line);border-bottom:none}
-.meth-sec.intl .meth-bar{background:linear-gradient(135deg,#EAF6F7,#fff)}
-.meth-bar .fl-em{font-size:1.7rem;line-height:1}
-.meth-bar h3{font-size:1.15rem;font-weight:800;color:var(--ink)}
-.meth-bar .scope{margin-left:auto;font-size:.66rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:5px 12px;border-radius:999px;background:var(--red-soft);color:var(--red);white-space:nowrap}
-.meth-sec.intl .meth-bar .scope{background:var(--teal-bg);color:var(--teal)}
-.meth-body{border:1px solid var(--line);border-radius:0 0 14px 14px;padding:20px 22px 24px}
-.meth-sec.br .meth-bar{border-top:3px solid var(--red)}
-.meth-sec.intl .meth-bar{border-top:3px solid var(--teal)}
-.sublabel{font-size:.74rem;font-weight:800;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);margin:22px 0 12px;display:flex;align-items:center;gap:9px}
-.sublabel::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--red)}
-.meth-sec.intl .sublabel::before{background:var(--teal)}
-.sublabel:first-child{margin-top:4px}
-.lead{background:#F9FAFB;border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;padding:18px 20px}
-.meth-sec.intl .lead{border-left-color:var(--teal)}
-.lead p{font-size:.9rem;line-height:1.7;color:var(--ink-2)}
-.fx{margin-top:14px;font-size:.82rem;color:var(--muted);background:#fff;border:1px dashed #D4D9E1;border-radius:8px;padding:11px 14px}
-.fx code{background:#141821;color:#EAEDF3;padding:2px 8px;border-radius:6px;font-size:.8rem}
-.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
-.tile{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;position:relative}
-.tile .ic{font-size:1.5rem;line-height:1}
-.tile h4{font-size:.94rem;margin:9px 0 6px;color:var(--ink)}
-.tile p{font-size:.82rem;color:var(--muted);line-height:1.55;margin:0}
-.tile.num{border-left:4px solid var(--teal);padding-top:18px}
-.tile.num .n{position:absolute;top:12px;right:16px;font-size:1.5rem;font-weight:800;color:#D7EEF0}
+/* ================= METODOLOGIA (nova, escaneável) ================= */
+.m-lead{font-size:.92rem;line-height:1.7;color:var(--ink-2);margin-bottom:20px;max-width:900px}
+.m-lead b{color:var(--ink)}
+.m-cmp{overflow-x:auto;border:1px solid var(--line);border-radius:14px;margin-bottom:26px}
+.m-cmp table{width:100%;min-width:680px;border-collapse:collapse}
+.m-cmp th,.m-cmp td{white-space:normal;text-align:left;padding:14px 16px;border-bottom:1px solid var(--line);font-size:.86rem;vertical-align:top}
+.m-cmp thead th{position:static;background:#F7F8FA;font-size:.8rem;letter-spacing:0;text-transform:none;color:var(--ink)}
+.m-cmp thead th.col-br{background:#FCF3F4;color:var(--red);border-left:3px solid var(--red)}
+.m-cmp thead th.col-in{background:#EAF6F7;color:var(--teal);border-left:3px solid var(--teal)}
+.m-cmp tbody tr:last-child td{border-bottom:none}
+.m-cmp .rowlab{font-weight:700;color:var(--ink);background:#FBFCFD;width:190px}
+.m-cmp td.col-br{border-left:3px solid #F3C6CE}
+.m-cmp td.col-in{border-left:3px solid #BFE3E6}
+.m-cmp code{background:#141821;color:#EAEDF3;padding:2px 7px;border-radius:6px;font-size:.78rem}
+.m-methods{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:18px;margin-bottom:8px}
+.m-block{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:#fff}
+.m-block .m-top{display:flex;align-items:center;gap:11px;padding:16px 18px;border-bottom:1px solid var(--line)}
+.m-block.br .m-top{background:linear-gradient(135deg,#FCF3F4,#fff);border-top:4px solid var(--red)}
+.m-block.in .m-top{background:linear-gradient(135deg,#EAF6F7,#fff);border-top:4px solid var(--teal)}
+.m-block .m-top .fl{font-size:1.6rem;line-height:1;width:auto;height:auto;background:none}
+.m-block .m-top h3{font-size:1.08rem;font-weight:800;color:var(--ink)}
+.m-block .m-top .tagm{margin-left:auto;font-size:.64rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:5px 11px;border-radius:999px;white-space:nowrap}
+.m-block.br .tagm{background:var(--red-soft);color:var(--red)}
+.m-block.in .tagm{background:var(--teal-bg);color:var(--teal)}
+.m-in{padding:18px 20px 20px}
+.m-in>p{font-size:.86rem;line-height:1.6;color:var(--ink-2);margin-bottom:14px}
+.m-sub{font-size:.72rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin:2px 0 10px}
+.vlist{display:flex;flex-direction:column;gap:8px}
+.vrow{display:flex;gap:11px;align-items:flex-start;background:#F9FAFB;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.vrow .vic{font-size:1.2rem;line-height:1.2}
+.vrow .vtx b{font-size:.86rem;color:var(--ink)}
+.vrow .vtx span{display:block;font-size:.78rem;color:var(--muted);margin-top:1px}
+.vrow .vnum{width:24px;height:24px;flex:none;border-radius:50%;background:var(--teal);color:#fff;font-size:.78rem;font-weight:800;display:flex;align-items:center;justify-content:center}
+.m-fx{margin-top:14px;font-size:.8rem;color:var(--muted);background:#F7F8FA;border:1px dashed #D4D9E1;border-radius:8px;padding:11px 13px}
+.m-fx code{background:#141821;color:#EAEDF3;padding:2px 8px;border-radius:6px;font-size:.78rem}
+.mkt-title{font-size:.72rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin:24px 0 12px;display:flex;align-items:center;gap:9px}
+.mkt-title::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--teal)}
 .grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
-.mkt{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;border-top:4px solid var(--teal);transition:.2s}
-.mkt:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
-.mkt .head{display:flex;align-items:center;gap:11px;margin-bottom:11px}
-.mkt .em{font-size:1.7rem;line-height:1}
-.mkt h4{font-size:1.05rem;color:var(--ink);font-weight:700}
-.mkt .sc{font-size:.72rem;color:var(--teal);font-weight:700;margin-top:2px}
-.mkt p{font-size:.84rem;line-height:1.6;color:var(--ink-2);margin-bottom:12px}
+.mkt{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px;border-top:4px solid var(--teal)}
+.mkt .head{display:flex;align-items:center;gap:11px;margin-bottom:10px}
+.mkt .em{font-size:1.6rem;line-height:1}
+.mkt h4{font-size:1.02rem;color:var(--ink);font-weight:700}
+.mkt .sc{font-size:.72rem;color:var(--teal);font-weight:700;margin-top:1px}
+.mkt p{font-size:.83rem;line-height:1.55;color:var(--ink-2);margin-bottom:11px}
 .mkt .mt{display:flex;flex-wrap:wrap;gap:7px}
 .mkt .t{background:var(--teal-bg);color:var(--teal);padding:4px 11px;border-radius:999px;font-size:.72rem;font-weight:600}
+.state-block{margin-top:34px;padding-top:26px;border-top:1px dashed var(--line)}
+.state-block h3{font-size:1.05rem;font-weight:800;color:var(--ink);display:flex;align-items:center;gap:8px}
+.state-block .sh{font-size:.82rem;color:var(--muted);margin:4px 0 4px}
 .foot{text-align:center;color:var(--muted);font-size:.76rem;margin-top:30px}
 </style>
 </head>
@@ -135,7 +146,7 @@ tbody tr:hover td{background:#FBFCFE}
     <div class="hero-top">
       <div class="brand-row">
         <div class="logo-badge"><svg viewBox="0 0 100 100" width="30" height="30"><path d="M50 8L92 92H72L50 44L28 92H8L50 8Z" fill="#fff"/></svg></div>
-        <div><h1>Forecast Intelligence — Análise por UF</h1><div class="sub">Projeção de Market Share 2027 · Varejo Brasil · Modelo multi-fator</div></div>
+        <div><h1>Forecast Intelligence — Análise por UF</h1><div class="sub">Projeção de Industry Share 2027 · Varejo Brasil · Modelo multi-fator</div></div>
       </div>
       <span class="pill"><span class="dot"></span>Escopo Nacional (BR) · Base 2026 → 2027</span>
     </div>
@@ -176,60 +187,78 @@ tbody tr:hover td{background:#FBFCFE}
     <h2 style="margin:26px 0 6px;font-size:1.15rem;color:var(--ink)">Insights por Estado — Alta Potência <span style="font-size:.8rem;color:var(--muted);font-weight:400">(ordenado pela variação em ≥340HP)</span></h2>
     <div class="cards" id="pcards"></div>
   </div>
+
+  <!-- ================= METODOLOGIA ================= -->
   <div id="metodologia" class="panel" style="display:none">
     <div class="ptitle"><div><h2>Metodologia de Projeção 2027</h2></div></div>
-    <p class="meth-intro">A projeção 2027 usa <b>dois métodos distintos</b>, apresentados abaixo em sequência. Primeiro o <b>Brasil</b> (modelo multi-fator, por UF) e, na sequência, os <b>mercados internacionais</b> — Argentina, OSA e México — que seguem a lógica de <b>Rolling 12 meses</b> sobre a indústria de Budget.</p>
+    <p class="m-lead">A projeção combina <b>dois métodos independentes</b>: um para o <b>Brasil</b> e outro para os <b>mercados internacionais</b> (Argentina, OSA e México). O quadro abaixo resume as diferenças; em seguida, cada método é detalhado.</p>
 
-    <!-- ===== SEÇÃO 1: BRASIL ===== -->
-    <div class="meth-sec br">
-      <div class="meth-bar"><span class="fl-em">🇧🇷</span><h3>Brasil — Projeção por UF</h3><span class="scope">Modelo Multi-fator</span></div>
-      <div class="meth-body">
-        <div class="sublabel">Como funciona</div>
-        <div class="lead">
-          <p>A sugestão de <b>market share por estado</b> é gerada por um processo de projeção que pontua cada UF em quatro vetores — <b>Crédito, Clima, Rentabilidade</b> e <b>Renovação de frota</b> — calculando um índice de momento específico por produto. Como o share é uma medida relativa, todas as colunas são <b>renormalizadas</b> para fechar exatamente 100%. Os segmentos de alta potência usam os mesmos vetores com pesos atenuados (fator 0,32), gerando variações mais suaves.</p>
-          <div class="fx">Fórmula: <code>share27 = share26 × (1 + Σ pesoᵢ·driverᵢ)</code> · renormalização por coluna.</div>
+    <!-- QUADRO COMPARATIVO -->
+    <div class="m-cmp">
+      <table>
+        <thead><tr><th></th><th class="col-br">🇧🇷 Brasil</th><th class="col-in">🌎 Argentina · OSA · México</th></tr></thead>
+        <tbody>
+          <tr><td class="rowlab">Método</td><td class="col-br">Modelo multi-fator</td><td class="col-in">Rolling 12 meses × Budget</td></tr>
+          <tr><td class="rowlab">Insumo principal</td><td class="col-br">Drivers qualitativos (clima, crédito, rentabilidade, renovação)</td><td class="col-in">Histórico de indústria dos últimos 12 meses + indústria de Budget</td></tr>
+          <tr><td class="rowlab">Granularidade</td><td class="col-br">Por UF e por produto</td><td class="col-in">Por região/país e por produto</td></tr>
+          <tr><td class="rowlab">Fórmula</td><td class="col-br"><code>share26 × (1 + Σ pesoᵢ·driverᵢ)</code></td><td class="col-in"><code>peso Rolling 12M × indústria Budget</code></td></tr>
+          <tr><td class="rowlab">Fechamento</td><td class="col-br">Renormalizado a 100% por coluna</td><td class="col-in">Coerente com o orçamento (Budget)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- BLOCOS DE MÉTODO LADO A LADO -->
+    <div class="m-methods">
+      <div class="m-block br">
+        <div class="m-top"><span class="fl">🇧🇷</span><h3>Brasil — por UF</h3><span class="tagm">Multi-fator</span></div>
+        <div class="m-in">
+          <p>Cada UF é pontuada em quatro vetores; a combinação gera um índice de momento por produto, e o resultado é renormalizado para fechar 100%.</p>
+          <div class="m-sub">Os quatro vetores</div>
+          <div class="vlist">
+            <div class="vrow"><span class="vic">💰</span><div class="vtx"><b>Crédito</b><span>Aperto de financiamento (Moderfrota/PRONAF).</span></div></div>
+            <div class="vrow"><span class="vic">🌦️</span><div class="vtx"><b>Clima</b><span>Recuperação no Sul vs. estiagem no Cerrado/MATOPIBA.</span></div></div>
+            <div class="vrow"><span class="vic">📈</span><div class="vtx"><b>Rentabilidade</b><span>Café, cana e perenes vs. grãos expostos a preço.</span></div></div>
+            <div class="vrow"><span class="vic">🚜</span><div class="vtx"><b>Renovação</b><span>Ciclo de troca de frota e expansão de área.</span></div></div>
+          </div>
+          <div class="m-fx"><code>share27 = share26 × (1 + Σ pesoᵢ·driverᵢ)</code> — alta potência usa pesos atenuados (fator 0,32).</div>
         </div>
-        <div class="sublabel">Os quatro vetores do modelo</div>
-        <div class="grid4">
-          <div class="tile"><div class="ic">💰</div><h4>Crédito</h4><p>Sensibilidade ao aperto de financiamento (Moderfrota/PRONAF).</p></div>
-          <div class="tile"><div class="ic">🌦️</div><h4>Clima</h4><p>Recuperação no Sul vs. estiagem no Cerrado/MATOPIBA.</p></div>
-          <div class="tile"><div class="ic">📈</div><h4>Rentabilidade</h4><p>Café, cana e perenes vs. grãos expostos a preço.</p></div>
-          <div class="tile"><div class="ic">🚜</div><h4>Renovação</h4><p>Ciclo de troca de frota e expansão de área.</p></div>
+      </div>
+
+      <div class="m-block in">
+        <div class="m-top"><span class="fl">🌎</span><h3>Argentina · OSA · México — por região</h3><span class="tagm">Rolling 12M</span></div>
+        <div class="m-in">
+          <p>Não usa drivers qualitativos. O share vem do próprio histórico de indústria: o peso móvel dos últimos 12 meses é aplicado sobre a indústria de Budget.</p>
+          <div class="m-sub">Passo a passo</div>
+          <div class="vlist">
+            <div class="vrow"><span class="vnum">1</span><div class="vtx"><b>Janela de 12 meses</b><span>Soma da indústria (retail/wholesale) dos últimos 12 meses corridos.</span></div></div>
+            <div class="vrow"><span class="vnum">2</span><div class="vtx"><b>Peso relativo</b><span>Participação de cada região no total do país, por produto.</span></div></div>
+            <div class="vrow"><span class="vnum">3</span><div class="vtx"><b>Aplicação ao Budget</b><span>O peso multiplica a indústria orçada do produto/região.</span></div></div>
+            <div class="vrow"><span class="vnum">4</span><div class="vtx"><b>Consolidação</b><span>Resultados agregados por linha e mercado.</span></div></div>
+          </div>
+          <div class="m-fx"><code>volume = peso Rolling 12M (indústria) × indústria de Budget</code>, por produto e região.</div>
         </div>
-        <div class="sublabel">Análise detalhada por estado — do maior ganho à maior perda</div>
-        <div class="cards" id="mcards"></div>
       </div>
     </div>
 
-    <!-- ===== SEÇÃO 2: INTERNACIONAL ===== -->
-    <div class="meth-sec intl">
-      <div class="meth-bar"><span class="fl-em">🌎</span><h3>Argentina · OSA · México — Projeção por Região</h3><span class="scope">Rolling 12M · Budget</span></div>
-      <div class="meth-body">
-        <div class="sublabel">Como funciona</div>
-        <div class="lead">
-          <p>Nesses três mercados, o share por produto/região <b>não</b> usa o modelo multi-fator brasileiro. Ele é derivado do próprio histórico recente de indústria: aplica-se o <b>peso do Rolling 12 meses</b> sobre as <b>indústrias definidas para o Budget</b>, de forma relativa a cada produto e região.</p>
-          <div class="fx">Base: <code>peso Rolling 12M (indústria) × indústria de Budget</code>, por produto e região.</div>
-        </div>
-        <div class="sublabel">Passo a passo do Rolling 12 meses</div>
-        <div class="grid4">
-          <div class="tile num"><span class="n">1</span><h4>Janela de 12 meses</h4><p>Soma-se a indústria (retail/wholesale) dos últimos 12 meses corridos, atualizada mês a mês.</p></div>
-          <div class="tile num"><span class="n">2</span><h4>Peso relativo</h4><p>Calcula-se o peso de cada região no total do país, por produto (tratores, colheitadeiras, etc.).</p></div>
-          <div class="tile num"><span class="n">3</span><h4>Aplicação ao Budget</h4><p>O peso multiplica a indústria definida no Budget do produto/região, gerando o volume sugerido.</p></div>
-          <div class="tile num"><span class="n">4</span><h4>Consolidação</h4><p>Os resultados são consolidados por linha e mercado, mantendo a coerência com o orçamento.</p></div>
-        </div>
-        <div class="sublabel">Detalhamento por mercado</div>
-        <div class="grid3">
-          <div class="mkt"><div class="head"><span class="em">🇦🇷</span><div><h4>Argentina</h4><div class="sc">Rolling 12M · Indústria de Budget</div></div></div>
-            <p>Share por região argentina (ex.: Pampeana, NOA, NEA, Cuyo, Patagônia) obtido pelo peso do Rolling 12 meses da indústria local, aplicado à indústria de Budget de cada produto. Captura a sazonalidade da safra e o mix regional.</p>
-            <div class="mt"><span class="t">Retail/Wholesale 12M</span><span class="t">Por produto</span><span class="t">Por região AR</span></div></div>
-          <div class="mkt"><div class="head"><span class="em">🌎</span><div><h4>OSA — Other South America</h4><div class="sc">Rolling 12M · Indústria de Budget</div></div></div>
-            <p>Agrupa os demais países da América do Sul (ex.: Bolívia, Paraguai, Uruguai, Chile, Peru, Colômbia). O peso do Rolling é calculado por país/região dentro do bloco e aplicado à indústria de Budget por produto.</p>
-            <div class="mt"><span class="t">Bloco multi-país</span><span class="t">Por produto</span><span class="t">Por país/região</span></div></div>
-          <div class="mkt"><div class="head"><span class="em">🇲🇽</span><div><h4>México</h4><div class="sc">Rolling 12M · Indústria de Budget</div></div></div>
-            <p>Share por região mexicana (ex.: Bajío, Noroeste, Norte, Sul-Sudeste) via peso do Rolling 12 meses da indústria, aplicado à indústria de Budget de cada linha. Reflete o peso das culturas irrigadas do noroeste e do Bajío.</p>
-            <div class="mt"><span class="t">Retail/Wholesale 12M</span><span class="t">Por produto</span><span class="t">Por região MX</span></div></div>
-        </div>
-      </div>
+    <!-- MERCADOS INTERNACIONAIS -->
+    <div class="mkt-title">Mercados internacionais — recorte por região</div>
+    <div class="grid3">
+      <div class="mkt"><div class="head"><span class="em">🇦🇷</span><div><h4>Argentina</h4><div class="sc">Rolling 12M · Budget</div></div></div>
+        <p>Regiões: Pampeana, NOA, NEA, Cuyo, Patagônia. Captura a sazonalidade da safra e o mix regional.</p>
+        <div class="mt"><span class="t">Por produto</span><span class="t">Por região AR</span></div></div>
+      <div class="mkt"><div class="head"><span class="em">🌎</span><div><h4>OSA — Other South America</h4><div class="sc">Rolling 12M · Budget</div></div></div>
+        <p>Bloco multi-país (Bolívia, Paraguai, Uruguai, Chile, Peru, Colômbia). Peso calculado por país/região dentro do bloco.</p>
+        <div class="mt"><span class="t">Por produto</span><span class="t">Por país/região</span></div></div>
+      <div class="mkt"><div class="head"><span class="em">🇲🇽</span><div><h4>México</h4><div class="sc">Rolling 12M · Budget</div></div></div>
+        <p>Regiões: Bajío, Noroeste, Norte, Sul-Sudeste. Reflete o peso das culturas irrigadas do noroeste e do Bajío.</p>
+        <div class="mt"><span class="t">Por produto</span><span class="t">Por região MX</span></div></div>
+    </div>
+
+    <!-- APROFUNDAMENTO BRASIL (movido para o fim) -->
+    <div class="state-block">
+      <h3>🇧🇷 Aprofundamento — análise por estado (Brasil)</h3>
+      <div class="sh">Leitura dos vetores por UF, do maior ganho à maior perda de share.</div>
+      <div class="cards" id="mcards"></div>
     </div>
   </div>
   <div class="foot">AGCO Forecast Intelligence · Projeção interna 2027 (varejo). Brasil: modelo multi-fator por UF. Argentina · OSA · México: peso Rolling 12 meses de indústria sobre a indústria de Budget, por produto e região. Alta potência com base real 2026 e variações atenuadas. Todas as colunas fecham 100,00%.</div>
