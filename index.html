@@ -69,34 +69,41 @@ tbody tr:hover td{background:#FBFCFE}
 .total .c27{color:#FDE68A;background:#1d222d!important}
 .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;font-size:.76rem;color:var(--muted)}
 .legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:5px}
-.mexp{background:linear-gradient(180deg,#FCFCFD,#F7F8FA);padding:24px;border-radius:14px;margin:20px 0;border:1px solid var(--line);border-left:5px solid var(--red)}
-#premium .mexp{border-left-color:var(--gold)}.mexp.teal{border-left-color:var(--teal)}
-.mexp h3{font-size:1.1rem;color:var(--ink);margin-bottom:10px}.mexp p{font-size:.88rem;line-height:1.65;margin-bottom:14px}
+/* ===== METODOLOGIA (reorganizada em 2 seções) ===== */
+.meth-section{margin-top:10px}
+.meth-head{display:flex;align-items:center;gap:12px;margin:8px 0 14px;padding-bottom:12px;border-bottom:2px solid var(--line)}
+.meth-head .mflag{font-size:1.7rem}
+.meth-head h2{font-size:1.25rem;color:var(--ink);font-weight:800}
+.meth-head .badge-scope{font-size:.66rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:4px 11px;border-radius:999px;background:var(--red-soft,#FDE8EB);color:var(--red);margin-left:auto}
+.meth-section.intl .meth-head{border-bottom-color:var(--teal-bg)}
+.meth-section.intl .meth-head .badge-scope{background:var(--teal-bg);color:var(--teal)}
+.mstep-title{font-size:.78rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.mstep-title::before{content:"";width:22px;height:2px;background:var(--red);border-radius:2px}
+.intl .mstep-title::before{background:var(--teal)}
+.mlead{background:linear-gradient(180deg,#FCFCFD,#F7F8FA);padding:22px;border-radius:14px;border:1px solid var(--line);border-left:5px solid var(--red)}
+.intl .mlead{border-left-color:var(--teal)}
+.mlead p{font-size:.9rem;line-height:1.7;color:var(--ink-2)}
+.mform{margin-top:14px;font-size:.82rem;color:var(--muted);background:#F7F8FA;border-radius:10px;padding:12px 14px;border:1px dashed #D4D9E1}
+.mform code{background:#141821;color:#EAEDF3;padding:2px 8px;border-radius:6px;font-size:.8rem}
 .mgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
 .mfeat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
-.mfeat .ic{font-size:1.4rem}.mfeat h4{font-size:.92rem;margin:8px 0 6px;color:var(--ink)}.mfeat p{font-size:.82rem;color:var(--muted);margin:0}
-.msplit{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin:6px 0 8px}
-.mblock{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;border-top:4px solid var(--red)}
-.mblock.intl{border-top-color:var(--teal)}
-.mblock h4{font-size:1.02rem;color:var(--ink);margin-bottom:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.mscope{font-size:.66rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:var(--red-soft,#FDE8EB);color:var(--red)}
-.mblock.intl .mscope{background:var(--teal-bg);color:var(--teal)}
-.mblock p{font-size:.86rem;line-height:1.65;color:var(--ink-2);margin-top:8px}
-.mform{margin-top:12px;font-size:.8rem;color:var(--muted);background:#F7F8FA;border-radius:8px;padding:10px 12px;border:1px dashed #D4D9E1}
-.mform code{background:#141821;color:#EAEDF3;padding:2px 7px;border-radius:6px;font-size:.78rem}
-.rsteps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-top:6px}
+.mfeat .ic{font-size:1.4rem}.mfeat h4{font-size:.92rem;margin:8px 0 6px;color:var(--ink)}.mfeat p{font-size:.82rem;color:var(--muted);margin:0;line-height:1.5}
+.rsteps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .rstep{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;border-left:4px solid var(--teal);position:relative}
 .rstep .num{position:absolute;top:14px;right:16px;font-size:1.4rem;font-weight:800;color:#E1F1F2}
 .rstep h5{font-size:.9rem;color:var(--ink);margin-bottom:6px}.rstep p{font-size:.8rem;color:var(--muted);line-height:1.55;margin:0}
-.mktgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:8px}
+.mktgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
 .mkt{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;border-top:4px solid var(--teal);transition:.2s}
 .mkt:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
 .mkt .top{display:flex;align-items:center;gap:10px;margin-bottom:10px}.mkt .flag{font-size:1.6rem}
 .mkt h4{font-size:1.05rem;color:var(--ink);font-weight:700}.mkt .sc{font-size:.72rem;color:var(--teal);font-weight:700}
 .mkt p{font-size:.84rem;line-height:1.6;color:var(--ink-2);margin-bottom:12px}
 .mkt .mt{display:flex;flex-wrap:wrap;gap:7px}.mkt .tag{background:var(--teal-bg);color:var(--teal);padding:4px 11px;border-radius:999px;font-size:.72rem;font-weight:600}
+.mdivider{height:1px;background:var(--line);margin:34px 0}
 .note{margin-top:16px;font-size:.82rem;color:var(--muted);background:#F7F8FA;border-radius:10px;padding:14px;border:1px dashed #D4D9E1}
 .note code{background:#141821;color:#EAEDF3;padding:2px 8px;border-radius:6px}
+.mexp{background:linear-gradient(180deg,#FCFCFD,#F7F8FA);padding:24px;border-radius:14px;margin:20px 0;border:1px solid var(--line);border-left:5px solid var(--gold)}
+.mexp h3{font-size:1.1rem;color:var(--ink);margin-bottom:10px}.mexp p{font-size:.88rem;line-height:1.65;margin-bottom:14px}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:8px}
 .card{background:#fff;padding:20px;border-radius:14px;border:1px solid var(--line);border-left:5px solid var(--flat);transition:.2s}
 .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
@@ -163,53 +170,63 @@ tbody tr:hover td{background:#FBFCFE}
     <div class="cards" id="pcards"></div>
   </div>
   <div id="metodologia" class="panel" style="display:none">
-    <h2 style="font-size:1.25rem;color:var(--ink)">Metodologia de Projeção 2027 — Brasil vs. Demais Mercados</h2>
-    <div class="msplit">
-      <div class="mblock">
-        <h4>🇧🇷 Brasil (por UF) <span class="mscope">Modelo Multi-fator</span></h4>
-        <p>A sugestão de <b>market share por estado</b> é gerada por um <b>processo de projeção</b> que pondera quatro vetores por UF — <b>Crédito, Clima, Rentabilidade</b> e <b>Renovação de frota</b> — calculando um índice de momento por produto. Como share é relativo, todas as colunas são <b>renormalizadas</b> para fechar exatamente 100%.</p>
-        <div class="mform">Fórmula: <code>share27 = share26 × (1 + Σ pesoᵢ·driverᵢ)</code> · renormalização por coluna. Alta potência usa pesos atenuados (fator 0,32).</div>
+    <div class="ptitle"><div><h2>Metodologia de Projeção 2027</h2><div class="hint">Dois métodos distintos: <b>Brasil</b> por modelo multi-fator (por UF) · <b>Argentina, OSA e México</b> por Rolling 12 meses sobre a indústria de Budget</div></div></div>
+
+    <!-- ===================== SEÇÃO 1: BRASIL ===================== -->
+    <div class="meth-section br">
+      <div class="meth-head"><span class="mflag">🇧🇷</span><h2>Brasil — Projeção por UF</h2><span class="badge-scope">Modelo Multi-fator</span></div>
+
+      <div class="mstep-title">Como funciona</div>
+      <div class="mlead">
+        <p>A sugestão de <b>market share por estado</b> é gerada por um <b>processo de projeção</b> que pontua cada UF em quatro vetores — <b>Crédito, Clima, Rentabilidade</b> e <b>Renovação de frota</b> — calculando um índice de momento específico por produto. Como o share é uma medida relativa, todas as colunas são <b>renormalizadas</b> para fechar exatamente 100%. Os segmentos de alta potência usam os mesmos vetores com pesos atenuados (fator 0,32) para variações mais suaves.</p>
+        <div class="mform">Fórmula: <code>share27 = share26 × (1 + Σ pesoᵢ·driverᵢ)</code> · renormalização por coluna.</div>
       </div>
-      <div class="mblock intl">
-        <h4>🌎 Argentina · OSA · México <span class="mscope">Rolling 12M · Budget</span></h4>
-        <p>Para os mercados internacionais, a métrica é o <b>peso do <em>Rolling</em> 12 meses de indústria</b>, aplicado às <b>indústrias definidas para o Budget</b>, de forma <b>relativa a cada produto e região</b>. O share decorre da participação móvel dos últimos 12 meses ponderada pela indústria orçada — e não do modelo multi-fator brasileiro.</p>
-        <div class="mform">Base: <code>peso Rolling 12M (indústria) × indústria de Budget</code>, por produto e região.</div>
-      </div>
-    </div>
-    <div class="mexp teal">
-      <h3>🌎 Como funciona o Rolling 12 meses (Argentina · OSA · México)</h3>
-      <p>Nesses três mercados, o share por produto/região é <b>derivado do próprio histórico recente de indústria</b>. O processo segue quatro passos:</p>
-      <div class="rsteps">
-        <div class="rstep"><span class="num">1</span><h5>Janela móvel de 12 meses</h5><p>Soma-se a indústria (retail/wholesale) dos últimos 12 meses corridos, atualizada mês a mês.</p></div>
-        <div class="rstep"><span class="num">2</span><h5>Peso relativo</h5><p>Calcula-se o peso de cada região dentro do total do país, por produto (tratores, colheitadeiras, etc.).</p></div>
-        <div class="rstep"><span class="num">3</span><h5>Aplicação à indústria de Budget</h5><p>Esse peso é multiplicado pela indústria definida no Budget do produto/região, gerando o volume sugerido.</p></div>
-        <div class="rstep"><span class="num">4</span><h5>Consolidação por produto/região</h5><p>Os resultados são consolidados por linha e mercado, mantendo a coerência com o orçamento.</p></div>
-      </div>
-    </div>
-    <h2 style="margin:26px 0 4px;font-size:1.15rem;color:var(--ink)">Detalhamento por Mercado Internacional</h2>
-    <div class="mktgrid">
-      <div class="mkt"><div class="top"><span class="flag">🇦🇷</span><div><h4>Argentina</h4><div class="sc">Rolling 12M · Indústria de Budget</div></div></div>
-        <p>Share por <b>região argentina</b> (ex.: Pampeana, NOA, NEA, Cuyo, Patagônia) obtido pelo peso do Rolling 12 meses da indústria local, aplicado à indústria de Budget de cada produto. Captura a sazonalidade da safra e o mix regional.</p>
-        <div class="mt"><span class="tag">Retail/Wholesale 12M</span><span class="tag">Por produto</span><span class="tag">Por região AR</span></div></div>
-      <div class="mkt"><div class="top"><span class="flag">🌎</span><div><h4>OSA — Other South America</h4><div class="sc">Rolling 12M · Indústria de Budget</div></div></div>
-        <p>Agrupa os <b>demais países da América do Sul</b> (ex.: Bolívia, Paraguai, Uruguai, Chile, Peru, Colômbia). O peso do Rolling 12 meses é calculado por país/região dentro do bloco e aplicado à indústria de Budget por produto.</p>
-        <div class="mt"><span class="tag">Bloco multi-país</span><span class="tag">Por produto</span><span class="tag">Por país/região</span></div></div>
-      <div class="mkt"><div class="top"><span class="flag">🇲🇽</span><div><h4>México</h4><div class="sc">Rolling 12M · Indústria de Budget</div></div></div>
-        <p>Share por <b>região mexicana</b> (ex.: Bajío, Noroeste, Norte, Sul-Sudeste) via peso do Rolling 12 meses da indústria, aplicado à indústria de Budget de cada linha. Reflete o peso das culturas irrigadas do noroeste e do Bajío.</p>
-        <div class="mt"><span class="tag">Retail/Wholesale 12M</span><span class="tag">Por produto</span><span class="tag">Por região MX</span></div></div>
-    </div>
-    <div class="mexp">
-      <h3>Vetores do modelo brasileiro</h3>
-      <p>Detalhamento dos quatro fatores que alimentam a projeção por UF no Brasil:</p>
+
+      <div class="mstep-title">Os quatro vetores do modelo</div>
       <div class="mgrid">
         <div class="mfeat"><div class="ic">💰</div><h4>Crédito</h4><p>Sensibilidade ao aperto de financiamento (Moderfrota/PRONAF).</p></div>
         <div class="mfeat"><div class="ic">🌦️</div><h4>Clima</h4><p>Recuperação no Sul vs. estiagem no Cerrado/MATOPIBA.</p></div>
         <div class="mfeat"><div class="ic">📈</div><h4>Rentabilidade</h4><p>Café, cana e perenes vs. grãos expostos a preço.</p></div>
         <div class="mfeat"><div class="ic">🚜</div><h4>Renovação</h4><p>Ciclo de troca de frota e expansão de área.</p></div>
       </div>
+
+      <div class="mstep-title">Análise detalhada por estado <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--muted)">(maior ganho → maior perda)</span></div>
+      <div class="cards" id="mcards"></div>
     </div>
-    <h2 style="margin:26px 0 6px;font-size:1.15rem;color:var(--ink)">Análise Detalhada por Estado — Brasil <span style="font-size:.8rem;color:var(--muted);font-weight:400">(maior ganho → maior perda)</span></h2>
-    <div class="cards" id="mcards"></div>
+
+    <div class="mdivider"></div>
+
+    <!-- ===================== SEÇÃO 2: INTERNACIONAL ===================== -->
+    <div class="meth-section intl">
+      <div class="meth-head"><span class="mflag">🌎</span><h2>Argentina · OSA · México — Projeção por Região</h2><span class="badge-scope">Rolling 12M · Budget</span></div>
+
+      <div class="mstep-title">Como funciona</div>
+      <div class="mlead">
+        <p>Nesses três mercados, o share por produto/região <b>não</b> usa o modelo multi-fator brasileiro. Ele é <b>derivado do próprio histórico recente de indústria</b>: aplica-se o <b>peso do Rolling 12 meses</b> sobre as <b>indústrias definidas para o Budget</b>, de forma relativa a cada produto e região.</p>
+        <div class="mform">Base: <code>peso Rolling 12M (indústria) × indústria de Budget</code>, por produto e região.</div>
+      </div>
+
+      <div class="mstep-title">Passo a passo do Rolling 12 meses</div>
+      <div class="rsteps">
+        <div class="rstep"><span class="num">1</span><h5>Janela móvel de 12 meses</h5><p>Soma-se a indústria (retail/wholesale) dos últimos 12 meses corridos, atualizada mês a mês.</p></div>
+        <div class="rstep"><span class="num">2</span><h5>Peso relativo</h5><p>Calcula-se o peso de cada região dentro do total do país, por produto (tratores, colheitadeiras, etc.).</p></div>
+        <div class="rstep"><span class="num">3</span><h5>Aplicação ao Budget</h5><p>O peso é multiplicado pela indústria definida no Budget do produto/região, gerando o volume sugerido.</p></div>
+        <div class="rstep"><span class="num">4</span><h5>Consolidação</h5><p>Os resultados são consolidados por linha e mercado, mantendo a coerência com o orçamento.</p></div>
+      </div>
+
+      <div class="mstep-title">Detalhamento por mercado</div>
+      <div class="mktgrid">
+        <div class="mkt"><div class="top"><span class="flag">🇦🇷</span><div><h4>Argentina</h4><div class="sc">Rolling 12M · Indústria de Budget</div></div></div>
+          <p>Share por <b>região argentina</b> (ex.: Pampeana, NOA, NEA, Cuyo, Patagônia) obtido pelo peso do Rolling 12 meses da indústria local, aplicado à indústria de Budget de cada produto. Captura a sazonalidade da safra e o mix regional.</p>
+          <div class="mt"><span class="tag">Retail/Wholesale 12M</span><span class="tag">Por produto</span><span class="tag">Por região AR</span></div></div>
+        <div class="mkt"><div class="top"><span class="flag">🌎</span><div><h4>OSA — Other South America</h4><div class="sc">Rolling 12M · Indústria de Budget</div></div></div>
+          <p>Agrupa os <b>demais países da América do Sul</b> (ex.: Bolívia, Paraguai, Uruguai, Chile, Peru, Colômbia). O peso do Rolling 12 meses é calculado por país/região dentro do bloco e aplicado à indústria de Budget por produto.</p>
+          <div class="mt"><span class="tag">Bloco multi-país</span><span class="tag">Por produto</span><span class="tag">Por país/região</span></div></div>
+        <div class="mkt"><div class="top"><span class="flag">🇲🇽</span><div><h4>México</h4><div class="sc">Rolling 12M · Indústria de Budget</div></div></div>
+          <p>Share por <b>região mexicana</b> (ex.: Bajío, Noroeste, Norte, Sul-Sudeste) via peso do Rolling 12 meses da indústria, aplicado à indústria de Budget de cada linha. Reflete o peso das culturas irrigadas do noroeste e do Bajío.</p>
+          <div class="mt"><span class="tag">Retail/Wholesale 12M</span><span class="tag">Por produto</span><span class="tag">Por região MX</span></div></div>
+      </div>
+    </div>
   </div>
   <div class="foot">AGCO Forecast Intelligence · Projeção interna 2027 (varejo). Brasil: modelo multi-fator por UF. Argentina · OSA · México: peso Rolling 12 meses de indústria sobre a indústria de Budget, por produto e região. Alta potência com base real 2026 e variações atenuadas. Todas as colunas fecham 100,00%.</div>
 </div>
@@ -217,11 +234,8 @@ tbody tr:hover td{background:#FBFCFE}
 /* ===== BLOCO DE DADOS (edite aqui) ===== */
 const NM={AC:"Acre",AL:"Alagoas",AM:"Amazonas",AP:"Amapá",BA:"Bahia",CE:"Ceará",DF:"Distrito Federal",ES:"Espírito Santo",GO:"Goiás",MA:"Maranhão",MG:"Minas Gerais",MS:"Mato Grosso Do Sul",MT:"Mato Grosso",PA:"Pará",PB:"Paraíba",PE:"Pernambuco",PI:"Piauí",PR:"Paraná",RJ:"Rio De Janeiro",RN:"Rio Grande do Norte",RO:"Rondônia",RR:"Roraima",RS:"Rio Grande Do Sul",SC:"Santa Catarina",SE:"Sergipe",SP:"São Paulo",TO:"Tocantins"};
 const RG={AC:"norte",AL:"nordeste",AM:"norte",AP:"norte",BA:"nordeste",CE:"nordeste",DF:"centro-oeste",ES:"sudeste",GO:"centro-oeste",MA:"nordeste",MG:"sudeste",MS:"centro-oeste",MT:"centro-oeste",PA:"norte",PB:"nordeste",PE:"nordeste",PI:"nordeste",PR:"sul",RJ:"sudeste",RN:"nordeste",RO:"norte",RR:"norte",RS:"sul",SC:"sul",SE:"nordeste",SP:"sudeste",TO:"norte"};
-// base 2026 principal [Tratores, Colheitadeiras, Pulverizadores, Plantadeiras]
 const MAIN={AC:[.20,.10,0,.10],AL:[.60,.10,.10,.10],AM:[.20,0,0,0],AP:[0,0,0,0],BA:[4.30,5.00,7.50,4.10],CE:[1.80,.10,0,.60],DF:[1.00,.10,.10,.30],ES:[3.60,0,.10,.10],GO:[4.10,11.60,12.60,10.50],MA:[1.40,2.00,2.70,3.50],MG:[21.00,5.40,5.00,7.70],MS:[2.50,5.00,5.20,7.80],MT:[5.50,26.50,32.10,19.20],PA:[2.20,1.90,3.50,4.30],PB:[.60,0,0,.10],PE:[1.70,0,0,0],PI:[.50,1.90,2.20,2.30],PR:[9.80,17.50,9.70,15.10],RJ:[.40,0,0,0],RN:[.80,0,0,0],RO:[1.70,2.00,1.30,1.00],RR:[.20,.30,.40,.30],RS:[10.30,11.20,5.40,8.90],SC:[6.30,2.40,1.10,3.00],SE:[1.10,.70,.40,1.10],SP:[17.60,4.80,6.90,7.30],TO:[.80,1.50,3.70,2.70]};
-// base 2026 REAL premium (Segmentos.xlsx) [260-339HP, >=340HP, Classe7, Classe8+, Plant>20] em %
 const PREM={AM:[0,0,0,0,0],PA:[1.7045,3.1489,4.3845,0.9302,5.0265],RO:[0.8523,1.1450,3.7099,1.3953,1.9841],AC:[0,0,0,0,0],AP:[0,0,0,0,0],RR:[0,0.0954,1.0118,0,0.3968],TO:[1.1364,3.2443,1.5177,1.0465,3.3069],MA:[0.2841,3.8168,2.6981,3.1395,3.9683],PI:[1.7045,5.1527,1.8550,4.7674,4.3651],CE:[0,0,0,0,0],RN:[1.7045,0,0,0,0],PB:[0,0,0,0,0],PE:[0,0.0954,0,0,0],AL:[0.5682,0.0954,0,0,0],SE:[0,0,0,0,0],BA:[1.4205,11.1641,2.5295,13.3721,8.3333],MG:[7.3864,3.3397,4.3845,1.7442,3.0423],ES:[0,0,0,0,0],RJ:[0,0,0,0,0],SP:[23.2955,4.0076,2.8668,0,1.0582],PR:[7.1023,4.0076,9.9494,1.8605,1.0582],SC:[1.4205,0.2863,1.1804,0.1163,0.5291],RS:[9.0909,3.9122,4.7218,3.3721,2.9101],MT:[26.4205,36.4504,33.8954,53.6047,38.7566],MS:[3.4091,7.0611,9.1062,3.7209,5.0265],GO:[12.5000,12.9771,16.1889,10.8140,19.9735],DF:[0,0,0,0,0]};
-// drivers (clima, credito, rentab, renovacao)
 const DRV={RS:[1.5,-.3,1.2,1.3],PR:[1.2,-.3,1.4,1.5],SC:[1.3,-.2,1.0,1.0],SP:[.6,-.5,1.3,.7],MG:[.5,-.4,1.4,.9],ES:[.4,-.3,1.1,.5],MT:[-1.8,-1.0,-.8,-.6],GO:[-1.3,-.9,-.5,-.4],MS:[-1.0,-.8,-.3,-.2],DF:[-.8,-.9,-.4,-.3],BA:[-1.4,-.9,-.4,-.5],MA:[-1.2,-.9,-.3,-.4],PI:[-1.3,-.9,-.3,-.4],TO:[-1.2,-.9,-.2,-.4],PA:[-.4,-.7,.2,.1],RO:[-.7,-.7,0,-.2],RR:[-.6,-.6,0,-.1],AC:[-.3,-.6,-.2,-.2],AM:[-1.0,-.9,-.4,-.5],AP:[0,-.5,0,0],CE:[-.5,-.7,.3,0],AL:[.2,-.4,.4,.1],PE:[.1,-.4,.3,0],PB:[0,-.4,.1,0],RN:[.1,-.4,.2,0],SE:[.2,-.3,.4,.2],RJ:[0,-.3,0,0]};
 const DRVP={RS:[1.5,-.4,1.2,1.3],PR:[1.2,-.4,1.4,1.5],SC:[1.3,-.3,1.0,1.0],SP:[.6,-.6,1.3,.7],MG:[.5,-.5,1.4,.9],ES:[.4,-.4,1.1,.5],MT:[-1.8,-1.2,-.8,-.6],GO:[-1.3,-1.1,-.5,-.4],MS:[-1.0,-1.0,-.3,-.2],DF:[-.8,-1.0,-.4,-.3],BA:[-1.4,-1.1,-.4,-.5],MA:[-1.2,-1.0,-.3,-.4],PI:[-1.3,-1.0,-.3,-.4],TO:[-1.2,-1.0,-.2,-.4],PA:[-.4,-.8,.2,.1],RO:[-.7,-.8,0,-.2],RR:[-.6,-.7,0,-.1],AC:[-.3,-.6,-.2,-.2],AM:[-1.0,-1.0,-.4,-.5],AP:[0,-.5,0,0],CE:[-.5,-.8,.3,0],AL:[.2,-.5,.4,.1],PE:[.1,-.5,.3,0],PB:[0,-.5,.1,0],RN:[.1,-.5,.2,0],SE:[.2,-.4,.4,.2],RJ:[0,-.4,0,0]};
 const PW=[[.030,.045,.030,.030],[.055,.040,.030,.035],[.055,.040,.030,.035],[.050,.042,.030,.035]];
@@ -239,7 +253,6 @@ const f=x=>x.toFixed(2)+"%";
 function cell(b,p){var d=p-b,c=d>.005?"up":d<-.005?"down":"flat",a=d>.005?"▲":d<-.005?"▼":"▬";return"<td>"+f(b)+'</td><td class="c27">'+f(p)+' <span class="d '+c+'">'+a+"</span></td>";}
 function badge(dt){return dt>.02?'<span class="badge win">+'+dt.toFixed(2)+" pp</span>":dt<-.02?'<span class="badge loss">'+dt.toFixed(2)+" pp</span>":'<span class="badge flat">estável</span>';}
 function bar(v,l){var pct=(v+2)/4*100,pol=v>.15?"p":v<-.15?"n":"u";return'<div class="br"><span class="l">'+l+'</span><span class="tk"><span class="fl '+pol+'" style="width:'+pct.toFixed(0)+'%"></span></span></div>';}
-// tabela principal
 var mrows="",nwin=0,nloss=0;
 for(var i=0;i<UFS.length;i++){var u=UFS[i],cells="";for(var j=0;j<4;j++)cells+=cell(M.b[u][j],M.p[u][j]);var dt=r2(M.p[u][0]-M.b[u][0]);if(dt>.02)nwin++;if(dt<-.02)nloss++;mrows+='<tr data-r="'+RG[u]+'"><td><span class="chip '+RG[u]+'">'+u+'</span></td><td class="nm">'+NM[u]+" "+badge(dt)+"</td>"+cells+'<td class="just">'+JMAIN[u]+"</td></tr>";}
 var mt="";for(var j=0;j<4;j++){var s26=0,s27=0;for(var i=0;i<UFS.length;i++){s26+=M.b[UFS[i]][j];s27+=M.p[UFS[i]][j];}mt+="<td>"+f(s26)+'</td><td class="c27">'+f(s27)+"</td>";}
@@ -247,32 +260,26 @@ mrows+='<tr class="total"><td></td><td class="nm">TOTAL BRASIL</td>'+mt+'<td cla
 document.getElementById("tMain").innerHTML='<thead><tr><th>UF</th><th>Estado</th><th>Trat. 26</th><th class="c27">Trat. 27</th><th>Colh. 26</th><th class="c27">Colh. 27</th><th>Pulv. 26</th><th class="c27">Pulv. 27</th><th>Plant. 26</th><th class="c27">Plant. 27</th><th>Justificativa</th></tr></thead><tbody>'+mrows+"</tbody>";
 document.getElementById("mNwin").textContent=nwin+" estados";
 document.getElementById("mNloss").textContent=nloss+" estados";
-// cards principais
 var rkM=UFS.slice().sort(function(a,b){return(M.p[b][0]-M.b[b][0])-(M.p[a][0]-M.b[a][0]);});
 var mcards="";
 for(var i=0;i<rkM.length;i++){var u=rkM[i],dt=r2(M.p[u][0]-M.b[u][0]),dr=DRV[u];var tr=dt>.02?"pos":dt<-.02?"neg":"";var dc=dt>.02?"up":dt<-.02?"down":"flat";var dtx=dt>0?"+"+dt.toFixed(2)+" pp":dt.toFixed(2)+" pp";var tags="";if(dr[1]<=-.7)tags+='<span class="tag n">Crédito Restrito</span>';if(dr[0]<=-.9)tags+='<span class="tag n">Risco Climático</span>';if(dr[0]>=.9)tags+='<span class="tag p">Clima Favorável</span>';if(dr[2]>=.9)tags+='<span class="tag p">Rentabilidade Alta</span>';if(dr[3]>=.9)tags+='<span class="tag p">Renovação Aquecida</span>';if(!tags)tags='<span class="tag u">Cenário Misto</span>';mcards+='<div class="card '+tr+'"><div class="ch"><h3>'+NM[u]+' <span class="cuf">'+u+'</span></h3><span class="cd '+dc+'">'+dtx+'</span></div><p class="cj">'+JMAIN[u]+'</p><div class="bars">'+bar(dr[0],"Clima")+bar(dr[1],"Crédito")+bar(dr[2],"Rentab.")+bar(dr[3],"Renov.")+'</div><div class="tags">'+tags+"</div></div>";}
 document.getElementById("mcards").innerHTML=mcards;
-// KPIs principais
 var mw=rkM[0],ml=rkM[rkM.length-1];
 document.getElementById("kpis").innerHTML='<div class="kpi win"><div class="ico" style="background:var(--up-bg)">🏆</div><h3>Maior Ganho de Share</h3><div class="val">'+NM[mw]+' <small class="up">+'+r2(M.p[mw][0]-M.b[mw][0]).toFixed(2)+' pp</small></div><div class="desc">Rentabilidade resiliente e ciclo de renovação sustentam a liderança.</div></div><div class="kpi loss"><div class="ico" style="background:var(--down-bg)">⚠️</div><h3>Maior Retração</h3><div class="val">'+NM[ml]+' <small class="down">'+r2(M.p[ml][0]-M.b[ml][0]).toFixed(2)+' pp</small></div><div class="desc">Estiagem no Cerrado e aperto de crédito aprofundam a perda.</div></div><div class="kpi gold"><div class="ico">⚙️</div><h3>Destaque Alta Potência</h3><div class="val" id="kPrem">–</div><div class="desc">Maior avanço em ≥340HP e Classe 8+ (aba Alta Potência).</div></div><div class="kpi loss"><div class="ico" style="background:var(--down-bg)">💧</div><h3>Risco Hídrico + Crédito</h3><div class="val">MT · BA · GO · MS</div><div class="desc">MATOPIBA e Centro-Oeste de grãos, mais expostos ao choque de 2027.</div></div>';
-// tabela premium
 var pu=UFS.filter(function(u){return PREM[u].reduce(function(a,b){return a+b;},0)>0;});
 var prows="";
 for(var i=0;i<pu.length;i++){var u=pu[i],cells="";for(var j=0;j<5;j++)cells+=cell(P.b[u][j],P.p[u][j]);var dt=r2(P.p[u][1]-P.b[u][1]);prows+='<tr data-r="'+RG[u]+'"><td><span class="chip '+RG[u]+'">'+u+'</span></td><td class="nm">'+NM[u]+" "+badge(dt)+"</td>"+cells+'<td class="just">'+(JPREM[u]||"")+"</td></tr>";}
 var pt="";for(var j=0;j<5;j++){var s26=0,s27=0;for(var i=0;i<UFS.length;i++){s26+=P.b[UFS[i]][j];s27+=P.p[UFS[i]][j];}pt+="<td>"+f(s26)+'</td><td class="c27">'+f(s27)+"</td>";}
 prows+='<tr class="total"><td></td><td class="nm">TOTAL BRASIL</td>'+pt+'<td class="just">Cada segmento soma exatamente 100,00%.</td></tr>';
 document.getElementById("tPrem").innerHTML='<thead><tr><th rowspan="2">UF</th><th rowspan="2">Estado</th><th class="grp" colspan="2">Trator 260–339 HP</th><th class="grp" colspan="2">Trator ≥340 HP</th><th class="grp" colspan="2">Colheit. Classe 7</th><th class="grp" colspan="2">Colheit. Classe 8+</th><th class="grp" colspan="2">Plantad. &gt;20 linhas</th><th rowspan="2">Insight</th></tr><tr><th>26</th><th class="c27">27</th><th>26</th><th class="c27">27</th><th>26</th><th class="c27">27</th><th>26</th><th class="c27">27</th><th>26</th><th class="c27">27</th></tr></thead><tbody>'+prows+"</tbody>";
-// cards premium
 var rkP=pu.slice().sort(function(a,b){return(P.p[b][1]-P.b[b][1])-(P.p[a][1]-P.b[a][1]);});
 var pcards="";
 for(var i=0;i<rkP.length;i++){var u=rkP[i],dt=r2(P.p[u][1]-P.b[u][1]),dr=DRVP[u];var tr=dt>.02?"pos":dt<-.02?"neg":"";var dc=dt>.02?"up":dt<-.02?"down":"flat";var dtx=dt>.02?"+"+dt.toFixed(2)+" pp":dt<-.02?dt.toFixed(2)+" pp":"estável";var tags="";if(dr[1]<=-.8)tags+='<span class="tag n">Crédito de Ticket Alto</span>';if(dr[0]<=-.9)tags+='<span class="tag n">Risco Climático</span>';if(dr[0]>=.9)tags+='<span class="tag p">Clima Favorável</span>';if(dr[2]>=.9)tags+='<span class="tag p">Rentabilidade Alta</span>';if(dr[3]>=.9)tags+='<span class="tag p">Renovação Aquecida</span>';if(!tags)tags='<span class="tag u">Cenário Misto</span>';pcards+='<div class="card '+tr+'"><div class="ch"><h3>'+NM[u]+' <span class="cuf">'+u+'</span></h3><span class="cd '+dc+'">'+dtx+'</span></div><p class="cj">'+(JPREM[u]||"")+'</p><div class="bars">'+bar(dr[0],"Clima")+bar(dr[1],"Crédito")+bar(dr[2],"Rentab.")+bar(dr[3],"Renov.")+'</div><div class="tags">'+tags+"</div></div>";}
 document.getElementById("pcards").innerHTML=pcards;
-// KPIs premium
 var pw_=rkP[0],pl_=rkP[rkP.length-1];
 document.getElementById("kPrem").innerHTML=NM[pw_]+' <small class="up">+'+r2(P.p[pw_][1]-P.b[pw_][1]).toFixed(2)+" pp</small>";
 var conc=Math.round(P.b.MT[3]+P.b.GO[3]+P.b.MS[3]+P.b.BA[3]);
 document.getElementById("pkpis").innerHTML='<div class="kpi gold"><div class="ico">🚜</div><h3>Líder Absoluto (Premium)</h3><div class="val">Mato Grosso</div><div class="desc">36% dos tratores ≥340HP e 54% das Classe 8+ (dados reais 2026).</div></div><div class="kpi win"><div class="ico" style="background:var(--up-bg)">📈</div><h3>Maior Ganho ≥340HP</h3><div class="val">'+NM[pw_]+' <small class="up">+'+r2(P.p[pw_][1]-P.b[pw_][1]).toFixed(2)+' pp</small></div><div class="desc">Renovação aquecida e clima favorável no Sul.</div></div><div class="kpi loss"><div class="ico" style="background:var(--down-bg)">📉</div><h3>Maior Retração ≥340HP</h3><div class="val">'+NM[pl_]+' <small class="down">'+r2(P.p[pl_][1]-P.b[pl_][1]).toFixed(2)+' pp</small></div><div class="desc">Seca no Cerrado e crédito de ticket alto derrubam o share.</div></div><div class="kpi gold"><div class="ico">🌾</div><h3>Concentração Classe 8+</h3><div class="val">'+conc+'% em 4 UFs</div><div class="desc">MT · GO · MS · BA somam a maior fatia da Classe 8+.</div></div>';
-// filtros e export
 var panels={main:document.getElementById("main"),premium:document.getElementById("premium"),metodologia:document.getElementById("metodologia")};
 document.querySelector(".filters").addEventListener("click",function(e){
   var btn=e.target.closest(".fbtn");if(!btn)return;
