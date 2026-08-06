@@ -92,12 +92,16 @@ tbody tr:hover td{background:#FBFCFE}
 .m-lead{width:100%;font-size:.92rem;line-height:1.7;color:var(--ink-2);margin-bottom:8px;text-align:left}
 .m-lead b{color:var(--ink)}
 .sec{width:100%;margin-top:24px}
-.sec-hd{display:flex;align-items:center;gap:12px;padding:15px 20px;border-radius:14px 14px 0 0;border:1px solid var(--line);border-bottom:none}
+/* CABEÇALHO DA SEÇÃO — grupo (badge+título) à esquerda, selo à direita, alinhado no topo */
+.sec-hd{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:16px 20px;border-radius:14px 14px 0 0;border:1px solid var(--line);border-bottom:none}
 .sec.br .sec-hd{background:linear-gradient(135deg,#FCF3F4,#fff);border-top:4px solid var(--red)}
 .sec.in .sec-hd{background:linear-gradient(135deg,#EAF6F7,#fff);border-top:4px solid var(--teal)}
-.sec-hd .sflag{font-size:1.7rem;line-height:1}
-.sec-hd h3{font-size:1.15rem;font-weight:800;color:var(--ink)}
-.sec-hd .stag{margin-left:auto;font-size:.64rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:5px 12px;border-radius:999px;white-space:nowrap}
+.sec-id{display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 auto}
+.sflag{flex:none;display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:30px;padding:0 11px;border-radius:9px;font-size:.78rem;font-weight:800;letter-spacing:.6px;color:#fff}
+.sec.br .sflag{background:var(--red)}
+.sec.in .sflag{background:var(--teal)}
+.sec-hd h3{font-size:1.15rem;font-weight:800;color:var(--ink);line-height:1.25}
+.sec-hd .stag{flex:none;font-size:.64rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:6px 13px;border-radius:999px;white-space:nowrap}
 .sec.br .sec-hd .stag{background:var(--red-soft);color:var(--red)}
 .sec.in .sec-hd .stag{background:var(--teal-bg);color:var(--teal)}
 .sec-bd{border:1px solid var(--line);border-radius:0 0 14px 14px;padding:22px}
@@ -178,7 +182,10 @@ tbody tr:hover td{background:#FBFCFE}
 
     <!-- ===== SEÇÃO 1 — BRASIL ===== -->
     <div class="sec br">
-      <div class="sec-hd"><span class="sflag">🇧🇷</span><h3>Brasil — Projeção por UF</h3><span class="stag">Modelo Multi-fator</span></div>
+      <div class="sec-hd">
+        <div class="sec-id"><span class="sflag">BR</span><h3>Brasil — Projeção por UF</h3></div>
+        <span class="stag">Modelo Multi-fator</span>
+      </div>
       <div class="sec-bd">
         <div class="step"><span class="stepn">1</span>Como funciona</div>
         <div class="lead br">
@@ -200,7 +207,10 @@ tbody tr:hover td{background:#FBFCFE}
 
     <!-- ===== SEÇÃO 2 — INTERNACIONAL ===== -->
     <div class="sec in">
-      <div class="sec-hd"><span class="sflag">🌎</span><h3>Argentina · OSA · México — Projeção por Região</h3><span class="stag">Rolling 12M · Budget</span></div>
+      <div class="sec-hd">
+        <div class="sec-id"><span class="sflag">INTL</span><h3>Argentina · OSA · México — Projeção por Região</h3></div>
+        <span class="stag">Rolling 12M · Budget</span>
+      </div>
       <div class="sec-bd">
         <div class="step"><span class="stepn">1</span>Como funciona</div>
         <div class="lead in">
