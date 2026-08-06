@@ -88,10 +88,10 @@ tbody tr:hover td{background:#FBFCFE}
 .fl.p{background:linear-gradient(90deg,#34d17f,#0B7A3B)}.fl.n{background:linear-gradient(90deg,#f28a8d,#C8102E)}.fl.u{background:linear-gradient(90deg,#c4cad3,#9aa2ae)}
 .tags{display:flex;flex-wrap:wrap;gap:7px}.tag{padding:4px 11px;border-radius:999px;font-size:.72rem;font-weight:600}
 .tag.n{background:var(--down-bg);color:var(--down)}.tag.p{background:var(--up-bg);color:var(--up)}.tag.u{background:#F0F2F5;color:#4b5563}
-/* ================= METODOLOGIA — 2 seções sequenciais e fechadas ================= */
-.m-lead{font-size:.92rem;line-height:1.7;color:var(--ink-2);margin-bottom:8px;max-width:920px}
+/* ================= METODOLOGIA — homogênea, alinhada à esquerda ================= */
+.m-lead{width:100%;font-size:.92rem;line-height:1.7;color:var(--ink-2);margin-bottom:8px;text-align:left}
 .m-lead b{color:var(--ink)}
-.sec{margin-top:28px}
+.sec{width:100%;margin-top:24px}
 .sec-hd{display:flex;align-items:center;gap:12px;padding:15px 20px;border-radius:14px 14px 0 0;border:1px solid var(--line);border-bottom:none}
 .sec.br .sec-hd{background:linear-gradient(135deg,#FCF3F4,#fff);border-top:4px solid var(--red)}
 .sec.in .sec-hd{background:linear-gradient(135deg,#EAF6F7,#fff);border-top:4px solid var(--teal)}
@@ -100,24 +100,26 @@ tbody tr:hover td{background:#FBFCFE}
 .sec-hd .stag{margin-left:auto;font-size:.64rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:5px 12px;border-radius:999px;white-space:nowrap}
 .sec.br .sec-hd .stag{background:var(--red-soft);color:var(--red)}
 .sec.in .sec-hd .stag{background:var(--teal-bg);color:var(--teal)}
-.sec-bd{border:1px solid var(--line);border-radius:0 0 14px 14px;padding:20px 22px 24px}
-.step{font-size:.72rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:22px 0 12px;display:flex;align-items:center;gap:9px}
-.step:first-child{margin-top:2px}
+.sec-bd{border:1px solid var(--line);border-radius:0 0 14px 14px;padding:22px}
+.step{width:100%;font-size:.72rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:22px 0 12px;display:flex;align-items:center;gap:9px;text-align:left}
+.step:first-child{margin-top:0}
 .step .stepn{width:22px;height:22px;flex:none;border-radius:50%;color:#fff;font-size:.74rem;font-weight:800;display:flex;align-items:center;justify-content:center}
 .sec.br .step .stepn{background:var(--red)}
 .sec.in .step .stepn{background:var(--teal)}
-.lead{background:#F9FAFB;border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:.88rem;line-height:1.65;color:var(--ink-2)}
+.lead{width:100%;background:#F9FAFB;border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:.88rem;line-height:1.65;color:var(--ink-2);text-align:left}
 .lead.br{border-left:4px solid var(--red)}
 .lead.in{border-left:4px solid var(--teal)}
-.fx{margin-top:12px;font-size:.8rem;color:var(--muted);background:#fff;border:1px dashed #D4D9E1;border-radius:8px;padding:11px 13px}
+.fx{margin-top:12px;font-size:.8rem;color:var(--muted);background:#fff;border:1px dashed #D4D9E1;border-radius:8px;padding:11px 13px;text-align:left}
 .fx code{background:#141821;color:#EAEDF3;padding:2px 8px;border-radius:6px;font-size:.78rem}
-.vlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
-.vrow{display:flex;gap:11px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 13px}
+.vlist{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(max-width:720px){.vlist{grid-template-columns:1fr}}
+.vrow{display:flex;gap:11px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 14px;text-align:left}
 .vrow .vic{font-size:1.25rem;line-height:1.1}
 .vrow .vnum{width:24px;height:24px;flex:none;border-radius:50%;background:var(--teal);color:#fff;font-size:.76rem;font-weight:800;display:flex;align-items:center;justify-content:center}
 .vrow .vtx b{font-size:.86rem;color:var(--ink)}
 .vrow .vtx span{display:block;font-size:.78rem;color:var(--muted);margin-top:2px;line-height:1.45}
-.state-sub{font-size:.82rem;color:var(--muted);margin:-2px 0 2px}
+.state-sub{width:100%;font-size:.82rem;color:var(--muted);margin:0 0 4px;text-align:left}
+.cards.states{margin-top:0}
 .foot{text-align:center;color:var(--muted);font-size:.76rem;margin-top:30px}
 </style>
 </head>
@@ -174,7 +176,7 @@ tbody tr:hover td{background:#FBFCFE}
     <div class="ptitle"><div><h2>Metodologia de Projeção 2027</h2></div></div>
     <p class="m-lead">A projeção usa <b>dois métodos independentes</b>, apresentados abaixo <b>um por vez, do início ao fim</b>. Primeiro o <b>Brasil</b> (modelo multi-fator por UF), completo; depois os <b>mercados internacionais</b> — Argentina, OSA e México — que seguem a lógica de <b>Rolling 12 meses</b> sobre a indústria de Budget.</p>
 
-    <!-- ===== SEÇÃO 1 — BRASIL (completa) ===== -->
+    <!-- ===== SEÇÃO 1 — BRASIL ===== -->
     <div class="sec br">
       <div class="sec-hd"><span class="sflag">🇧🇷</span><h3>Brasil — Projeção por UF</h3><span class="stag">Modelo Multi-fator</span></div>
       <div class="sec-bd">
@@ -183,7 +185,6 @@ tbody tr:hover td{background:#FBFCFE}
           Cada UF é pontuada em quatro vetores (Crédito, Clima, Rentabilidade e Renovação). A combinação gera um índice de momento por produto, e o resultado é renormalizado para fechar exatamente 100%. Os segmentos de alta potência usam os mesmos vetores com pesos atenuados (fator 0,32), gerando variações mais suaves.
           <div class="fx"><code>share27 = share26 × (1 + Σ pesoᵢ·driverᵢ)</code> · renormalização por coluna.</div>
         </div>
-
         <div class="step"><span class="stepn">2</span>Os quatro vetores</div>
         <div class="vlist">
           <div class="vrow"><span class="vic">💰</span><div class="vtx"><b>Crédito</b><span>Aperto de financiamento (Moderfrota/PRONAF).</span></div></div>
@@ -191,14 +192,13 @@ tbody tr:hover td{background:#FBFCFE}
           <div class="vrow"><span class="vic">📈</span><div class="vtx"><b>Rentabilidade</b><span>Café, cana e perenes vs. grãos expostos a preço.</span></div></div>
           <div class="vrow"><span class="vic">🚜</span><div class="vtx"><b>Renovação</b><span>Ciclo de troca de frota e expansão de área.</span></div></div>
         </div>
-
         <div class="step"><span class="stepn">3</span>Análise detalhada por estado</div>
         <div class="state-sub">Leitura dos vetores por UF, do maior ganho à maior perda de share.</div>
-        <div class="cards" id="mcards"></div>
+        <div class="cards states" id="mcards"></div>
       </div>
     </div>
 
-    <!-- ===== SEÇÃO 2 — INTERNACIONAL (completa) ===== -->
+    <!-- ===== SEÇÃO 2 — INTERNACIONAL ===== -->
     <div class="sec in">
       <div class="sec-hd"><span class="sflag">🌎</span><h3>Argentina · OSA · México — Projeção por Região</h3><span class="stag">Rolling 12M · Budget</span></div>
       <div class="sec-bd">
@@ -207,7 +207,6 @@ tbody tr:hover td{background:#FBFCFE}
           Estes mercados <b>não</b> usam os drivers qualitativos do Brasil. O share vem do próprio histórico de indústria: o <b>peso móvel dos últimos 12 meses</b> é aplicado sobre a <b>indústria de Budget</b>, de forma relativa a cada produto e região (Argentina, OSA e México, cada um com suas regiões).
           <div class="fx"><code>volume = peso Rolling 12M (indústria) × indústria de Budget</code>, por produto e região.</div>
         </div>
-
         <div class="step"><span class="stepn">2</span>Passo a passo do Rolling 12 meses</div>
         <div class="vlist">
           <div class="vrow"><span class="vnum">1</span><div class="vtx"><b>Janela de 12 meses</b><span>Soma da indústria (retail/wholesale) dos últimos 12 meses corridos, atualizada mês a mês.</span></div></div>
