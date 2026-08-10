@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AGCO Forecast Intelligence | Projeção 2027 por UF</title>
+<title>IMR — Índice de Momento Regional | AGCO · Industry Share 2027</title>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 <style>
 :root{--red:#C8102E;--red-dark:#8B0A1D;--red-soft:#FDE8EB;--ink:#0E1116;--ink-2:#2B303B;--muted:#6B7280;--bg:#EEF1F5;--card:#FFF;--line:#E6E9EF;--up:#0B7A3B;--up-bg:#E4F7EC;--down:#C8102E;--down-bg:#FDE8EB;--flat:#8A93A2;--gold:#B8860B;--gold-bg:#FBF3DF;--teal:#0E7C86;--teal-bg:#E1F1F2;--shadow:0 1px 2px rgba(16,17,22,.04),0 6px 20px -8px rgba(16,17,22,.12);--shadow-lg:0 20px 45px -20px rgba(16,17,22,.28);--font:'Segoe UI',system-ui,-apple-system,Roboto,Arial,sans-serif}
@@ -14,9 +14,11 @@ body{background:radial-gradient(1200px 500px at 100% -10%,rgba(200,16,46,.06),tr
 .hero::after{content:"";position:absolute;right:-60px;top:-80px;width:340px;height:340px;background:radial-gradient(circle,rgba(200,16,46,.55),transparent 62%);filter:blur(6px)}
 .hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;position:relative;z-index:2;flex-wrap:wrap}
 .brand-row{display:flex;align-items:center;gap:16px}
-.logo-badge{width:52px;height:52px;border-radius:14px;background:linear-gradient(145deg,var(--red),var(--red-dark));display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px -6px rgba(200,16,46,.7)}
-.hero h1{font-size:1.6rem;font-weight:800;letter-spacing:-.6px}
-.hero .sub{color:#B7BECC;margin-top:4px}
+.imr-badge{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:74px;height:64px;border-radius:14px;background:linear-gradient(145deg,var(--red),var(--red-dark));box-shadow:0 8px 20px -6px rgba(200,16,46,.7);padding:0 12px}
+.imr-badge b{font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:1px;line-height:1}
+.imr-badge span{font-size:.5rem;color:#FDE8EB;letter-spacing:.5px;margin-top:3px}
+.hero h1{font-size:1.5rem;font-weight:800;letter-spacing:-.5px}
+.hero .sub{color:#B7BECC;margin-top:4px;font-size:.92rem}
 .hero .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:9px 15px;border-radius:999px;font-size:.82rem;font-weight:600;color:#EAEDF3}
 .pill .dot{width:8px;height:8px;border-radius:50%;background:#34d17f;box-shadow:0 0 0 4px rgba(52,209,127,.2)}
 .hero-meta{display:flex;gap:26px;margin-top:22px;position:relative;z-index:2;flex-wrap:wrap}
@@ -46,8 +48,8 @@ body{background:radial-gradient(1200px 500px at 100% -10%,rgba(200,16,46,.06),tr
 .exp{background:linear-gradient(135deg,#0B7A3B,#0a6c35);color:#fff;border:none;padding:10px 18px;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer}
 .exp:hover{filter:brightness(1.08)}
 .scroll{overflow-x:auto;border-radius:12px;border:1px solid var(--line)}
-table{width:100%;border-collapse:separate;border-spacing:0;min-width:1440px}
-table.prem{min-width:1600px}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1100px}
+table.prem{min-width:1300px}
 th,td{padding:13px 16px;text-align:right;border-bottom:1px solid var(--line);font-size:.86rem;white-space:nowrap}
 th:nth-child(1),td:nth-child(1),th:nth-child(2),td:nth-child(2),th:last-child,td:last-child{text-align:left}
 thead th{background:#F7F8FA;color:var(--muted);font-weight:700;text-transform:uppercase;font-size:.7rem;letter-spacing:.5px;position:sticky;top:0;z-index:10}
@@ -64,15 +66,11 @@ tbody tr:hover td{background:#FBFCFE}
 .nm{font-weight:600;color:var(--ink)}
 .badge{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:7px}
 .badge.win{background:var(--up-bg);color:var(--up)}.badge.loss{background:var(--down-bg);color:var(--down)}.badge.flat{background:#EEF0F3;color:var(--flat)}
-.just{color:var(--ink-2);font-size:.82rem;max-width:420px;white-space:normal;text-align:left}
+.just{color:var(--ink-2);font-size:.82rem;max-width:440px;white-space:normal;text-align:left}
 .total td{background:#141821!important;color:#fff;font-weight:800;position:sticky;bottom:0}
 .total .c27{color:#FDE68A;background:#1d222d!important}
 .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;font-size:.76rem;color:var(--muted)}
 .legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:5px}
-.mexp{background:linear-gradient(180deg,#FCFCFD,#F7F8FA);padding:24px;border-radius:14px;margin:20px 0;border:1px solid var(--line);border-left:5px solid var(--gold)}
-.mexp h3{font-size:1.1rem;color:var(--ink);margin-bottom:10px}.mexp p{font-size:.88rem;line-height:1.65;margin-bottom:14px}
-.note{margin-top:6px;font-size:.82rem;color:var(--muted);background:#F7F8FA;border-radius:10px;padding:14px;border:1px dashed #D4D9E1}
-.note code{background:#141821;color:#EAEDF3;padding:2px 8px;border-radius:6px}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:8px}
 .card{background:#fff;padding:20px;border-radius:14px;border:1px solid var(--line);border-left:5px solid var(--flat);transition:.2s}
 .card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
@@ -82,37 +80,27 @@ tbody tr:hover td{background:#FBFCFE}
 .cuf{font-size:.72rem;background:#F0F2F5;color:var(--muted);padding:2px 7px;border-radius:6px;margin-left:5px;font-weight:700}
 .cd{font-size:.82rem;font-weight:800}.cd.up{color:var(--up)}.cd.down{color:var(--down)}.cd.flat{color:var(--flat)}
 .cj{font-size:.84rem;line-height:1.55;margin-bottom:14px}
-.bars{display:flex;flex-direction:column;gap:7px;margin-bottom:14px}
-.br{display:flex;align-items:center;gap:10px}.br .l{font-size:.7rem;color:var(--muted);width:56px;font-weight:600;text-transform:uppercase}
-.tk{flex:1;height:7px;background:#EEF0F3;border-radius:99px;overflow:hidden}.fl{display:block;height:100%}
-.fl.p{background:linear-gradient(90deg,#34d17f,#0B7A3B)}.fl.n{background:linear-gradient(90deg,#f28a8d,#C8102E)}.fl.u{background:linear-gradient(90deg,#c4cad3,#9aa2ae)}
 .tags{display:flex;flex-wrap:wrap;gap:7px}.tag{padding:4px 11px;border-radius:999px;font-size:.72rem;font-weight:600}
 .tag.n{background:var(--down-bg);color:var(--down)}.tag.p{background:var(--up-bg);color:var(--up)}.tag.u{background:#F0F2F5;color:#4b5563}
-/* ================= METODOLOGIA — homogênea, alinhada à esquerda ================= */
 .m-lead{width:100%;font-size:.92rem;line-height:1.7;color:var(--ink-2);margin-bottom:8px;text-align:left}
 .m-lead b{color:var(--ink)}
 .sec{width:100%;margin-top:24px}
-/* CABEÇALHO DA SEÇÃO — grupo (badge+título) à esquerda, selo à direita, alinhado no topo */
 .sec-hd{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:16px 20px;border-radius:14px 14px 0 0;border:1px solid var(--line);border-bottom:none}
 .sec.br .sec-hd{background:linear-gradient(135deg,#FCF3F4,#fff);border-top:4px solid var(--red)}
 .sec.in .sec-hd{background:linear-gradient(135deg,#EAF6F7,#fff);border-top:4px solid var(--teal)}
 .sec-id{display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 auto}
 .sflag{flex:none;display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:30px;padding:0 11px;border-radius:9px;font-size:.78rem;font-weight:800;letter-spacing:.6px;color:#fff}
-.sec.br .sflag{background:var(--red)}
-.sec.in .sflag{background:var(--teal)}
+.sec.br .sflag{background:var(--red)}.sec.in .sflag{background:var(--teal)}
 .sec-hd h3{font-size:1.15rem;font-weight:800;color:var(--ink);line-height:1.25}
 .sec-hd .stag{flex:none;font-size:.64rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:6px 13px;border-radius:999px;white-space:nowrap}
-.sec.br .sec-hd .stag{background:var(--red-soft);color:var(--red)}
-.sec.in .sec-hd .stag{background:var(--teal-bg);color:var(--teal)}
+.sec.br .sec-hd .stag{background:var(--red-soft);color:var(--red)}.sec.in .sec-hd .stag{background:var(--teal-bg);color:var(--teal)}
 .sec-bd{border:1px solid var(--line);border-radius:0 0 14px 14px;padding:22px}
 .step{width:100%;font-size:.72rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:22px 0 12px;display:flex;align-items:center;gap:9px;text-align:left}
 .step:first-child{margin-top:0}
 .step .stepn{width:22px;height:22px;flex:none;border-radius:50%;color:#fff;font-size:.74rem;font-weight:800;display:flex;align-items:center;justify-content:center}
-.sec.br .step .stepn{background:var(--red)}
-.sec.in .step .stepn{background:var(--teal)}
+.sec.br .step .stepn{background:var(--red)}.sec.in .step .stepn{background:var(--teal)}
 .lead{width:100%;background:#F9FAFB;border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:.88rem;line-height:1.65;color:var(--ink-2);text-align:left}
-.lead.br{border-left:4px solid var(--red)}
-.lead.in{border-left:4px solid var(--teal)}
+.lead.br{border-left:4px solid var(--red)}.lead.in{border-left:4px solid var(--teal)}
 .fx{margin-top:12px;font-size:.8rem;color:var(--muted);background:#fff;border:1px dashed #D4D9E1;border-radius:8px;padding:11px 13px;text-align:left}
 .fx code{background:#141821;color:#EAEDF3;padding:2px 8px;border-radius:6px;font-size:.78rem}
 .vlist{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
@@ -123,8 +111,10 @@ tbody tr:hover td{background:#FBFCFE}
 .vrow .vtx b{font-size:.86rem;color:var(--ink)}
 .vrow .vtx span{display:block;font-size:.78rem;color:var(--muted);margin-top:2px;line-height:1.45}
 .state-sub{width:100%;font-size:.82rem;color:var(--muted);margin:0 0 4px;text-align:left}
-.cards.states{margin-top:0}
-.foot{text-align:center;color:var(--muted);font-size:.76rem;margin-top:30px}
+.author{margin-top:22px;padding:16px 20px;border-radius:12px;background:linear-gradient(135deg,#141821,#241016);color:#EAEDF3;font-size:.85rem;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.author b{color:#FDE68A}
+.foot{text-align:center;color:var(--muted);font-size:.76rem;margin-top:30px;line-height:1.7}
+.foot b{color:var(--ink-2)}
 </style>
 </head>
 <body>
@@ -132,15 +122,15 @@ tbody tr:hover td{background:#FBFCFE}
   <div class="hero">
     <div class="hero-top">
       <div class="brand-row">
-        <div class="logo-badge"><svg viewBox="0 0 100 100" width="30" height="30"><path d="M50 8L92 92H72L50 44L28 92H8L50 8Z" fill="#fff"/></svg></div>
-        <div><h1>Forecast Intelligence — Análise por UF</h1><div class="sub">Projeção de Industry Share 2027 · Varejo Brasil · Modelo multi-fator</div></div>
+        <div class="imr-badge"><b>IMR</b><span>ÍNDICE DE MOMENTO</span></div>
+        <div><h1>Índice de Momento Regional — Industry Share 2027</h1><div class="sub">Projeção por UF · Modelo 4D: Crédito · Clima · Rentabilidade · Renovação · Varejo Brasil</div></div>
       </div>
-      <span class="pill"><span class="dot"></span>Escopo Nacional (BR) · Base 2026 → 2027</span>
+      <span class="pill"><span class="dot"></span>Base 2026 → 2027 · El Niño ativo (INMET)</span>
     </div>
     <div class="hero-meta">
-      <div><div class="k">Cobertura</div><div class="v">27 UFs · 4 linhas + Alta Potência</div></div>
-      <div><div class="k">Ganho de share</div><div class="v" id="mNwin">–</div></div>
-      <div><div class="k">Perda de share</div><div class="v" id="mNloss">–</div></div>
+      <div><div class="k">Cobertura</div><div class="v">27 UFs · 9 produtos/segmentos</div></div>
+      <div><div class="k">Maior ganho (Tratores)</div><div class="v" id="mNwin">–</div></div>
+      <div><div class="k">Líder Alta Potência</div><div class="v" id="mNlead">–</div></div>
       <div><div class="k">Fechamento</div><div class="v">100,00% por coluna ✓</div></div>
     </div>
   </div>
@@ -153,144 +143,141 @@ tbody tr:hover td{background:#FBFCFE}
     <button class="fbtn" data-f="nordeste">Nordeste</button>
     <button class="fbtn" data-f="norte">Norte</button>
     <button class="fbtn gold" data-f="premium">⚙️ Alta Potência</button>
-    <button class="fbtn" data-f="metodologia">Metodologia</button>
+    <button class="fbtn" data-f="metodologia">Metodologia IMR</button>
   </div>
   <div id="main" class="panel">
-    <div class="ptitle"><div><h2>Projeção por Estado</h2><div class="hint">% de participação nacional · linha TOTAL confirma 100,00% por coluna</div></div>
-      <button class="exp" onclick="expTable('#main table','Projecao_2027')">Exportar Excel</button></div>
+    <div class="ptitle"><div><h2>Projeção IMR por Estado — Produtos principais</h2><div class="hint">Share 2027 (%) · linha TOTAL confirma 100,00% por coluna · Δ pp vs. 2026</div></div>
+      <button class="exp" onclick="expTable('#main table','IMR_Share2027')">Exportar Excel</button></div>
     <div class="scroll"><table id="tMain"></table></div>
     <div class="legend"><span><i class="sul"></i>Sul</span><span><i class="sudeste"></i>Sudeste</span><span><i class="centro-oeste"></i>Centro-Oeste</span><span><i class="nordeste"></i>Nordeste</span><span><i class="norte"></i>Norte</span><span><i class="sul"></i>▲ ganho · <i class="sudeste"></i>▼ perda</span></div>
   </div>
   <div id="premium" class="panel" style="display:none">
-    <div class="ptitle"><div><h2>⚙️ Segmentos de Alta Potência — Projeção por Estado</h2><div class="hint">Tratores 260–339 HP e ≥340 HP · Colheit. Classe 7 e Classe 8+ · Plantad. &gt;20 linhas · base real 2026 · variações suaves</div></div>
-      <button class="exp" onclick="expTable('#premium table','AltaPotencia_2027')">Exportar Excel</button></div>
+    <div class="ptitle"><div><h2>⚙️ Segmentos de Alta Potência — Projeção IMR 2027</h2><div class="hint">Trator 260–339 HP e ≥340 HP · Colheit. Classe 7 e Classe 8+ · Plantad. &gt;20 linhas</div></div>
+      <button class="exp" onclick="expTable('#premium table','IMR_AltaPotencia2027')">Exportar Excel</button></div>
     <div class="kpi-wrap" id="pkpis" style="margin-bottom:22px"></div>
     <div class="scroll"><table id="tPrem" class="prem"></table></div>
-    <div class="mexp">
-      <h3>Leitura das variações de alta potência</h3>
-      <p>As projeções 2027 dos segmentos premium foram calibradas em modo <b>conservador</b>: as setas <b>sinalizam apenas a direção da tendência</b> (recuperação no Sul/Sudeste, acomodação no Cerrado/MATOPIBA), sem quedas ou altas dramáticas. Os dados reais de 2026 confirmam a concentração: <b>82% das colheitadeiras Classe 8+</b> em apenas quatro estados.</p>
-      <div class="note">Mecânica atenuada: <code>share27 = share26 × (1 + 0,32·Σ pesoᵢ·driverᵢ)</code> com renormalização por coluna. Cada coluna (2026 e 2027) fecha exatamente 100,00%.</div>
-    </div>
     <h2 style="margin:26px 0 6px;font-size:1.15rem;color:var(--ink)">Insights por Estado — Alta Potência <span style="font-size:.8rem;color:var(--muted);font-weight:400">(ordenado pela variação em ≥340HP)</span></h2>
     <div class="cards" id="pcards"></div>
   </div>
-
-  <!-- ================= METODOLOGIA ================= -->
   <div id="metodologia" class="panel" style="display:none">
-    <div class="ptitle"><div><h2>Metodologia de Projeção 2027</h2></div></div>
-    <p class="m-lead">A projeção usa <b>dois métodos independentes</b>, apresentados abaixo <b>um por vez, do início ao fim</b>. Primeiro o <b>Brasil</b> (modelo multi-fator por UF), completo; depois os <b>mercados internacionais</b> — Argentina, OSA e México — que seguem a lógica de <b>Rolling 12 meses</b> sobre a indústria de Budget.</p>
-
-    <!-- ===== SEÇÃO 1 — BRASIL ===== -->
+    <div class="ptitle"><div><h2>Metodologia IMR — Índice de Momento Regional</h2></div></div>
+    <p class="m-lead">O <b>IMR (Índice de Momento Regional)</b> redistribui o forecast nacional de indústria entre os 27 estados, pontuando cada UF em <b>quatro vetores independentes</b> — Crédito, Clima, Rentabilidade e Renovação (Modelo 4D). O resultado é renormalizado para fechar exatamente 100% por produto. Os mercados internacionais (Argentina, OSA e México) seguem lógica própria de Rolling 12M.</p>
     <div class="sec br">
-      <div class="sec-hd">
-        <div class="sec-id"><span class="sflag">BR</span><h3>Brasil — Projeção por UF</h3></div>
-        <span class="stag">Modelo Multi-fator</span>
-      </div>
+      <div class="sec-hd"><div class="sec-id"><span class="sflag">BR</span><h3>Brasil — IMR por UF (Modelo 4D)</h3></div><span class="stag">4 Vetores Independentes</span></div>
       <div class="sec-bd">
         <div class="step"><span class="stepn">1</span>Como funciona</div>
-        <div class="lead br">
-          Cada UF é pontuada em quatro vetores (Crédito, Clima, Rentabilidade e Renovação). A combinação gera um índice de momento por produto, e o resultado é renormalizado para fechar exatamente 100%. Os segmentos de alta potência usam os mesmos vetores com pesos atenuados (fator 0,32), gerando variações mais suaves.
-          <div class="fx"><code>share27 = share26 × (1 + Σ pesoᵢ·driverᵢ)</code> · renormalização por coluna.</div>
+        <div class="lead br">Cada UF recebe uma nota (z-score) em quatro vetores. A combinação ponderada por produto gera o <b>índice de momento</b>, aplicado ao share 2026 e renormalizado a 100%. O Clima combina a produtividade real com o <b>Fator El Niño</b> por região (Painel INMET/INPE), tornando o efeito climático auditável.
+          <div class="fx"><code>Momento = Σ(pesoᵢ · zᵢ)</code> · <code>Share27 = Share26 × (1 + fator × Momento)</code> → renormalizado.</div>
         </div>
-        <div class="step"><span class="stepn">2</span>Os quatro vetores</div>
+        <div class="step"><span class="stepn">2</span>Os quatro vetores e suas fontes</div>
         <div class="vlist">
-          <div class="vrow"><span class="vic">💰</span><div class="vtx"><b>Crédito</b><span>Aperto de financiamento (Moderfrota/PRONAF).</span></div></div>
-          <div class="vrow"><span class="vic">🌦️</span><div class="vtx"><b>Clima</b><span>Recuperação no Sul vs. estiagem no Cerrado/MATOPIBA.</span></div></div>
-          <div class="vrow"><span class="vic">📈</span><div class="vtx"><b>Rentabilidade</b><span>Café, cana e perenes vs. grãos expostos a preço.</span></div></div>
-          <div class="vrow"><span class="vic">🚜</span><div class="vtx"><b>Renovação</b><span>Ciclo de troca de frota e expansão de área.</span></div></div>
+          <div class="vrow"><span class="vic">💰</span><div class="vtx"><b>Crédito</b><span>Moderfrota (R$5,8bi) + MOVE Agrícola (R$14bi) 2027, distribuído pelo peso histórico por UF. Fonte: Plano Safra + FINEP + SICOR/BCB.</span></div></div>
+          <div class="vrow"><span class="vic">🌦️</span><div class="vtx"><b>Clima</b><span>Produtividade por cultura + Fator El Niño por região. Fonte: base física (IBGE/CONAB) + Painel El Niño INMET/INPE.</span></div></div>
+          <div class="vrow"><span class="vic">📈</span><div class="vtx"><b>Rentabilidade</b><span>Valor Bruto da Produção (VBP) 2027 por UF. Fonte: base própria de VBP.</span></div></div>
+          <div class="vrow"><span class="vic">🚜</span><div class="vtx"><b>Renovação</b><span>Δ Área plantada 2027 + frota por estado e segmento. Fonte: IBGE/CONAB + AGCOSTAT.</span></div></div>
         </div>
         <div class="step"><span class="stepn">3</span>Análise detalhada por estado</div>
-        <div class="state-sub">Leitura dos vetores por UF, do maior ganho à maior perda de share.</div>
-        <div class="cards states" id="mcards"></div>
+        <div class="state-sub">Leitura do IMR por UF (produto Tratores como referência), do maior ganho à maior perda de share.</div>
+        <div class="cards" id="mcards"></div>
       </div>
     </div>
-
-    <!-- ===== SEÇÃO 2 — INTERNACIONAL ===== -->
     <div class="sec in">
-      <div class="sec-hd">
-        <div class="sec-id"><span class="sflag">INTL</span><h3>Argentina · OSA · México — Projeção por Região</h3></div>
-        <span class="stag">Rolling 12M · Budget</span>
-      </div>
+      <div class="sec-hd"><div class="sec-id"><span class="sflag">INTL</span><h3>Argentina · OSA · México — Projeção por Região</h3></div><span class="stag">Rolling 12M · Budget</span></div>
       <div class="sec-bd">
         <div class="step"><span class="stepn">1</span>Como funciona</div>
-        <div class="lead in">
-          Estes mercados <b>não</b> usam os drivers qualitativos do Brasil. O share vem do próprio histórico de indústria: o <b>peso móvel dos últimos 12 meses</b> é aplicado sobre a <b>indústria de Budget</b>, de forma relativa a cada produto e região (Argentina, OSA e México, cada um com suas regiões).
-          <div class="fx"><code>volume = peso Rolling 12M (indústria) × indústria de Budget</code>, por produto e região.</div>
+        <div class="lead in">Estes mercados não usam o Modelo 4D. O share por região é derivado do <b>peso do Rolling 12 meses</b> da indústria, aplicado sobre a <b>indústria de Budget</b>, por produto e região.
+          <div class="fx"><code>volume = peso Rolling 12M (indústria) × indústria de Budget</code>.</div>
         </div>
         <div class="step"><span class="stepn">2</span>Passo a passo do Rolling 12 meses</div>
         <div class="vlist">
-          <div class="vrow"><span class="vnum">1</span><div class="vtx"><b>Janela de 12 meses</b><span>Soma da indústria (retail/wholesale) dos últimos 12 meses corridos, atualizada mês a mês.</span></div></div>
-          <div class="vrow"><span class="vnum">2</span><div class="vtx"><b>Peso relativo</b><span>Participação de cada região no total do país, por produto.</span></div></div>
-          <div class="vrow"><span class="vnum">3</span><div class="vtx"><b>Aplicação ao Budget</b><span>O peso multiplica a indústria orçada do produto/região.</span></div></div>
-          <div class="vrow"><span class="vnum">4</span><div class="vtx"><b>Consolidação</b><span>Resultados agregados por linha e mercado, coerentes com o orçamento.</span></div></div>
+          <div class="vrow"><span class="vnum">1</span><div class="vtx"><b>Janela de 12 meses</b><span>Soma da indústria dos últimos 12 meses corridos.</span></div></div>
+          <div class="vrow"><span class="vnum">2</span><div class="vtx"><b>Peso relativo</b><span>Participação de cada região no total, por produto.</span></div></div>
+          <div class="vrow"><span class="vnum">3</span><div class="vtx"><b>Aplicação ao Budget</b><span>O peso multiplica a indústria orçada.</span></div></div>
+          <div class="vrow"><span class="vnum">4</span><div class="vtx"><b>Consolidação</b><span>Resultados agregados por linha e mercado.</span></div></div>
         </div>
       </div>
     </div>
+    <div class="author">🏛️ <div>Metodologia <b>IMR — Índice de Momento Regional</b> desenvolvida pela área de <b>Global Reporting &amp; Analytics</b> da AGCO, através de <b>Thiago Montoro</b>.</div></div>
   </div>
-  <div class="foot">AGCO Forecast Intelligence · Projeção interna 2027 (varejo). Brasil: modelo multi-fator por UF. Argentina · OSA · México: peso Rolling 12 meses de indústria sobre a indústria de Budget, por produto e região. Alta potência com base real 2026 e variações atenuadas. Todas as colunas fecham 100,00%.</div>
+  <div class="foot"><b>IMR — Índice de Momento Regional</b> · AGCO Global Reporting &amp; Analytics · Thiago Montoro.<br>Brasil: Modelo 4D por UF (Crédito · Clima · Rentabilidade · Renovação), Clima com Fator El Niño (Painel INMET/INPE). Fontes: IBGE/CONAB, SICOR/BCB, Plano Safra, FINEP, AGCOSTAT. Todas as colunas fecham 100,00%.</div>
 </div>
 <script>
-/* ===== BLOCO DE DADOS (edite aqui) ===== */
-const NM={AC:"Acre",AL:"Alagoas",AM:"Amazonas",AP:"Amapá",BA:"Bahia",CE:"Ceará",DF:"Distrito Federal",ES:"Espírito Santo",GO:"Goiás",MA:"Maranhão",MG:"Minas Gerais",MS:"Mato Grosso Do Sul",MT:"Mato Grosso",PA:"Pará",PB:"Paraíba",PE:"Pernambuco",PI:"Piauí",PR:"Paraná",RJ:"Rio De Janeiro",RN:"Rio Grande do Norte",RO:"Rondônia",RR:"Roraima",RS:"Rio Grande Do Sul",SC:"Santa Catarina",SE:"Sergipe",SP:"São Paulo",TO:"Tocantins"};
-const RG={AC:"norte",AL:"nordeste",AM:"norte",AP:"norte",BA:"nordeste",CE:"nordeste",DF:"centro-oeste",ES:"sudeste",GO:"centro-oeste",MA:"nordeste",MG:"sudeste",MS:"centro-oeste",MT:"centro-oeste",PA:"norte",PB:"nordeste",PE:"nordeste",PI:"nordeste",PR:"sul",RJ:"sudeste",RN:"nordeste",RO:"norte",RR:"norte",RS:"sul",SC:"sul",SE:"nordeste",SP:"sudeste",TO:"norte"};
-const MAIN={AC:[.20,.10,0,.10],AL:[.60,.10,.10,.10],AM:[.20,0,0,0],AP:[0,0,0,0],BA:[4.30,5.00,7.50,4.10],CE:[1.80,.10,0,.60],DF:[1.00,.10,.10,.30],ES:[3.60,0,.10,.10],GO:[4.10,11.60,12.60,10.50],MA:[1.40,2.00,2.70,3.50],MG:[21.00,5.40,5.00,7.70],MS:[2.50,5.00,5.20,7.80],MT:[5.50,26.50,32.10,19.20],PA:[2.20,1.90,3.50,4.30],PB:[.60,0,0,.10],PE:[1.70,0,0,0],PI:[.50,1.90,2.20,2.30],PR:[9.80,17.50,9.70,15.10],RJ:[.40,0,0,0],RN:[.80,0,0,0],RO:[1.70,2.00,1.30,1.00],RR:[.20,.30,.40,.30],RS:[10.30,11.20,5.40,8.90],SC:[6.30,2.40,1.10,3.00],SE:[1.10,.70,.40,1.10],SP:[17.60,4.80,6.90,7.30],TO:[.80,1.50,3.70,2.70]};
-const PREM={AM:[0,0,0,0,0],PA:[1.7045,3.1489,4.3845,0.9302,5.0265],RO:[0.8523,1.1450,3.7099,1.3953,1.9841],AC:[0,0,0,0,0],AP:[0,0,0,0,0],RR:[0,0.0954,1.0118,0,0.3968],TO:[1.1364,3.2443,1.5177,1.0465,3.3069],MA:[0.2841,3.8168,2.6981,3.1395,3.9683],PI:[1.7045,5.1527,1.8550,4.7674,4.3651],CE:[0,0,0,0,0],RN:[1.7045,0,0,0,0],PB:[0,0,0,0,0],PE:[0,0.0954,0,0,0],AL:[0.5682,0.0954,0,0,0],SE:[0,0,0,0,0],BA:[1.4205,11.1641,2.5295,13.3721,8.3333],MG:[7.3864,3.3397,4.3845,1.7442,3.0423],ES:[0,0,0,0,0],RJ:[0,0,0,0,0],SP:[23.2955,4.0076,2.8668,0,1.0582],PR:[7.1023,4.0076,9.9494,1.8605,1.0582],SC:[1.4205,0.2863,1.1804,0.1163,0.5291],RS:[9.0909,3.9122,4.7218,3.3721,2.9101],MT:[26.4205,36.4504,33.8954,53.6047,38.7566],MS:[3.4091,7.0611,9.1062,3.7209,5.0265],GO:[12.5000,12.9771,16.1889,10.8140,19.9735],DF:[0,0,0,0,0]};
-const DRV={RS:[1.5,-.3,1.2,1.3],PR:[1.2,-.3,1.4,1.5],SC:[1.3,-.2,1.0,1.0],SP:[.6,-.5,1.3,.7],MG:[.5,-.4,1.4,.9],ES:[.4,-.3,1.1,.5],MT:[-1.8,-1.0,-.8,-.6],GO:[-1.3,-.9,-.5,-.4],MS:[-1.0,-.8,-.3,-.2],DF:[-.8,-.9,-.4,-.3],BA:[-1.4,-.9,-.4,-.5],MA:[-1.2,-.9,-.3,-.4],PI:[-1.3,-.9,-.3,-.4],TO:[-1.2,-.9,-.2,-.4],PA:[-.4,-.7,.2,.1],RO:[-.7,-.7,0,-.2],RR:[-.6,-.6,0,-.1],AC:[-.3,-.6,-.2,-.2],AM:[-1.0,-.9,-.4,-.5],AP:[0,-.5,0,0],CE:[-.5,-.7,.3,0],AL:[.2,-.4,.4,.1],PE:[.1,-.4,.3,0],PB:[0,-.4,.1,0],RN:[.1,-.4,.2,0],SE:[.2,-.3,.4,.2],RJ:[0,-.3,0,0]};
-const DRVP={RS:[1.5,-.4,1.2,1.3],PR:[1.2,-.4,1.4,1.5],SC:[1.3,-.3,1.0,1.0],SP:[.6,-.6,1.3,.7],MG:[.5,-.5,1.4,.9],ES:[.4,-.4,1.1,.5],MT:[-1.8,-1.2,-.8,-.6],GO:[-1.3,-1.1,-.5,-.4],MS:[-1.0,-1.0,-.3,-.2],DF:[-.8,-1.0,-.4,-.3],BA:[-1.4,-1.1,-.4,-.5],MA:[-1.2,-1.0,-.3,-.4],PI:[-1.3,-1.0,-.3,-.4],TO:[-1.2,-1.0,-.2,-.4],PA:[-.4,-.8,.2,.1],RO:[-.7,-.8,0,-.2],RR:[-.6,-.7,0,-.1],AC:[-.3,-.6,-.2,-.2],AM:[-1.0,-1.0,-.4,-.5],AP:[0,-.5,0,0],CE:[-.5,-.8,.3,0],AL:[.2,-.5,.4,.1],PE:[.1,-.5,.3,0],PB:[0,-.5,.1,0],RN:[.1,-.5,.2,0],SE:[.2,-.4,.4,.2],RJ:[0,-.4,0,0]};
-const PW=[[.030,.045,.030,.030],[.055,.040,.030,.035],[.055,.040,.030,.035],[.050,.042,.030,.035]];
-const DAMP=0.32;
-const SW=[[.050,.050,.030,.035],[.055,.055,.030,.035],[.058,.048,.030,.038],[.060,.052,.030,.038],[.055,.050,.030,.038]].map(a=>a.map(w=>w*DAMP));
-const JMAIN={RS:"Safra recorde e recuperação após anos de estiagem sustentam a maior base de tratores do país; o único freio é o teto de crédito.",PR:"Matriz agrícola diversificada e ciclo de renovação aquecido consolidam o Paraná como o principal ganho relativo de share.",SC:"Chuvas bem distribuídas e forte adoção tecnológica ampliam a participação catarinense.",SP:"A resiliência da cana e o adensamento tecnológico preservam a liderança paulista em tratores.",MG:"O café em ciclo de alta rentabilidade blinda Minas e amplia sua liderança nacional de tratores.",ES:"Culturas perenes garantem estabilidade ao Espírito Santo; crescimento calibrado pela conjuntura de juros.",MT:"Cenário mais crítico: estiagem histórica no Cerrado somada ao corte de financiamento aprofunda a perda em todas as linhas.",GO:"A crise hídrica e a escassez de crédito comprimem os investimentos goianos.",MS:"Clima adverso e custo de capital elevado forçam retração acentuada nas linhas de grão em larga escala.",DF:"A combinação de seca e crédito restrito congela a renovação de frota no entorno do DF.",BA:"O oeste baiano (MATOPIBA) sofre o duplo impacto de seca prolongada e financiamento escasso.",MA:"O atraso das chuvas e o corte de recursos adiam a renovação de frota maranhense.",PI:"Alto risco climático e teto financeiro restritivo intensificam a retração do varejo piauiense.",TO:"Seca e menor oferta de crédito reduzem a participação tocantinense em grãos.",PA:"A fronteira paraense mantém fôlego, mas o financiamento limitado transforma o avanço em quase estabilidade.",RO:"Irregularidade hídrica e limites bancários seguram a demanda de Rondônia.",RR:"Clima adverso e crédito escasso desaceleram a expansão roraimense.",AC:"Mercado de baixa densidade e sem fomento relevante permanece estagnado.",AM:"Restrição severa de caixa paralisa projetos e aprofunda a retração amazonense.",AP:"Mercado inexpressivo, sem vetores de recuperação em 2027.",CE:"A resiliência da fruticultura irrigada é neutralizada pelo aperto de crédito.",AL:"A cana nordestina oferece sustentação, permitindo estabilidade alagoana.",PE:"A fruticultura pernambucana adia a renovação de frota; crescimento diluído pela falta de crédito.",PB:"Mercado marginal permanece estagnado.",RN:"Compras postergadas pelo aperto financeiro; participação estável no piso.",SE:"Demanda pontual e mix de cana sustentam leve avanço sergipano.",RJ:"Mercado marginal segue estável."};
-const JPREM={MT:"Domínio absoluto: 36% dos tratores ≥340HP, 54% das Classe 8+ e 39% das plantadeiras >20 linhas. Leve acomodação com seca e crédito de ticket alto, sem ruptura na liderança.",GO:"Segundo maior polo premium (12–20% por segmento). Leve pressão da crise hídrica e do capital caro sobre Classe 7/8+ e plantadeiras de grande porte.",MS:"Base sólida de escala (7% em ≥340HP e Classe 7). Sinais suaves de acomodação com clima adverso e ticket elevado.",BA:"Oeste baiano forte em Classe 8+ (13%) e ≥340HP (11%); leve recuo pela estiagem no MATOPIBA e financiamento escasso.",MA:"Presença relevante em ≥340HP (3,8%) e Classe 8+ (3,1%); tendência estável com leve viés de baixa.",PI:"Destaque em ≥340HP (5,2%) e Classe 8+ (4,8%) para o porte; leve acomodação pelo risco climático e teto financeiro.",TO:"Presença consistente em grãos de escala; tendência praticamente estável, viés suave de baixa.",PA:"Fronteira com apetite por escala (Classe 7 com 4,4%); leve viés de alta sustentado pela expansão.",RO:"Nicho relevante em Classe 7 (3,7%); tendência estável com leve oscilação.",RR:"Presença incipiente em Classe 7 (1,0%); estável no horizonte de 2027.",PR:"Principal ganho premium: lidera Classe 7 fora do MT (9,9%) e avança levemente em ≥340HP com renovação aquecida.",RS:"Safra recorde e recuperação climática dão leve impulso à alta potência gaúcha (Classe 7 com 4,7%, ≥340HP com 3,9%).",SC:"Adensamento tecnológico e clima favorável ampliam suavemente o share catarinense.",SP:"Líder nacional em 260–339HP (23%), sustentado por cana e grãos; leve avanço também em Classe 7.",MG:"Forte em 260–339HP (7,4%) e Classe 7 (4,4%); café e grãos rentáveis dão leve reforço.",AL:"Participação marginal sustentada pela cana; estável no cenário premium.",PE:"Presença mínima em ≥340HP; estável, sem vetores relevantes.",RN:"Presença pontual em 260–339HP; mercado premium estável.",DF:"Nicho reduzido em Classe 8+ e plantadeiras; praticamente estável."};
-/* ===== MOTOR ===== */
-const UFS=Object.keys(NM).sort();
-const r2=x=>Math.round(x*100)/100;
-function renorm(col){var tot=0;for(var u in col)tot+=col[u];if(tot===0){var o={};for(var u in col)o[u]=0;return o;}var sc={},ro={};for(var u in col){sc[u]=col[u]/tot*100;ro[u]=r2(sc[u]);}var s=0;for(var u in ro)s+=ro[u];var diff=r2(100-s);if(Math.abs(diff)>=0.01){var big=UFS[0];for(var u in sc)if(sc[u]>sc[big])big=u;ro[big]=r2(ro[big]+diff);}return ro;}
-function project(base,W,drv,n){var b={},p={};for(var c=0;c<n;c++){var col={};for(var k=0;k<UFS.length;k++)col[UFS[k]]=base[UFS[k]][c];var rn=renorm(col);for(var k=0;k<UFS.length;k++){var u=UFS[k];b[u]=b[u]||[];b[u][c]=rn[u];}}for(var c=0;c<n;c++){var raw={};for(var k=0;k<UFS.length;k++){var u=UFS[k];var dr=drv[u],w=W[c];raw[u]=b[u][c]*(1+w[0]*dr[0]+w[1]*dr[1]+w[2]*dr[2]+w[3]*dr[3]);}var rn=renorm(raw);for(var k=0;k<UFS.length;k++){var u=UFS[k];p[u]=p[u]||[];p[u][c]=rn[u];}}return{b:b,p:p};}
-const M=project(MAIN,PW,DRV,4),P=project(PREM,SW,DRVP,5);
-const f=x=>x.toFixed(2)+"%";
-function cell(b,p){var d=p-b,c=d>.005?"up":d<-.005?"down":"flat",a=d>.005?"▲":d<-.005?"▼":"▬";return"<td>"+f(b)+'</td><td class="c27">'+f(p)+' <span class="d '+c+'">'+a+"</span></td>";}
-function badge(dt){return dt>.02?'<span class="badge win">+'+dt.toFixed(2)+" pp</span>":dt<-.02?'<span class="badge loss">'+dt.toFixed(2)+" pp</span>":'<span class="badge flat">estável</span>';}
-function bar(v,l){var pct=(v+2)/4*100,pol=v>.15?"p":v<-.15?"n":"u";return'<div class="br"><span class="l">'+l+'</span><span class="tk"><span class="fl '+pol+'" style="width:'+pct.toFixed(0)+'%"></span></span></div>';}
-var mrows="",nwin=0,nloss=0;
-for(var i=0;i<UFS.length;i++){var u=UFS[i],cells="";for(var j=0;j<4;j++)cells+=cell(M.b[u][j],M.p[u][j]);var dt=r2(M.p[u][0]-M.b[u][0]);if(dt>.02)nwin++;if(dt<-.02)nloss++;mrows+='<tr data-r="'+RG[u]+'"><td><span class="chip '+RG[u]+'">'+u+'</span></td><td class="nm">'+NM[u]+" "+badge(dt)+"</td>"+cells+'<td class="just">'+JMAIN[u]+"</td></tr>";}
-var mt="";for(var j=0;j<4;j++){var s26=0,s27=0;for(var i=0;i<UFS.length;i++){s26+=M.b[UFS[i]][j];s27+=M.p[UFS[i]][j];}mt+="<td>"+f(s26)+'</td><td class="c27">'+f(s27)+"</td>";}
-mrows+='<tr class="total"><td></td><td class="nm">TOTAL BRASIL</td>'+mt+'<td class="just">Cada coluna soma exatamente 100,00%.</td></tr>';
-document.getElementById("tMain").innerHTML='<thead><tr><th>UF</th><th>Estado</th><th>Trat. 26</th><th class="c27">Trat. 27</th><th>Colh. 26</th><th class="c27">Colh. 27</th><th>Pulv. 26</th><th class="c27">Pulv. 27</th><th>Plant. 26</th><th class="c27">Plant. 27</th><th>Justificativa</th></tr></thead><tbody>'+mrows+"</tbody>";
-document.getElementById("mNwin").textContent=nwin+" estados";
-document.getElementById("mNloss").textContent=nloss+" estados";
-var rkM=UFS.slice().sort(function(a,b){return(M.p[b][0]-M.b[b][0])-(M.p[a][0]-M.b[a][0]);});
-var mcards="";
-for(var i=0;i<rkM.length;i++){var u=rkM[i],dt=r2(M.p[u][0]-M.b[u][0]),dr=DRV[u];var tr=dt>.02?"pos":dt<-.02?"neg":"";var dc=dt>.02?"up":dt<-.02?"down":"flat";var dtx=dt>0?"+"+dt.toFixed(2)+" pp":dt.toFixed(2)+" pp";var tags="";if(dr[1]<=-.7)tags+='<span class="tag n">Crédito Restrito</span>';if(dr[0]<=-.9)tags+='<span class="tag n">Risco Climático</span>';if(dr[0]>=.9)tags+='<span class="tag p">Clima Favorável</span>';if(dr[2]>=.9)tags+='<span class="tag p">Rentabilidade Alta</span>';if(dr[3]>=.9)tags+='<span class="tag p">Renovação Aquecida</span>';if(!tags)tags='<span class="tag u">Cenário Misto</span>';mcards+='<div class="card '+tr+'"><div class="ch"><h3>'+NM[u]+' <span class="cuf">'+u+'</span></h3><span class="cd '+dc+'">'+dtx+'</span></div><p class="cj">'+JMAIN[u]+'</p><div class="bars">'+bar(dr[0],"Clima")+bar(dr[1],"Crédito")+bar(dr[2],"Rentab.")+bar(dr[3],"Renov.")+'</div><div class="tags">'+tags+"</div></div>";}
-document.getElementById("mcards").innerHTML=mcards;
-var mw=rkM[0],ml=rkM[rkM.length-1];
-document.getElementById("kpis").innerHTML='<div class="kpi win"><div class="ico" style="background:var(--up-bg)">🏆</div><h3>Maior Ganho de Share</h3><div class="val">'+NM[mw]+' <small class="up">+'+r2(M.p[mw][0]-M.b[mw][0]).toFixed(2)+' pp</small></div><div class="desc">Rentabilidade resiliente e ciclo de renovação sustentam a liderança.</div></div><div class="kpi loss"><div class="ico" style="background:var(--down-bg)">⚠️</div><h3>Maior Retração</h3><div class="val">'+NM[ml]+' <small class="down">'+r2(M.p[ml][0]-M.b[ml][0]).toFixed(2)+' pp</small></div><div class="desc">Estiagem no Cerrado e aperto de crédito aprofundam a perda.</div></div><div class="kpi gold"><div class="ico">⚙️</div><h3>Destaque Alta Potência</h3><div class="val" id="kPrem">–</div><div class="desc">Maior avanço em ≥340HP e Classe 8+ (aba Alta Potência).</div></div><div class="kpi loss"><div class="ico" style="background:var(--down-bg)">💧</div><h3>Risco Hídrico + Crédito</h3><div class="val">MT · BA · GO · MS</div><div class="desc">MATOPIBA e Centro-Oeste de grãos, mais expostos ao choque de 2027.</div></div>';
-var pu=UFS.filter(function(u){return PREM[u].reduce(function(a,b){return a+b;},0)>0;});
+const DATA={"NM": {"AC": "Acre", "AL": "Alagoas", "AM": "Amazonas", "AP": "Amapá", "BA": "Bahia", "CE": "Ceará", "DF": "Distrito Federal", "ES": "Espírito Santo", "GO": "Goiás", "MA": "Maranhão", "MG": "Minas Gerais", "MS": "Mato Grosso do Sul", "MT": "Mato Grosso", "PA": "Pará", "PB": "Paraíba", "PE": "Pernambuco", "PI": "Piauí", "PR": "Paraná", "RJ": "Rio de Janeiro", "RN": "Rio Grande do Norte", "RO": "Rondônia", "RR": "Roraima", "RS": "Rio Grande do Sul", "SC": "Santa Catarina", "SE": "Sergipe", "SP": "São Paulo", "TO": "Tocantins"}, "RG": {"AC": "norte", "AL": "nordeste", "AM": "norte", "AP": "norte", "BA": "nordeste", "CE": "nordeste", "DF": "centro-oeste", "ES": "sudeste", "GO": "centro-oeste", "MA": "nordeste", "MG": "sudeste", "MS": "centro-oeste", "MT": "centro-oeste", "PA": "norte", "PB": "nordeste", "PE": "nordeste", "PI": "nordeste", "PR": "sul", "RJ": "sudeste", "RN": "nordeste", "RO": "norte", "RR": "norte", "RS": "sul", "SC": "sul", "SE": "nordeste", "SP": "sudeste", "TO": "norte"}, "UFS": ["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO"], "S27": {"AC": [0.2162, 0.0591, 0, 0.0463, 0, 0, 0, 0, 0], "AL": [0.5702, 0.0949, 0.0673, 0.0983, 0.5298, 0.091, 0, 0, 0], "AM": [0.161, 0, 0, 0, 0, 0, 0, 0, 0], "AP": [0, 0, 0, 0, 0, 0, 0, 0, 0], "BA": [4.06, 4.7028, 7.1721, 3.9333, 1.3449, 10.7009, 2.3777, 12.5514, 8.0918], "CE": [1.5739, 0.0592, 0, 0.5639, 0, 0, 0, 0, 0], "DF": [0.8403, 0.0591, 0.1274, 0.2789, 0, 0, 0, 0.104, 0.238], "ES": [3.3224, 0.0308, 0.0668, 0.0972, 0, 0, 0, 0, 0], "GO": [3.8682, 11.1875, 12.227, 10.1514, 12.0605, 12.7358, 15.8742, 10.4072, 19.9148], "MA": [1.2489, 1.7838, 2.456, 3.1549, 0.2553, 3.4739, 2.4395, 2.8142, 3.6252], "MG": [22.2677, 5.5637, 5.2397, 8.0582, 7.7261, 3.4857, 4.5761, 1.7768, 3.171], "MS": [2.3201, 4.6669, 4.9732, 7.3642, 3.1844, 6.752, 8.67, 3.4906, 4.7436], "MT": [5.4469, 27.0011, 32.7782, 19.3465, 26.9163, 38.4315, 35.2519, 56.0981, 40.6852], "PA": [2.0356, 1.7601, 3.2952, 3.977, 1.5607, 2.9202, 4.0407, 0.85, 4.6656], "PB": [0.4898, 0, 0, 0.093, 0, 0, 0, 0, 0], "PE": [1.5241, 0.0297, 0, 0, 0, 0.0864, 0, 0, 0], "PI": [0.4183, 1.6863, 1.9931, 2.0618, 1.5245, 4.6723, 1.666, 4.2574, 3.9639], "PR": [10.4413, 18.526, 10.4845, 16.2176, 7.4876, 4.2212, 10.5021, 1.9117, 1.096], "RJ": [0.3402, 0.0298, 0, 0, 0, 0, 0, 0, 0], "RN": [0.707, 0, 0, 0, 1.5007, 0, 0, 0, 0], "RO": [1.5526, 1.7752, 1.2397, 0.9495, 0.7718, 1.0513, 3.3949, 1.2654, 1.8258], "RR": [0.1787, 0.2346, 0.3171, 0.2313, 0, 0.0851, 0.9004, 0, 0.3549], "RS": [10.9419, 11.7429, 5.8064, 9.6604, 9.5937, 4.0538, 4.9055, 3.4187, 3.0295], "SC": [6.2402, 2.3424, 1.0635, 2.9952, 1.3965, 0.2825, 1.1614, 0.1131, 0.5192], "SE": [0.9443, 0.5858, 0.3812, 0.9729, 0, 0, 0, 0, 0], "SP": [17.531, 4.7658, 6.9527, 7.3017, 23.1305, 4.0029, 2.8644, 0, 1.0431], "TO": [0.7589, 1.3124, 3.3589, 2.4467, 1.0166, 2.9534, 1.3755, 0.9416, 3.0324]}, "D": {"AC": [-0.03, -0.01, 0.0, -0.01, 0.0, 0.0, 0.0, 0.0, 0.0], "AL": [-0.04, 0.0, 0.0, -0.01, -0.04, 0.0, 0.0, 0.0, 0.0], "AM": [-0.03, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "AP": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "BA": [-0.22, -0.34, -0.35, -0.2, -0.08, -0.46, -0.15, -0.82, -0.24], "CE": [-0.18, -0.01, 0.0, -0.06, 0.0, 0.0, 0.0, 0.0, 0.0], "DF": [-0.12, -0.01, -0.01, -0.03, 0.0, 0.0, 0.0, -0.01, -0.03], "ES": [-0.23, 0.0, 0.0, -0.01, 0.0, 0.0, 0.0, 0.0, 0.0], "GO": [-0.2, -0.42, -0.33, -0.33, -0.44, -0.24, -0.31, -0.41, -0.06], "MA": [-0.14, -0.21, -0.24, -0.31, -0.03, -0.34, -0.26, -0.33, -0.34], "MG": [1.26, 0.19, 0.28, 0.36, 0.34, 0.15, 0.19, 0.03, 0.13], "MS": [-0.19, -0.31, -0.27, -0.44, -0.22, -0.31, -0.44, -0.23, -0.28], "MT": [-0.04, 0.5, 0.65, 0.13, 0.5, 1.98, 1.36, 2.49, 1.93], "PA": [-0.19, -0.16, -0.25, -0.31, -0.14, -0.23, -0.34, -0.08, -0.36], "PB": [-0.06, 0.0, 0.0, -0.01, 0.0, 0.0, 0.0, 0.0, 0.0], "PE": [-0.18, 0.0, 0.0, 0.0, 0.0, -0.01, 0.0, 0.0, 0.0], "PI": [-0.05, -0.2, -0.21, -0.21, -0.18, -0.48, -0.19, -0.51, -0.4], "PR": [0.62, 0.98, 0.77, 1.13, 0.39, 0.21, 0.55, 0.05, 0.04], "RJ": [-0.04, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], "RN": [-0.1, 0.0, 0.0, 0.0, -0.2, 0.0, 0.0, 0.0, 0.0], "RO": [-0.16, -0.18, -0.11, -0.08, -0.08, -0.09, -0.32, -0.13, -0.16], "RR": [-0.03, -0.03, -0.04, -0.03, 0.0, -0.01, -0.11, 0.0, -0.04], "RS": [0.64, 0.5, 0.42, 0.72, 0.5, 0.14, 0.18, 0.05, 0.12], "SC": [-0.03, -0.05, 0.0, 0.0, -0.02, 0.0, -0.02, 0.0, -0.01], "SE": [-0.13, -0.08, -0.04, -0.11, 0.0, 0.0, 0.0, 0.0, 0.0], "SP": [-0.03, -0.01, 0.07, 0.02, -0.16, 0.0, 0.0, 0.0, -0.02], "TO": [-0.09, -0.15, -0.33, -0.24, -0.12, -0.29, -0.14, -0.1, -0.27]}, "PRODS": ["Tratores", "Colheitadeiras", "Pulverizadores", "Plantadeiras", "Trator 260-339", "Trator 340+", "Colheit. Classe 7", "Colheit. Classe 8+", "Plantad. +20 linhas"], "JUST": {"AC": "Acre mantém participação estável em 2027, sustentado por baixo valor de produção e as chuvas irregulares no Cerrado; crédito de máquina restrito.", "AL": "Alagoas mantém participação estável em 2027, sustentado por baixo valor de produção e a seca do El Niño no semiárido/MATOPIBA; crédito moderado.", "AM": "Amazonas mantém participação estável em 2027, sustentado por baixo valor de produção e as chuvas irregulares no Cerrado; crédito de máquina restrito.", "AP": "Amapá mantém participação estável em 2027, sustentado por baixo valor de produção e as chuvas irregulares no Cerrado; crédito de máquina restrito.", "BA": "Bahia perde participação em 2027, sustentado por rentabilidade mediana e a seca do El Niño no semiárido/MATOPIBA; forte acesso a crédito de máquina (Moderfrota/MOVE).", "CE": "Ceará perde participação em 2027, sustentado por baixo valor de produção e a seca do El Niño no semiárido/MATOPIBA; crédito moderado.", "DF": "Distrito Federal perde participação em 2027, sustentado por baixo valor de produção e as chuvas irregulares no Cerrado; crédito de máquina restrito.", "ES": "Espírito Santo perde participação em 2027, sustentado por rentabilidade mediana e um clima neutro; crédito moderado.", "GO": "Goiás perde participação em 2027, sustentado por VBP elevado e as chuvas irregulares no Cerrado; crédito moderado.", "MA": "Maranhão perde participação em 2027, sustentado por rentabilidade mediana e a seca do El Niño no semiárido/MATOPIBA; crédito moderado.", "MG": "Minas Gerais ganha participação em 2027, sustentado por VBP elevado e um clima neutro; forte acesso a crédito de máquina (Moderfrota/MOVE).", "MS": "Mato Grosso do Sul perde participação em 2027, sustentado por rentabilidade mediana e as chuvas irregulares no Cerrado; crédito moderado.", "MT": "Mato Grosso mantém participação estável em 2027, sustentado por VBP elevado e as chuvas irregulares no Cerrado; crédito moderado.", "PA": "Pará perde participação em 2027, sustentado por rentabilidade mediana e as chuvas irregulares no Cerrado; crédito moderado.", "PB": "Paraíba perde participação em 2027, sustentado por baixo valor de produção e a seca do El Niño no semiárido/MATOPIBA; crédito moderado.", "PE": "Pernambuco perde participação em 2027, sustentado por rentabilidade mediana e a seca do El Niño no semiárido/MATOPIBA; crédito moderado.", "PI": "Piauí mantém participação estável em 2027, sustentado por baixo valor de produção e a seca do El Niño no semiárido/MATOPIBA; crédito moderado.", "PR": "Paraná ganha participação em 2027, sustentado por VBP elevado e a recuperação climática (El Niño favorável ao Sul); forte acesso a crédito de máquina (Moderfrota/MOVE).", "RJ": "Rio de Janeiro mantém participação estável em 2027, sustentado por baixo valor de produção e um clima neutro; crédito de máquina restrito.", "RN": "Rio Grande do Norte perde participação em 2027, sustentado por baixo valor de produção e a seca do El Niño no semiárido/MATOPIBA; crédito moderado.", "RO": "Rondônia perde participação em 2027, sustentado por rentabilidade mediana e as chuvas irregulares no Cerrado; crédito moderado.", "RR": "Roraima mantém participação estável em 2027, sustentado por baixo valor de produção e as chuvas irregulares no Cerrado; crédito de máquina restrito.", "RS": "Rio Grande do Sul ganha participação em 2027, sustentado por rentabilidade mediana e a recuperação climática (El Niño favorável ao Sul); forte acesso a crédito de máquina (Moderfrota/MOVE).", "SC": "Santa Catarina mantém participação estável em 2027, sustentado por rentabilidade mediana e a recuperação climática (El Niño favorável ao Sul); forte acesso a crédito de máquina (Moderfrota/MOVE).", "SE": "Sergipe perde participação em 2027, sustentado por baixo valor de produção e a seca do El Niño no semiárido/MATOPIBA; crédito de máquina restrito.", "SP": "São Paulo mantém participação estável em 2027, sustentado por VBP elevado e um clima neutro; crédito moderado.", "TO": "Tocantins perde participação em 2027, sustentado por rentabilidade mediana e as chuvas irregulares no Cerrado; crédito moderado."}, "TAGS": {"AC": [["u", "Clima Irregular"], ["n", "Crédito Restrito"], ["n", "Rentabilidade Baixa"]], "AL": [["n", "Seca (El Niño)"], ["n", "Rentabilidade Baixa"]], "AM": [["u", "Clima Irregular"], ["n", "Crédito Restrito"], ["n", "Rentabilidade Baixa"]], "AP": [["u", "Clima Irregular"], ["n", "Crédito Restrito"], ["n", "Rentabilidade Baixa"]], "BA": [["n", "Seca (El Niño)"], ["p", "Crédito Forte"]], "CE": [["n", "Seca (El Niño)"], ["n", "Rentabilidade Baixa"]], "DF": [["u", "Clima Irregular"], ["n", "Crédito Restrito"], ["n", "Rentabilidade Baixa"]], "ES": [["u", "Cenário Misto"]], "GO": [["u", "Clima Irregular"], ["p", "Rentabilidade Alta"]], "MA": [["n", "Seca (El Niño)"]], "MG": [["p", "Crédito Forte"], ["p", "Rentabilidade Alta"]], "MS": [["u", "Clima Irregular"]], "MT": [["u", "Clima Irregular"], ["p", "Rentabilidade Alta"]], "PA": [["u", "Clima Irregular"]], "PB": [["n", "Seca (El Niño)"], ["n", "Rentabilidade Baixa"]], "PE": [["n", "Seca (El Niño)"]], "PI": [["n", "Seca (El Niño)"], ["n", "Rentabilidade Baixa"]], "PR": [["p", "Clima Favorável"], ["p", "Crédito Forte"], ["p", "Rentabilidade Alta"]], "RJ": [["n", "Crédito Restrito"], ["n", "Rentabilidade Baixa"]], "RN": [["n", "Seca (El Niño)"], ["n", "Rentabilidade Baixa"]], "RO": [["u", "Clima Irregular"]], "RR": [["u", "Clima Irregular"], ["n", "Crédito Restrito"], ["n", "Rentabilidade Baixa"]], "RS": [["p", "Clima Favorável"], ["p", "Crédito Forte"]], "SC": [["p", "Clima Favorável"], ["p", "Crédito Forte"]], "SE": [["n", "Seca (El Niño)"], ["n", "Crédito Restrito"], ["n", "Rentabilidade Baixa"]], "SP": [["p", "Rentabilidade Alta"]], "TO": [["u", "Clima Irregular"]]}};
+var f=function(x){return x.toFixed(2)+"%";};
+function darrow(d){var c=d>0.03?"up":d<-0.03?"down":"flat",a=d>0.03?"▲":d<-0.03?"▼":"▬";return '<span class="d '+c+'">'+a+' '+(d>0?"+":"")+d.toFixed(2)+"</span>";}
+function badge(d){return d>0.03?'<span class="badge win">+'+d.toFixed(2)+' pp</span>':d<-0.03?'<span class="badge loss">'+d.toFixed(2)+' pp</span>':'<span class="badge flat">estável</span>';}
+var UFS=DATA.UFS,NM=DATA.NM,RG=DATA.RG,S27=DATA.S27,D=DATA.D,J=DATA.JUST,TG=DATA.TAGS;
+var mainIdx=[0,1,2,3],mainLab=["Trat.","Colh.","Pulv.","Plant."];
+var head='<thead><tr><th>UF</th><th>Estado</th>';
+mainLab.forEach(function(l){head+='<th class="c27">'+l+' 27</th><th>Δ pp</th>';});
+head+='<th>Leitura IMR</th></tr></thead>';
+var rows="";
+UFS.forEach(function(u){
+  rows+='<tr data-r="'+RG[u]+'"><td><span class="chip '+RG[u]+'">'+u+'</span></td><td class="nm">'+NM[u]+' '+badge(D[u][0])+'</td>';
+  mainIdx.forEach(function(i){rows+='<td class="c27">'+f(S27[u][i])+'</td><td>'+darrow(D[u][i])+'</td>';});
+  rows+='<td class="just">'+J[u]+'</td></tr>';
+});
+var tot="";mainIdx.forEach(function(i){var s=0;UFS.forEach(function(u){s+=S27[u][i];});tot+='<td class="c27">'+f(s)+'</td><td></td>';});
+rows+='<tr class="total"><td></td><td class="nm">TOTAL BRASIL</td>'+tot+'<td class="just">Cada coluna soma 100,00%.</td></tr>';
+document.getElementById("tMain").innerHTML=head+'<tbody>'+rows+'</tbody>';
+function topDelta(i){var a=UFS.map(function(u){return [u,D[u][i]];});a.sort(function(x,y){return y[1]-x[1];});return a;}
+var trd=topDelta(0),t340d=topDelta(5);
+document.getElementById("mNwin").textContent=NM[trd[0][0]]+" +"+trd[0][1].toFixed(2)+" pp";
+document.getElementById("mNlead").textContent="MT "+S27["MT"][5].toFixed(1)+"%";
+var mw=trd[0][0],ml=trd[trd.length-1][0];
+document.getElementById("kpis").innerHTML=
+'<div class="kpi win"><div class="ico" style="background:var(--up-bg)">🏆</div><h3>Maior Ganho — Tratores</h3><div class="val">'+NM[mw]+' <small class="up">+'+trd[0][1].toFixed(2)+' pp</small></div><div class="desc">Rentabilidade (VBP) e crédito robusto puxam o momento positivo.</div></div>'+
+'<div class="kpi loss"><div class="ico" style="background:var(--down-bg)">⚠️</div><h3>Maior Retração — Tratores</h3><div class="val">'+NM[ml]+' <small class="down">'+trd[trd.length-1][1].toFixed(2)+' pp</small></div><div class="desc">Momento negativo por rentabilidade/clima abaixo da média.</div></div>'+
+'<div class="kpi gold"><div class="ico">⚙️</div><h3>Líder Classe 8+ (2027)</h3><div class="val">Mato Grosso <small>'+S27["MT"][7].toFixed(1)+'%</small></div><div class="desc">Domínio absoluto na alta potência de grãos pesados.</div></div>'+
+'<div class="kpi win"><div class="ico" style="background:var(--up-bg)">🌦️</div><h3>Efeito El Niño — Sul</h3><div class="val">RS · PR · SC</div><div class="desc">Clima favorável eleva o momento; ganho de share em tratores e colheitadeiras.</div></div>';
+var pIdx=[4,5,6,7,8],pGrp=["Trator 260–339","Trator ≥340","Colheit. Cl.7","Colheit. Cl.8+","Plantad. >20L"];
+var ph='<thead><tr><th rowspan="2">UF</th><th rowspan="2">Estado</th>';
+pGrp.forEach(function(g){ph+='<th class="grp" colspan="2">'+g+'</th>';});
+ph+='<th rowspan="2">Insight</th></tr><tr>';
+pGrp.forEach(function(){ph+='<th class="c27">27</th><th>Δ</th>';});
+ph+='</tr></thead>';
 var prows="";
-for(var i=0;i<pu.length;i++){var u=pu[i],cells="";for(var j=0;j<5;j++)cells+=cell(P.b[u][j],P.p[u][j]);var dt=r2(P.p[u][1]-P.b[u][1]);prows+='<tr data-r="'+RG[u]+'"><td><span class="chip '+RG[u]+'">'+u+'</span></td><td class="nm">'+NM[u]+" "+badge(dt)+"</td>"+cells+'<td class="just">'+(JPREM[u]||"")+"</td></tr>";}
-var pt="";for(var j=0;j<5;j++){var s26=0,s27=0;for(var i=0;i<UFS.length;i++){s26+=P.b[UFS[i]][j];s27+=P.p[UFS[i]][j];}pt+="<td>"+f(s26)+'</td><td class="c27">'+f(s27)+"</td>";}
-prows+='<tr class="total"><td></td><td class="nm">TOTAL BRASIL</td>'+pt+'<td class="just">Cada segmento soma exatamente 100,00%.</td></tr>';
-document.getElementById("tPrem").innerHTML='<thead><tr><th rowspan="2">UF</th><th rowspan="2">Estado</th><th class="grp" colspan="2">Trator 260–339 HP</th><th class="grp" colspan="2">Trator ≥340 HP</th><th class="grp" colspan="2">Colheit. Classe 7</th><th class="grp" colspan="2">Colheit. Classe 8+</th><th class="grp" colspan="2">Plantad. &gt;20 linhas</th><th rowspan="2">Insight</th></tr><tr><th>26</th><th class="c27">27</th><th>26</th><th class="c27">27</th><th>26</th><th class="c27">27</th><th>26</th><th class="c27">27</th><th>26</th><th class="c27">27</th></tr></thead><tbody>'+prows+"</tbody>";
-var rkP=pu.slice().sort(function(a,b){return(P.p[b][1]-P.b[b][1])-(P.p[a][1]-P.b[a][1]);});
-var pcards="";
-for(var i=0;i<rkP.length;i++){var u=rkP[i],dt=r2(P.p[u][1]-P.b[u][1]),dr=DRVP[u];var tr=dt>.02?"pos":dt<-.02?"neg":"";var dc=dt>.02?"up":dt<-.02?"down":"flat";var dtx=dt>.02?"+"+dt.toFixed(2)+" pp":dt<-.02?dt.toFixed(2)+" pp":"estável";var tags="";if(dr[1]<=-.8)tags+='<span class="tag n">Crédito de Ticket Alto</span>';if(dr[0]<=-.9)tags+='<span class="tag n">Risco Climático</span>';if(dr[0]>=.9)tags+='<span class="tag p">Clima Favorável</span>';if(dr[2]>=.9)tags+='<span class="tag p">Rentabilidade Alta</span>';if(dr[3]>=.9)tags+='<span class="tag p">Renovação Aquecida</span>';if(!tags)tags='<span class="tag u">Cenário Misto</span>';pcards+='<div class="card '+tr+'"><div class="ch"><h3>'+NM[u]+' <span class="cuf">'+u+'</span></h3><span class="cd '+dc+'">'+dtx+'</span></div><p class="cj">'+(JPREM[u]||"")+'</p><div class="bars">'+bar(dr[0],"Clima")+bar(dr[1],"Crédito")+bar(dr[2],"Rentab.")+bar(dr[3],"Renov.")+'</div><div class="tags">'+tags+"</div></div>";}
-document.getElementById("pcards").innerHTML=pcards;
-var pw_=rkP[0],pl_=rkP[rkP.length-1];
-document.getElementById("kPrem").innerHTML=NM[pw_]+' <small class="up">+'+r2(P.p[pw_][1]-P.b[pw_][1]).toFixed(2)+" pp</small>";
-var conc=Math.round(P.b.MT[3]+P.b.GO[3]+P.b.MS[3]+P.b.BA[3]);
-document.getElementById("pkpis").innerHTML='<div class="kpi gold"><div class="ico">🚜</div><h3>Líder Absoluto (Premium)</h3><div class="val">Mato Grosso</div><div class="desc">36% dos tratores ≥340HP e 54% das Classe 8+ (dados reais 2026).</div></div><div class="kpi win"><div class="ico" style="background:var(--up-bg)">📈</div><h3>Maior Ganho ≥340HP</h3><div class="val">'+NM[pw_]+' <small class="up">+'+r2(P.p[pw_][1]-P.b[pw_][1]).toFixed(2)+' pp</small></div><div class="desc">Renovação aquecida e clima favorável no Sul.</div></div><div class="kpi loss"><div class="ico" style="background:var(--down-bg)">📉</div><h3>Maior Retração ≥340HP</h3><div class="val">'+NM[pl_]+' <small class="down">'+r2(P.p[pl_][1]-P.b[pl_][1]).toFixed(2)+' pp</small></div><div class="desc">Seca no Cerrado e crédito de ticket alto derrubam o share.</div></div><div class="kpi gold"><div class="ico">🌾</div><h3>Concentração Classe 8+</h3><div class="val">'+conc+'% em 4 UFs</div><div class="desc">MT · GO · MS · BA somam a maior fatia da Classe 8+.</div></div>';
+UFS.forEach(function(u){
+  var any=pIdx.some(function(i){return S27[u][i]>0;});if(!any)return;
+  prows+='<tr data-r="'+RG[u]+'"><td><span class="chip '+RG[u]+'">'+u+'</span></td><td class="nm">'+NM[u]+' '+badge(D[u][5])+'</td>';
+  pIdx.forEach(function(i){prows+='<td class="c27">'+f(S27[u][i])+'</td><td>'+darrow(D[u][i])+'</td>';});
+  prows+='<td class="just">'+J[u]+'</td></tr>';
+});
+var pt="";pIdx.forEach(function(i){var s=0;UFS.forEach(function(u){s+=S27[u][i];});pt+='<td class="c27">'+f(s)+'</td><td></td>';});
+prows+='<tr class="total"><td></td><td class="nm">TOTAL BRASIL</td>'+pt+'<td class="just">Cada segmento soma 100,00%.</td></tr>';
+document.getElementById("tPrem").innerHTML=ph+'<tbody>'+prows+'</tbody>';
+var pw=t340d[0][0];
+var conc=(S27["MT"][7]+S27["GO"][7]+S27["BA"][7]+S27["MS"][7]);
+document.getElementById("pkpis").innerHTML=
+'<div class="kpi gold"><div class="ico">🚜</div><h3>Líder ≥340HP (2027)</h3><div class="val">Mato Grosso <small>'+S27["MT"][5].toFixed(1)+'%</small></div><div class="desc">Alta potência concentrada no Cerrado.</div></div>'+
+'<div class="kpi win"><div class="ico" style="background:var(--up-bg)">📈</div><h3>Maior Ganho ≥340HP</h3><div class="val">'+NM[pw]+' <small class="up">+'+t340d[0][1].toFixed(2)+' pp</small></div><div class="desc">Momento positivo por rentabilidade e renovação de frota.</div></div>'+
+'<div class="kpi loss"><div class="ico" style="background:var(--down-bg)">📉</div><h3>Maior Retração ≥340HP</h3><div class="val">'+NM[t340d[t340d.length-1][0]]+' <small class="down">'+t340d[t340d.length-1][1].toFixed(2)+' pp</small></div><div class="desc">Clima/rentabilidade abaixo da média reduzem o share.</div></div>'+
+'<div class="kpi gold"><div class="ico">🌾</div><h3>Concentração Classe 8+</h3><div class="val">'+conc.toFixed(1)+'% em 4 UFs</div><div class="desc">MT · GO · BA · MS dominam colheitadeiras pesadas.</div></div>';
+var rkP=UFS.filter(function(u){return pIdx.some(function(i){return S27[u][i]>0;});}).sort(function(a,b){return D[b][5]-D[a][5];});
+var pc="";rkP.forEach(function(u){
+  var d=D[u][5],tr=d>0.03?"pos":d<-0.03?"neg":"",dc=d>0.03?"up":d<-0.03?"down":"flat",dt=d>0.03?"+"+d.toFixed(2)+" pp":d<-0.03?d.toFixed(2)+" pp":"estável";
+  var tg="";TG[u].forEach(function(t){tg+='<span class="tag '+t[0]+'">'+t[1]+'</span>';});
+  pc+='<div class="card '+tr+'"><div class="ch"><h3>'+NM[u]+' <span class="cuf">'+u+'</span></h3><span class="cd '+dc+'">'+dt+'</span></div><p class="cj">'+J[u]+'</p><div class="tags">'+tg+'</div></div>';
+});
+document.getElementById("pcards").innerHTML=pc;
+var rkM=UFS.slice().sort(function(a,b){return D[b][0]-D[a][0];});
+var mc="";rkM.forEach(function(u){
+  var d=D[u][0],tr=d>0.03?"pos":d<-0.03?"neg":"",dc=d>0.03?"up":d<-0.03?"down":"flat",dt=d>0?"+"+d.toFixed(2)+" pp":d.toFixed(2)+" pp";
+  var tg="";TG[u].forEach(function(t){tg+='<span class="tag '+t[0]+'">'+t[1]+'</span>';});
+  mc+='<div class="card '+tr+'"><div class="ch"><h3>'+NM[u]+' <span class="cuf">'+u+'</span></h3><span class="cd '+dc+'">'+dt+'</span></div><p class="cj">'+J[u]+'</p><div class="tags">'+tg+'</div></div>';
+});
+document.getElementById("mcards").innerHTML=mc;
 var panels={main:document.getElementById("main"),premium:document.getElementById("premium"),metodologia:document.getElementById("metodologia")};
 document.querySelector(".filters").addEventListener("click",function(e){
   var btn=e.target.closest(".fbtn");if(!btn)return;
   var act=document.querySelector(".fbtn.active");if(act)act.classList.remove("active");
-  btn.classList.add("active");
-  var ff=btn.dataset.f;
+  btn.classList.add("active");var ff=btn.dataset.f;
   panels.main.style.display="none";panels.premium.style.display="none";panels.metodologia.style.display="none";
   if(ff==="premium")panels.premium.style.display="block";
   else if(ff==="metodologia")panels.metodologia.style.display="block";
   else{panels.main.style.display="block";document.querySelectorAll("#tMain tbody tr:not(.total)").forEach(function(r){r.style.display=(ff==="todos"||r.dataset.r===ff)?"":"none";});}
 });
-function expTable(sel,name){if(typeof XLSX==="undefined"){alert("Biblioteca XLSX não carregou — verifique a conexão com a internet.");return;}var t=document.querySelector(sel);if(!t)return;var c=t.cloneNode(true);c.querySelectorAll('tbody tr[style*="display: none"]').forEach(function(r){r.remove();});var wb=XLSX.utils.table_to_book(c,{sheet:name});XLSX.writeFile(wb,"AGCO_"+name+".xlsx");}
+function expTable(sel,name){if(typeof XLSX==="undefined"){alert("XLSX não carregou.");return;}var t=document.querySelector(sel);if(!t)return;var c=t.cloneNode(true);c.querySelectorAll('tbody tr[style*="display: none"]').forEach(function(r){r.remove();});var wb=XLSX.utils.table_to_book(c,{sheet:name});XLSX.writeFile(wb,"AGCO_"+name+".xlsx");}
 </script>
 </body>
 </html>
