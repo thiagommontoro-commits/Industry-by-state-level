@@ -1,0 +1,1904 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IMR - Indice de Momento Regional | AGCO Industry Share 2027</title>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+<style>
+:root{--red:#C8102E;--red-dark:#8B0A1D;--red-soft:#FDE8EB;--ink:#0E1116;--ink-2:#2B303B;--muted:#6B7280;--bg:#EEF1F5;--card:#FFF;--line:#E6E9EF;--up:#0B7A3B;--up-bg:#E4F7EC;--down:#C8102E;--down-bg:#FDE8EB;--flat:#8A93A2;--gold:#B8860B;--gold-bg:#FBF3DF;--teal:#0E7C86;--teal-bg:#E1F1F2;--purple:#7A3FB0;--purple-bg:#F3EEFA;--shadow:0 1px 2px rgba(16,17,22,.04),0 6px 20px -8px rgba(16,17,22,.12);--shadow-lg:0 20px 45px -20px rgba(16,17,22,.28);--font:"Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif}
+*{margin:0;padding:0;box-sizing:border-box;font-family:var(--font)}
+body{background:radial-gradient(1200px 500px at 100% -10%,rgba(200,16,46,.06),transparent 60%),var(--bg);color:var(--ink-2);padding:34px 22px 70px;line-height:1.5}
+.container{max-width:1640px;margin:0 auto}
+.hero{position:relative;overflow:hidden;border-radius:22px;padding:32px 38px;background:linear-gradient(135deg,#141821,#1d222d 55%,#241016);color:#fff;box-shadow:var(--shadow-lg);margin-bottom:26px}
+.hero::after{content:"";position:absolute;right:-60px;top:-80px;width:340px;height:340px;background:radial-gradient(circle,rgba(200,16,46,.55),transparent 62%);filter:blur(6px)}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;position:relative;z-index:2;flex-wrap:wrap}
+.brand-row{display:flex;align-items:center;gap:16px}
+.imr-badge{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:74px;height:64px;border-radius:14px;background:linear-gradient(145deg,var(--red),var(--red-dark));box-shadow:0 8px 20px -6px rgba(200,16,46,.7);padding:0 12px}
+.imr-badge b{font-size:1.5rem;font-weight:800;color:#fff;letter-spacing:1px;line-height:1}
+.imr-badge span{font-size:.5rem;color:#FDE8EB;letter-spacing:.5px;margin-top:3px}
+.hero h1{font-size:1.5rem;font-weight:800;letter-spacing:-.5px}
+.hero .sub{color:#B7BECC;margin-top:4px;font-size:.92rem}
+.hero .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:9px 15px;border-radius:999px;font-size:.82rem;font-weight:600;color:#EAEDF3}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:#34d17f;box-shadow:0 0 0 4px rgba(52,209,127,.2)}
+.hero-meta{display:flex;gap:26px;margin-top:22px;position:relative;z-index:2;flex-wrap:wrap}
+.hero-meta .k{font-size:.72rem;text-transform:uppercase;letter-spacing:1.2px;color:#8B93A3}
+.hero-meta .v{font-size:1.05rem;font-weight:700;color:#fff;margin-top:2px}
+.kpi-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-bottom:28px}
+.kpi{background:var(--card);padding:20px 22px;border-radius:16px;box-shadow:var(--shadow);border:1px solid var(--line);position:relative;overflow:hidden;transition:.2s}
+.kpi:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--red)}
+.kpi.win::before{background:var(--up)}.kpi.loss::before{background:var(--down)}.kpi.gold::before{background:var(--gold)}.kpi.purple::before{background:var(--purple)}
+.kpi .ico{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;background:var(--gold-bg)}
+.kpi h3{font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.1px;font-weight:600;margin-bottom:8px}
+.kpi .val{font-size:1.35rem;font-weight:800;color:var(--ink);line-height:1.15}
+.kpi .val small{font-size:.9rem}.kpi .val small.up{color:var(--up)}.kpi .val small.down{color:var(--down)}
+.kpi .desc{margin-top:8px;color:var(--muted);font-size:.82rem}
+.filters{display:flex;gap:10px;margin-bottom:22px;flex-wrap:wrap}
+.fbtn{background:var(--card);color:var(--ink-2);border:1px solid var(--line);padding:9px 18px;border-radius:999px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.18s}
+.fbtn:hover{border-color:var(--red);color:var(--red)}
+.fbtn.active{background:linear-gradient(135deg,var(--red),var(--red-dark));color:#fff;border-color:transparent}
+.fbtn.gold{border-color:var(--gold);color:var(--gold)}
+.fbtn.gold.active{background:linear-gradient(135deg,var(--gold),#946c08);color:#fff;border-color:transparent}
+.panel{background:var(--card);padding:24px;border-radius:18px;box-shadow:var(--shadow);border:1px solid var(--line)}
+#premium{border-top:4px solid var(--gold)}
+.ptitle{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;gap:14px;flex-wrap:wrap}
+.ptitle h2{font-size:1.2rem;color:var(--ink);font-weight:700}
+.ptitle .hint{font-size:.8rem;color:var(--muted);margin-top:3px}
+.exp{background:linear-gradient(135deg,#0B7A3B,#0a6c35);color:#fff;border:none;padding:10px 18px;border-radius:10px;font-size:.85rem;font-weight:600;cursor:pointer}
+.scroll{overflow-x:auto;border-radius:12px;border:1px solid var(--line)}
+table{width:100%;border-collapse:separate;border-spacing:0;min-width:1100px}
+table.prem{min-width:1300px}
+th,td{padding:13px 16px;text-align:right;border-bottom:1px solid var(--line);font-size:.86rem;white-space:nowrap}
+th:nth-child(1),td:nth-child(1),th:nth-child(2),td:nth-child(2),th:last-child,td:last-child{text-align:left}
+thead th{background:#F7F8FA;color:var(--muted);font-weight:700;text-transform:uppercase;font-size:.7rem;letter-spacing:.5px;position:sticky;top:0;z-index:10}
+th.c27{color:var(--red);background:#FCF3F4}
+table.prem th.c27{color:var(--gold);background:#FBF6E8}
+table.prem th.grp{color:var(--ink);background:#F0F2F5;text-align:center;border-left:2px solid var(--line)}
+td:first-child{position:sticky;left:0;background:var(--card)}
+th:first-child{left:0;z-index:11}
+tbody tr:hover td{background:#FBFCFE}
+.c27{font-weight:700;color:var(--ink);background:#FDFBFB}
+.d{font-size:.7rem;font-weight:700;margin-left:2px}.d.up{color:var(--up)}.d.down{color:var(--down)}.d.flat{color:var(--flat)}
+.chip{display:inline-block;font-weight:800;font-size:.78rem;color:#fff;padding:3px 9px;border-radius:8px}
+.sul{background:#0B7A3B}.sudeste{background:#C8102E}.centro-oeste{background:#B8860B}.nordeste{background:#7A3FB0}.norte{background:#0E7C86}
+.nm{font-weight:600;color:var(--ink)}
+.badge{font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:999px;margin-left:7px}
+.badge.win{background:var(--up-bg);color:var(--up)}.badge.loss{background:var(--down-bg);color:var(--down)}.badge.flat{background:#EEF0F3;color:var(--flat)}
+.just{color:var(--ink-2);font-size:.82rem;max-width:440px;white-space:normal;text-align:left}
+.total td{background:#141821!important;color:#fff;font-weight:800;position:sticky;bottom:0}
+.total .c27{color:#FDE68A;background:#1d222d!important}
+.legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px;font-size:.76rem;color:var(--muted)}
+.legend i{width:11px;height:11px;border-radius:3px;display:inline-block;margin-right:5px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px;margin-top:8px}
+.card{background:#fff;padding:20px;border-radius:14px;border:1px solid var(--line);border-left:5px solid var(--flat);transition:.2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.card.pos{border-left-color:var(--up)}.card.neg{border-left-color:var(--down)}
+.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ch h3{font-size:1rem;font-weight:700;color:var(--ink)}
+.cuf{font-size:.72rem;background:#F0F2F5;color:var(--muted);padding:2px 7px;border-radius:6px;margin-left:5px;font-weight:700}
+.cd{font-size:.82rem;font-weight:800}.cd.up{color:var(--up)}.cd.down{color:var(--down)}.cd.flat{color:var(--flat)}
+.cj{font-size:.84rem;line-height:1.55;margin-bottom:14px}
+.tags{display:flex;flex-wrap:wrap;gap:7px}.tag{padding:4px 11px;border-radius:999px;font-size:.72rem;font-weight:600}
+.tag.n{background:var(--down-bg);color:var(--down)}.tag.p{background:var(--up-bg);color:var(--up)}.tag.u{background:#F0F2F5;color:#4b5563}
+.m-lead{width:100%;font-size:.92rem;line-height:1.7;color:var(--ink-2);margin-bottom:8px;text-align:left}
+.m-lead b{color:var(--ink)}
+.sec{width:100%;margin-top:24px}
+.sec-hd{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:16px 20px;border-radius:14px 14px 0 0;border:1px solid var(--line);border-bottom:none}
+.sec.br .sec-hd{background:linear-gradient(135deg,#FCF3F4,#fff);border-top:4px solid var(--red)}
+.sec-id{display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 auto}
+.sflag{flex:none;display:inline-flex;align-items:center;justify-content:center;min-width:40px;height:30px;padding:0 11px;border-radius:9px;font-size:.78rem;font-weight:800;letter-spacing:.6px;color:#fff}
+.sec.br .sflag{background:var(--red)}
+.sec-hd h3{font-size:1.15rem;font-weight:800;color:var(--ink);line-height:1.25}
+.sec-hd .stag{flex:none;font-size:.64rem;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:6px 13px;border-radius:999px;white-space:nowrap}
+.sec.br .sec-hd .stag{background:var(--red-soft);color:var(--red)}
+.sec-bd{border:1px solid var(--line);border-radius:0 0 14px 14px;padding:22px}
+.step{width:100%;font-size:.72rem;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);margin:22px 0 12px;display:flex;align-items:center;gap:9px;text-align:left}
+.step:first-child{margin-top:0}
+.step .stepn{width:22px;height:22px;flex:none;border-radius:50%;color:#fff;font-size:.74rem;font-weight:800;display:flex;align-items:center;justify-content:center;background:var(--red)}
+.lead{width:100%;background:#F9FAFB;border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-size:.88rem;line-height:1.65;color:var(--ink-2);text-align:left;border-left:4px solid var(--red)}
+.fx{margin-top:12px;font-size:.8rem;color:var(--muted);background:#fff;border:1px dashed #D4D9E1;border-radius:8px;padding:11px 13px;text-align:left}
+.fx code{background:#141821;color:#EAEDF3;padding:2px 8px;border-radius:6px;font-size:.78rem}
+.vlist{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(max-width:720px){.vlist{grid-template-columns:1fr}}
+.vrow{display:flex;gap:11px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:10px;padding:13px 14px;text-align:left}
+.vrow.nova{border-color:var(--purple);background:var(--purple-bg)}
+.vrow .vic{font-size:1.25rem;line-height:1.1}
+.vrow .vtx b{font-size:.86rem;color:var(--ink)}
+.vrow .vtx span{display:block;font-size:.78rem;color:var(--muted);margin-top:2px;line-height:1.45}
+.novo-badge{display:inline-block;font-size:.6rem;font-weight:800;color:#fff;background:var(--purple);padding:2px 7px;border-radius:999px;margin-left:6px;vertical-align:middle}
+.state-sub{width:100%;font-size:.82rem;color:var(--muted);margin:0 0 4px;text-align:left}
+.author{margin-top:22px;padding:16px 20px;border-radius:12px;background:linear-gradient(135deg,#141821,#241016);color:#EAEDF3;font-size:.85rem}
+.author b{color:#FDE68A}
+.foot{text-align:center;color:var(--muted);font-size:.76rem;margin-top:30px;line-height:1.7}
+.foot b{color:var(--ink-2)}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <div class="hero-top">
+      <div class="brand-row">
+        <div class="imr-badge"><b>IMR</b><span>INDICE DE MOMENTO</span></div>
+        <div><h1>&Iacute;ndice de Momento Regional &mdash; Industry Share 2027</h1><div class="sub">Modelo 5D: Cr&eacute;dito &middot; Clima &middot; Rentabilidade &middot; Renova&ccedil;&atilde;o &middot; <b style="color:#d9b3ff">Inadimpl&ecirc;ncia</b> &middot; Varejo Brasil</div></div>
+      </div>
+      <span class="pill"><span class="dot"></span>Base 2026 &rarr; 2027 &middot; El Ni&ntilde;o (INMET) &middot; Inadimpl&ecirc;ncia (Serasa Agro)</span>
+    </div>
+    <div class="hero-meta">
+      <div><div class="k">Cobertura</div><div class="v">27 UFs &middot; 9 produtos/segmentos</div></div>
+      <div><div class="k">Maior ganho (Tratores)</div><div class="v" id="mNwin">-</div></div>
+      <div><div class="k">L&iacute;der Alta Pot&ecirc;ncia</div><div class="v" id="mNlead">-</div></div>
+      <div><div class="k">Fechamento</div><div class="v">100,00% por coluna</div></div>
+    </div>
+  </div>
+  <div class="kpi-wrap" id="kpis"></div>
+  <div class="filters">
+    <button class="fbtn active" data-f="todos">Todos</button>
+    <button class="fbtn" data-f="sul">Sul</button>
+    <button class="fbtn" data-f="sudeste">Sudeste</button>
+    <button class="fbtn" data-f="centro-oeste">Centro-Oeste</button>
+    <button class="fbtn" data-f="nordeste">Nordeste</button>
+    <button class="fbtn" data-f="norte">Norte</button>
+    <button class="fbtn gold" data-f="premium">Alta Pot&ecirc;ncia</button>
+    <button class="fbtn" data-f="metodologia">Metodologia IMR</button>
+  </div>
+  <div id="main" class="panel">
+    <div class="ptitle"><div><h2>Proje&ccedil;&atilde;o IMR por Estado &mdash; Produtos principais</h2><div class="hint">Share 2027 (%) &middot; &Delta; pp vs. 2026</div></div>
+      <button class="exp" onclick="expTable('#main table','IMR_Share2027')">Exportar Excel</button></div>
+    <div class="scroll"><table id="tMain"></table></div>
+    <div class="legend"><span><i class="sul"></i>Sul</span><span><i class="sudeste"></i>Sudeste</span><span><i class="centro-oeste"></i>Centro-Oeste</span><span><i class="nordeste"></i>Nordeste</span><span><i class="norte"></i>Norte</span></div>
+    <h2 style="margin:26px 0 6px;font-size:1.15rem;color:var(--ink)">Insights por Estado <span style="font-size:.8rem;color:var(--muted);font-weight:400">(ordenado pelo &Delta; em Tratores)</span></h2>
+    <div class="cards" id="allcards"></div>
+  </div>
+  <div id="premium" class="panel" style="display:none">
+    <div class="ptitle"><div><h2>Segmentos de Alta Pot&ecirc;ncia &mdash; Proje&ccedil;&atilde;o IMR 2027</h2><div class="hint">Trator 260-339 HP e &ge;340 HP &middot; Colheit. Classe 7 e Classe 8+ &middot; Plantad. &gt;20 linhas</div></div>
+      <button class="exp" onclick="expTable('#premium table','IMR_AltaPotencia2027')">Exportar Excel</button></div>
+    <div class="scroll"><table id="tPrem" class="prem"></table></div>
+    <h2 style="margin:26px 0 6px;font-size:1.15rem;color:var(--ink)">Insights por Estado &mdash; Alta Pot&ecirc;ncia</h2>
+    <div class="cards" id="pcards"></div>
+  </div>
+  <div id="metodologia" class="panel" style="display:none">
+    <div class="ptitle"><div><h2>Metodologia IMR &mdash; &Iacute;ndice de Momento Regional</h2></div></div>
+    <p class="m-lead">O <b>IMR (&Iacute;ndice de Momento Regional)</b> redistribui o forecast nacional entre os 27 estados, pontuando cada UF em <b>cinco vetores independentes</b> &mdash; Cr&eacute;dito, Clima, Rentabilidade, Renova&ccedil;&atilde;o e <b>Inadimpl&ecirc;ncia</b> (Modelo 5D). Renormalizado a 100% por produto.</p>
+    <div class="sec br">
+      <div class="sec-hd"><div class="sec-id"><span class="sflag">BR</span><h3>Brasil &mdash; IMR por UF (Modelo 5D)</h3></div><span class="stag">5 Vetores Independentes</span></div>
+      <div class="sec-bd">
+        <div class="step"><span class="stepn">1</span>Como funciona</div>
+        <div class="lead">Cada UF recebe uma nota (z-score) em cinco vetores. A combina&ccedil;&atilde;o ponderada por produto gera o <b>&iacute;ndice de momento</b>, aplicado ao share 2026 e renormalizado a 100%.
+          <div class="fx"><code>Momento = Soma(peso x z)</code> &middot; <code>Share27 = Share26 x (1 + fator x Momento)</code></div>
+        </div>
+        <div class="step"><span class="stepn">2</span>Os cinco vetores e suas fontes</div>
+        <div class="vlist">
+          <div class="vrow"><span class="vic">&#128176;</span><div class="vtx"><b>Cr&eacute;dito</b><span>Moderfrota + MOVE 2027, distribu&iacute;do pelo peso hist&oacute;rico por UF. Fonte: Plano Safra + FINEP + SICOR/BCB.</span></div></div>
+          <div class="vrow"><span class="vic">&#127782;</span><div class="vtx"><b>Clima</b><span>Produtividade + Fator El Ni&ntilde;o por regi&atilde;o. Fonte: IBGE/CONAB + Painel INMET/INPE.</span></div></div>
+          <div class="vrow"><span class="vic">&#128200;</span><div class="vtx"><b>Rentabilidade</b><span>Valor Bruto da Produ&ccedil;&atilde;o (VBP) 2027 por UF.</span></div></div>
+          <div class="vrow"><span class="vic">&#128666;</span><div class="vtx"><b>Renova&ccedil;&atilde;o</b><span>&Delta; &Aacute;rea + frota por estado e segmento. Fonte: IBGE/CONAB + AGCOSTAT.</span></div></div>
+          <div class="vrow nova"><span class="vic">&#128201;</span><div class="vtx"><b>Inadimpl&ecirc;ncia<span class="novo-badge">NOVO</span></b><span>Inadimpl&ecirc;ncia agro por UF (z invertido: menor = melhor). Estados com maior inadimpl&ecirc;ncia t&ecirc;m menor capacidade de converter cr&eacute;dito em compra efetiva. Fonte: <b>Serasa Agro</b>.</span></div></div>
+        </div>
+        <div class="step"><span class="stepn">3</span>An&aacute;lise por estado</div>
+        <div class="state-sub">Leitura do IMR por UF (Tratores como refer&ecirc;ncia), do maior ganho &agrave; maior perda.</div>
+        <div class="cards" id="mcards"></div>
+      </div>
+    </div>
+    <div class="author">Metodologia <b>IMR &mdash; &Iacute;ndice de Momento Regional</b> desenvolvida pela &aacute;rea de <b>Global Reporting &amp; Analytics</b> da AGCO, atrav&eacute;s de <b>Thiago Montoro</b>.</div>
+  </div>
+  <div class="foot"><b>IMR &mdash; &Iacute;ndice de Momento Regional (Modelo 5D)</b> &middot; AGCO Global Reporting &amp; Analytics &middot; Thiago Montoro.<br>Vetores: Cr&eacute;dito, Clima, Rentabilidade, Renova&ccedil;&atilde;o e Inadimpl&ecirc;ncia. Fontes: IBGE/CONAB, SICOR/BCB, Plano Safra, FINEP, AGCOSTAT, INMET/INPE, Serasa Agro. Colunas fecham 100,00%.</div>
+</div>
+<script>
+window.__IMR__={
+"prods": [
+"Tratores",
+"Colheitadeiras",
+"Pulverizadores",
+"Plantadeiras",
+"Trator 260-339",
+"Trator 340+",
+"Colheit. Classe 7",
+"Colheit. Classe 8+",
+"Plantad. +20 linhas"
+],
+"ufs": [
+"AC",
+"AL",
+"AM",
+"AP",
+"BA",
+"CE",
+"DF",
+"ES",
+"GO",
+"MA",
+"MG",
+"MS",
+"MT",
+"PA",
+"PB",
+"PE",
+"PI",
+"PR",
+"RJ",
+"RN",
+"RO",
+"RR",
+"RS",
+"SC",
+"SE",
+"SP",
+"TO"
+],
+"names": {
+"AC": "Acre",
+"AL": "Alagoas",
+"AM": "Amazonas",
+"AP": "Amap\u00e1",
+"BA": "Bahia",
+"CE": "Cear\u00e1",
+"DF": "Distrito Federal",
+"ES": "Esp\u00edrito Santo",
+"GO": "Goi\u00e1s",
+"MA": "Maranh\u00e3o",
+"MG": "Minas Gerais",
+"MS": "Mato Grosso do Sul",
+"MT": "Mato Grosso",
+"PA": "Par\u00e1",
+"PB": "Para\u00edba",
+"PE": "Pernambuco",
+"PI": "Piau\u00ed",
+"PR": "Paran\u00e1",
+"RJ": "Rio de Janeiro",
+"RN": "Rio Grande do Norte",
+"RO": "Rond\u00f4nia",
+"RR": "Roraima",
+"RS": "Rio Grande do Sul",
+"SC": "Santa Catarina",
+"SE": "Sergipe",
+"SP": "S\u00e3o Paulo",
+"TO": "Tocantins"
+},
+"reg": {
+"AC": "norte",
+"AL": "nordeste",
+"AM": "norte",
+"AP": "norte",
+"BA": "nordeste",
+"CE": "nordeste",
+"DF": "centro-oeste",
+"ES": "sudeste",
+"GO": "centro-oeste",
+"MA": "nordeste",
+"MG": "sudeste",
+"MS": "centro-oeste",
+"MT": "centro-oeste",
+"PA": "norte",
+"PB": "nordeste",
+"PE": "nordeste",
+"PI": "nordeste",
+"PR": "sul",
+"RJ": "sudeste",
+"RN": "nordeste",
+"RO": "norte",
+"RR": "norte",
+"RS": "sul",
+"SC": "sul",
+"SE": "nordeste",
+"SP": "sudeste",
+"TO": "norte"
+},
+"s27": {
+"AC": [
+0.202696146718737,
+0.0589146925742544,
+0,
+0.0449576189898069,
+0,
+0,
+0,
+0,
+0
+],
+"AL": [
+0.547924503574115,
+0.0949715462101857,
+0.0694095126695439,
+0.0959490192444735,
+0.257372866921201,
+0.0908641056418129,
+0,
+0,
+0
+],
+"AM": [
+0.164637979153919,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0
+],
+"AP": [
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0
+],
+"BA": [
+3.97111458465073,
+4.48723315964233,
+7.20406124836546,
+3.85388655198412,
+1.04652595187704,
+10.2549884857628,
+2.20607087225866,
+12.9867345235823,
+7.32771220745302
+],
+"CE": [
+1.57630485751376,
+0.0594890237019947,
+0,
+0.551033000664077,
+0,
+0,
+0,
+0,
+0
+],
+"DF": [
+0.792070927033757,
+0.0612154052026862,
+0.135390192593399,
+0.374255199960764,
+0,
+0.0883071568755254,
+0,
+0,
+0.254849365704417
+],
+"ES": [
+3.40032102536973,
+0,
+0.0721118055753441,
+0.0991677771427842,
+0,
+0,
+0,
+0,
+0
+],
+"GO": [
+3.79547527998067,
+10.4237855234461,
+12.02789424306,
+10.281365442645,
+11.6950981298323,
+11.8770762454396,
+15.8284448452074,
+10.5126393593777,
+20.5526432559224
+],
+"MA": [
+1.172042075943,
+1.9144296809033,
+2.53987366129463,
+2.7607595636286,
+0.497959060239395,
+3.57903891638044,
+2.57744352471174,
+2.87321897933996,
+3.13743110513421
+],
+"MG": [
+22.1687560400075,
+5.77752350658794,
+5.24333220509775,
+7.78851203445298,
+8.01360809865531,
+3.19638771689238,
+4.5337392415371,
+1.88437561039186,
+3.25034078620817
+],
+"MS": [
+2.24074834856619,
+4.68461502556297,
+4.98860376816456,
+7.95741412293257,
+3.44082527590418,
+6.09449101748238,
+9.19433499034327,
+3.66069488160758,
+4.80888484880682
+],
+"MT": [
+5.4431545129203,
+26.736696077528,
+33.4404844324982,
+18.6577478478278,
+25.9393230429452,
+40.1935849987418,
+34.0749898546611,
+54.6335125364789,
+40.2610517873698
+],
+"PA": [
+2.00929014217776,
+1.68295387945323,
+2.78750502410041,
+3.8156068643339,
+2.01850524000916,
+2.73175323441854,
+3.8520370962529,
+1.0726817392991,
+4.97990761070836
+],
+"PB": [
+0.52256147226637,
+0,
+0,
+0.0945808190811185,
+0,
+0,
+0,
+0,
+0
+],
+"PE": [
+1.55909870431315,
+0.0311410250135884,
+0,
+0,
+0,
+0.0900577396664771,
+0,
+0,
+0
+],
+"PI": [
+0.40669716953447,
+1.6375143510819,
+1.79666096504454,
+1.7412234989363,
+1.48742888420275,
+5.39463466722773,
+1.65769947101911,
+4.34847195812123,
+4.12065654943881
+],
+"PR": [
+10.5813086452279,
+19.0238707725136,
+10.9679259001875,
+16.9304863137096,
+8.51510153486567,
+3.70940473085357,
+11.7745511516329,
+2.07074516573948,
+0.750334117916473
+],
+"RJ": [
+0.362302100257828,
+0.0327632751994967,
+0,
+0,
+0,
+0,
+0,
+0,
+0
+],
+"RN": [
+0.697763586454609,
+0,
+0,
+0,
+1.47230898914182,
+0,
+0,
+0,
+0
+],
+"RO": [
+1.52441097446248,
+1.70391958613618,
+1.31287197732067,
+0.915555872438523,
+0.764742665328184,
+0.801504808533168,
+3.59101333172035,
+1.30282827505773,
+1.95869913854959
+],
+"RR": [
+0.187902658963787,
+0.325397264311433,
+0.327705451242004,
+0.227309119306683,
+0,
+0.170000667410516,
+0.595991843695473,
+0,
+0.369501255714782
+],
+"RS": [
+10.966603151595,
+12.141756217513,
+5.43318934217667,
+9.87736782146027,
+10.0340494220001,
+4.17779174853708,
+4.78501497517122,
+3.57714415742463,
+3.46610413913943
+],
+"SC": [
+6.31185649886836,
+2.39306641727593,
+1.24910286462406,
+3.2909668817742,
+1.44471911571979,
+0.303801192319632,
+1.0651518511399,
+0.124751962949114,
+0.580103463426552
+],
+"SE": [
+0.950717177426691,
+0.605417617477522,
+0.404566605824668,
+0.978823431359973,
+0,
+0,
+0,
+0,
+0
+],
+"SP": [
+17.7317082395659,
+5.00986231930232,
+7.19573609729207,
+7.48702887584997,
+22.3841587783038,
+4.29939279268498,
+2.89839238886576,
+0,
+1.15256246813959
+],
+"TO": [
+0.712533197453327,
+1.11346363336197,
+2.80357470286855,
+2.17600232227651,
+0.98827294405409,
+2.9469197751316,
+1.36512456178322,
+0.952200850630447,
+3.02921790036751
+]
+},
+"s26": {
+"AC": [
+0.239449266686621,
+0.0689417442261289,
+0,
+0.0519750519750519,
+0,
+0,
+0,
+0,
+0
+],
+"AL": [
+0.607174926241074,
+0.10341261633919299,
+0.0746825989544436,
+0.103950103950104,
+0.284090909090909,
+0.09671179883945841,
+0,
+0,
+0
+],
+"AM": [
+0.188138709539488,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0
+],
+"AP": [
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0
+],
+"BA": [
+4.34215589857613,
+4.96380558428128,
+7.69230769230769,
+4.15800415800416,
+1.13636363636364,
+10.8317214700193,
+2.3972602739726,
+13.912009512485099,
+7.638888888888889
+],
+"CE": [
+1.8172488989609599,
+0.0689417442261289,
+0,
+0.623700623700624,
+0,
+0,
+0,
+0,
+0
+],
+"DF": [
+0.9022106298370891,
+0.0689417442261289,
+0.149365197908887,
+0.415800415800416,
+0,
+0.09671179883945841,
+0,
+0,
+0.277777777777777
+],
+"ES": [
+3.61739427887288,
+0,
+0.0746825989544436,
+0.103950103950104,
+0,
+0,
+0,
+0,
+0
+],
+"GO": [
+4.01291315688203,
+10.8583247156153,
+12.3226288274832,
+10.6548856548857,
+12.215909090909099,
+11.9922630560928,
+16.095890410958898,
+10.7015457788347,
+20.4166666666667
+],
+"MA": [
+1.34904006499337,
+2.20613581523613,
+2.8379387602688597,
+3.1185031185031202,
+0.568181818181818,
+3.9651837524178,
+2.91095890410959,
+3.21046373365042,
+3.47222222222222
+],
+"MG": [
+21.1720186428358,
+5.54981041020338,
+4.92905153099328,
+7.43243243243243,
+7.670454545454549,
+2.99806576402321,
+4.28082191780822,
+1.78359096313912,
+3.05555555555555
+],
+"MS": [
+2.42442382520204,
+4.9982764563943505,
+5.22778192681105,
+8.419958419958421,
+3.6931818181818197,
+6.2862669245648,
+9.58904109589041,
+3.80499405469679,
+5.0
+],
+"MT": [
+5.61850600761107,
+26.887280248190297,
+33.3084391336819,
+18.9189189189189,
+26.1363636363636,
+38.6847195357834,
+33.3904109589041,
+52.67538644470871,
+38.75
+],
+"PA": [
+2.26194039423611,
+1.8958979662185502,
+3.06198655713219,
+4.209979209979211,
+2.27272727272727,
+2.99806576402321,
+4.28082191780822,
+1.1890606420927499,
+5.4166666666666705
+],
+"PB": [
+0.587933467310899,
+0,
+0,
+0.103950103950104,
+0,
+0,
+0,
+0,
+0
+],
+"PE": [
+1.7295933638346102,
+0.0344708721130645,
+0,
+0,
+0,
+0.09671179883945841,
+0,
+0,
+0
+],
+"PI": [
+0.470346773848719,
+1.8958979662185502,
+2.01643017176998,
+1.97505197505198,
+1.70454545454545,
+5.99613152804642,
+1.8835616438356202,
+4.8751486325802595,
+4.58333333333334
+],
+"PR": [
+9.88797195022876,
+17.6146156497759,
+9.932785660941,
+15.4885654885655,
+7.954545454545451,
+3.3849129593810403,
+10.7876712328767,
+1.9024970273484,
+0.694444444444444
+],
+"RJ": [
+0.38910505836575904,
+0.0344708721130645,
+0,
+0,
+0,
+0,
+0,
+0,
+0
+],
+"RN": [
+0.8166930345918669,
+0,
+0,
+0,
+1.70454545454545,
+0,
+0,
+0,
+0
+],
+"RO": [
+1.68897250609313,
+1.8958979662185502,
+1.4189693801344299,
+0.9875259875259871,
+0.8522727272727271,
+0.870406189555126,
+3.93835616438356,
+1.4268727705113,
+2.08333333333333
+],
+"RR": [
+0.22020780775644602,
+0.379179593243709,
+0.373412994772218,
+0.25987525987526,
+0,
+0.193423597678917,
+0.684931506849315,
+0,
+0.416666666666667
+],
+"RS": [
+10.2578355496643,
+11.3753877973113,
+4.92905153099328,
+8.99168399168399,
+9.375,
+3.8684719535783403,
+4.45205479452055,
+3.32936979785969,
+3.19444444444445
+],
+"SC": [
+6.18292213622953,
+2.34401930368838,
+1.1949215832711,
+3.17047817047817,
+1.4204545454545499,
+0.290135396518375,
+1.02739726027397,
+0.118906064209275,
+0.555555555555556
+],
+"SE": [
+1.08607345961432,
+0.689417442261289,
+0.448095593726662,
+1.09147609147609,
+0,
+0,
+0,
+0,
+0
+],
+"SP": [
+17.310899217514,
+4.79145122371596,
+6.870799103808809,
+7.27650727650728,
+21.875,
+4.061895551257249,
+2.73972602739726,
+0,
+1.1111111111111098
+],
+"TO": [
+0.818830974472998,
+1.27542226818339,
+3.13666915608663,
+2.44282744282744,
+1.13636363636364,
+3.28820116054159,
+1.54109589041096,
+1.07015457788347,
+3.33333333333334
+]
+},
+"mot": {
+"AC": {
+"cred": -0.790913132996339,
+"clima": -0.549584787663594,
+"rent": -0.721858639803169,
+"area": -1.07188460148368,
+"inad": -1.3203796315908,
+"elnino": -0.398838192932829
+},
+"AL": {
+"cred": -0.589742069018541,
+"clima": 0.818127045134661,
+"rent": -0.715287933047457,
+"area": -0.112477845528833,
+"inad": -0.0471564154139571,
+"elnino": -0.873924863926345
+},
+"AM": {
+"cred": -0.891220734602952,
+"clima": -0.391892077186566,
+"rent": -0.687776009286695,
+"area": 1.56401968699602,
+"inad": -1.3203796315908,
+"elnino": -0.398838192932829
+},
+"AP": {
+"cred": -0.89905331810372,
+"clima": -0.665004452259732,
+"rent": -0.791084260856306,
+"area": 0.416089074783636,
+"inad": -1.3203796315908,
+"elnino": -0.398838192932829
+},
+"BA": {
+"cred": 0.981423648438801,
+"clima": -1.09611099483589,
+"rent": 0.129369200139696,
+"area": -0.449441314320311,
+"inad": -0.0471564154139571,
+"elnino": -0.873924863926345
+},
+"CE": {
+"cred": -0.00502707748699262,
+"clima": -1.21648098615316,
+"rent": -0.680681862746666,
+"area": -0.781158483291611,
+"inad": -0.0471564154139571,
+"elnino": -0.873924863926345
+},
+"DF": {
+"cred": -0.928109676251732,
+"clima": -0.155021435887311,
+"rent": -0.766649209683829,
+"area": 0.152231534788813,
+"inad": -0.00471564154139571,
+"elnino": 0.234610701725193
+},
+"ES": {
+"cred": 0.373741500771129,
+"clima": 0.488727499277214,
+"rent": -0.260800246098478,
+"area": -0.2407759345114,
+"inad": 1.18362602689033,
+"elnino": 0.70969737271871
+},
+"GO": {
+"cred": -0.215774106454439,
+"clima": 0.215033957885739,
+"rent": 1.11197765343331,
+"area": -0.0456895278585647,
+"inad": -0.00471564154139571,
+"elnino": 0.234610701725193
+},
+"MA": {
+"cred": -0.166807826375442,
+"clima": -1.11649345132672,
+"rent": -0.503463197543565,
+"area": -0.937100430934065,
+"inad": -0.0471564154139571,
+"elnino": -0.873924863926345
+},
+"MG": {
+"cred": 2.37473918763192,
+"clima": 0.736286055604404,
+"rent": 1.87735495880597,
+"area": -0.556507873348311,
+"inad": 1.18362602689033,
+"elnino": 0.70969737271871
+},
+"MS": {
+"cred": -0.5874175603667,
+"clima": 0.13984687226888,
+"rent": 0.508326295620367,
+"area": 0.162204828120661,
+"inad": -0.00471564154139571,
+"elnino": 0.234610701725193
+},
+"MT": {
+"cred": -0.088684122554876,
+"clima": -0.134122818616076,
+"rent": 2.66648546009088,
+"area": -0.4759871954726,
+"inad": -0.00471564154139571,
+"elnino": 0.234610701725193
+},
+"PA": {
+"cred": -0.0966177716492025,
+"clima": -0.678208841871965,
+"rent": -0.0844067681766802,
+"area": 0.359422603011798,
+"inad": -1.3203796315908,
+"elnino": -0.398838192932829
+},
+"PB": {
+"cred": -0.418562219929169,
+"clima": -0.359462269474291,
+"rent": -0.739577326592139,
+"area": 0.605474388336895,
+"inad": -0.0471564154139571,
+"elnino": -0.873924863926345
+},
+"PE": {
+"cred": -0.155513746295302,
+"clima": -0.270926362146225,
+"rent": -0.536372765088404,
+"area": 0.681443375540193,
+"inad": -0.0471564154139571,
+"elnino": -0.873924863926345
+},
+"PI": {
+"cred": -0.236442020337111,
+"clima": -1.14101705031608,
+"rent": -0.599643283945664,
+"area": -0.88012760265747,
+"inad": -0.0471564154139571,
+"elnino": -0.873924863926345
+},
+"PR": {
+"cred": 2.16429535544515,
+"clima": 1.73884062415322,
+"rent": 1.69094550443494,
+"area": 0.00635325772389787,
+"inad": 1.6504745394885,
+"elnino": 2.29331960936376
+},
+"RJ": {
+"cred": -0.842835581686915,
+"clima": 1.30853960254032,
+"rent": -0.712367615724988,
+"area": 0.795627999308232,
+"inad": 1.18362602689033,
+"elnino": 0.70969737271871
+},
+"RN": {
+"cred": -0.580519833606346,
+"clima": -0.368130618770092,
+"rent": -0.75008229924834,
+"area": -2.44671217660278,
+"inad": -0.0471564154139571,
+"elnino": -0.873924863926345
+},
+"RO": {
+"cred": -0.269187272650001,
+"clima": -0.729047325139208,
+"rent": -0.270580832158952,
+"area": 2.72393059971535,
+"inad": -1.3203796315908,
+"elnino": -0.398838192932829
+},
+"RR": {
+"cred": -0.862492839634005,
+"clima": -0.714402168794705,
+"rent": -0.750255768618463,
+"area": 0.133441507124105,
+"inad": -1.3203796315908,
+"elnino": -0.398838192932829
+},
+"RS": {
+"cred": 2.45554112968178,
+"clima": 1.54681099682749,
+"rent": 0.815226898547509,
+"area": 0.352205337212982,
+"inad": 1.6504745394885,
+"elnino": 2.29331960936376
+},
+"SC": {
+"cred": 1.32724484319692,
+"clima": 1.66819618505727,
+"rent": 0.107456299582438,
+"area": 0.993913423679702,
+"inad": 1.6504745394885,
+"elnino": 2.29331960936376
+},
+"SE": {
+"cred": -0.649446568413107,
+"clima": -0.719733115549068,
+"rent": -0.704961786287852,
+"area": 0.368862247476576,
+"inad": -0.0471564154139571,
+"elnino": -0.873924863926345
+},
+"SP": {
+"cred": 0.177168921300234,
+"clima": 2.35420376553784,
+"rent": 1.79633044222305,
+"area": -1.65251485839277,
+"inad": 1.18362602689033,
+"elnino": 0.70969737271871
+},
+"TO": {
+"cred": -0.579787108053048,
+"clima": -0.708973848296356,
+"rent": -0.427622907970495,
+"area": 0.335157980583542,
+"inad": -1.3203796315908,
+"elnino": -0.398838192932829
+}
+},
+"inad": {
+"AC": {
+"pct": 13.2,
+"z": -1.3203796315908,
+"nivel": "Critica"
+},
+"AL": {
+"pct": 10.2,
+"z": -0.0471564154139571,
+"nivel": "Critica"
+},
+"AM": {
+"pct": 13.2,
+"z": -1.3203796315908,
+"nivel": "Critica"
+},
+"AP": {
+"pct": 13.2,
+"z": -1.3203796315908,
+"nivel": "Critica"
+},
+"BA": {
+"pct": 10.2,
+"z": -0.0471564154139571,
+"nivel": "Critica"
+},
+"CE": {
+"pct": 10.2,
+"z": -0.0471564154139571,
+"nivel": "Critica"
+},
+"DF": {
+"pct": 10.1,
+"z": -0.00471564154139571,
+"nivel": "Critica"
+},
+"ES": {
+"pct": 7.3,
+"z": 1.18362602689033,
+"nivel": "Alta"
+},
+"GO": {
+"pct": 10.1,
+"z": -0.00471564154139571,
+"nivel": "Critica"
+},
+"MA": {
+"pct": 10.2,
+"z": -0.0471564154139571,
+"nivel": "Critica"
+},
+"MG": {
+"pct": 7.3,
+"z": 1.18362602689033,
+"nivel": "Alta"
+},
+"MS": {
+"pct": 10.1,
+"z": -0.00471564154139571,
+"nivel": "Critica"
+},
+"MT": {
+"pct": 10.1,
+"z": -0.00471564154139571,
+"nivel": "Critica"
+},
+"PA": {
+"pct": 13.2,
+"z": -1.3203796315908,
+"nivel": "Critica"
+},
+"PB": {
+"pct": 10.2,
+"z": -0.0471564154139571,
+"nivel": "Critica"
+},
+"PE": {
+"pct": 10.2,
+"z": -0.0471564154139571,
+"nivel": "Critica"
+},
+"PI": {
+"pct": 10.2,
+"z": -0.0471564154139571,
+"nivel": "Critica"
+},
+"PR": {
+"pct": 6.2,
+"z": 1.6504745394885,
+"nivel": "Alta"
+},
+"RJ": {
+"pct": 7.3,
+"z": 1.18362602689033,
+"nivel": "Alta"
+},
+"RN": {
+"pct": 10.2,
+"z": -0.0471564154139571,
+"nivel": "Critica"
+},
+"RO": {
+"pct": 13.2,
+"z": -1.3203796315908,
+"nivel": "Critica"
+},
+"RR": {
+"pct": 13.2,
+"z": -1.3203796315908,
+"nivel": "Critica"
+},
+"RS": {
+"pct": 6.2,
+"z": 1.6504745394885,
+"nivel": "Alta"
+},
+"SC": {
+"pct": 6.2,
+"z": 1.6504745394885,
+"nivel": "Alta"
+},
+"SE": {
+"pct": 10.2,
+"z": -0.0471564154139571,
+"nivel": "Critica"
+},
+"SP": {
+"pct": 7.3,
+"z": 1.18362602689033,
+"nivel": "Alta"
+},
+"TO": {
+"pct": 13.2,
+"z": -1.3203796315908,
+"nivel": "Critica"
+}
+},
+"just": {
+"AC": "Acre mantem participacao estavel em 2027, sustentado por baixo VBP e credito restrito; inadimplencia critica (risco) (13.2%).",
+"AL": "Alagoas perde participacao em 2027, sustentado por baixo VBP e credito moderado; inadimplencia moderada (10.2%).",
+"AM": "Amazonas mantem participacao estavel em 2027, sustentado por baixo VBP e credito restrito; inadimplencia critica (risco) (13.2%).",
+"AP": "Amap\u00e1 mantem participacao estavel em 2027, sustentado por baixo VBP e credito restrito; inadimplencia critica (risco) (13.2%).",
+"BA": "Bahia perde participacao em 2027, sustentado por rentabilidade mediana e credito forte; inadimplencia moderada (10.2%).",
+"CE": "Cear\u00e1 perde participacao em 2027, sustentado por baixo VBP e credito moderado; inadimplencia moderada (10.2%).",
+"DF": "Distrito Federal perde participacao em 2027, sustentado por baixo VBP e credito restrito; inadimplencia moderada (10.1%).",
+"ES": "Esp\u00edrito Santo perde participacao em 2027, sustentado por rentabilidade mediana e credito moderado; inadimplencia baixa (saudavel) (7.3%).",
+"GO": "Goi\u00e1s perde participacao em 2027, sustentado por VBP elevado e credito moderado; inadimplencia moderada (10.1%).",
+"MA": "Maranh\u00e3o perde participacao em 2027, sustentado por rentabilidade mediana e credito moderado; inadimplencia moderada (10.2%).",
+"MG": "Minas Gerais ganha participacao em 2027, sustentado por VBP elevado e credito forte; inadimplencia baixa (saudavel) (7.3%).",
+"MS": "Mato Grosso do Sul perde participacao em 2027, sustentado por rentabilidade mediana e credito moderado; inadimplencia moderada (10.1%).",
+"MT": "Mato Grosso perde participacao em 2027, sustentado por VBP elevado e credito moderado; inadimplencia moderada (10.1%).",
+"PA": "Par\u00e1 perde participacao em 2027, sustentado por rentabilidade mediana e credito moderado; inadimplencia critica (risco) (13.2%).",
+"PB": "Para\u00edba perde participacao em 2027, sustentado por baixo VBP e credito moderado; inadimplencia moderada (10.2%).",
+"PE": "Pernambuco perde participacao em 2027, sustentado por rentabilidade mediana e credito moderado; inadimplencia moderada (10.2%).",
+"PI": "Piau\u00ed perde participacao em 2027, sustentado por rentabilidade mediana e credito moderado; inadimplencia moderada (10.2%).",
+"PR": "Paran\u00e1 ganha participacao em 2027, sustentado por VBP elevado e credito forte; inadimplencia baixa (saudavel) (6.2%).",
+"RJ": "Rio de Janeiro mantem participacao estavel em 2027, sustentado por baixo VBP e credito restrito; inadimplencia baixa (saudavel) (7.3%).",
+"RN": "Rio Grande do Norte perde participacao em 2027, sustentado por baixo VBP e credito moderado; inadimplencia moderada (10.2%).",
+"RO": "Rond\u00f4nia perde participacao em 2027, sustentado por rentabilidade mediana e credito moderado; inadimplencia critica (risco) (13.2%).",
+"RR": "Roraima mantem participacao estavel em 2027, sustentado por baixo VBP e credito restrito; inadimplencia critica (risco) (13.2%).",
+"RS": "Rio Grande do Sul ganha participacao em 2027, sustentado por VBP elevado e credito forte; inadimplencia baixa (saudavel) (6.2%).",
+"SC": "Santa Catarina ganha participacao em 2027, sustentado por rentabilidade mediana e credito forte; inadimplencia baixa (saudavel) (6.2%).",
+"SE": "Sergipe perde participacao em 2027, sustentado por baixo VBP e credito restrito; inadimplencia moderada (10.2%).",
+"SP": "S\u00e3o Paulo ganha participacao em 2027, sustentado por VBP elevado e credito moderado; inadimplencia baixa (saudavel) (7.3%).",
+"TO": "Tocantins perde participacao em 2027, sustentado por rentabilidade mediana e credito moderado; inadimplencia critica (risco) (13.2%)."
+},
+"tags": {
+"AC": [
+[
+"n",
+"Credito Restrito"
+],
+[
+"n",
+"Rentabilidade Baixa"
+],
+[
+"n",
+"Inadimpl. Critica"
+]
+],
+"AL": [
+[
+"n",
+"Rentabilidade Baixa"
+]
+],
+"AM": [
+[
+"n",
+"Credito Restrito"
+],
+[
+"n",
+"Rentabilidade Baixa"
+],
+[
+"n",
+"Inadimpl. Critica"
+]
+],
+"AP": [
+[
+"n",
+"Credito Restrito"
+],
+[
+"n",
+"Rentabilidade Baixa"
+],
+[
+"n",
+"Inadimpl. Critica"
+]
+],
+"BA": [
+[
+"p",
+"Credito Forte"
+]
+],
+"CE": [
+[
+"n",
+"Rentabilidade Baixa"
+]
+],
+"DF": [
+[
+"n",
+"Credito Restrito"
+],
+[
+"n",
+"Rentabilidade Baixa"
+]
+],
+"ES": [
+[
+"p",
+"Inadimpl. Baixa"
+]
+],
+"GO": [
+[
+"p",
+"Rentabilidade Alta"
+]
+],
+"MA": [
+[
+"u",
+"Cenario Misto"
+]
+],
+"MG": [
+[
+"p",
+"Credito Forte"
+],
+[
+"p",
+"Rentabilidade Alta"
+],
+[
+"p",
+"Inadimpl. Baixa"
+]
+],
+"MS": [
+[
+"u",
+"Cenario Misto"
+]
+],
+"MT": [
+[
+"p",
+"Rentabilidade Alta"
+]
+],
+"PA": [
+[
+"n",
+"Inadimpl. Critica"
+]
+],
+"PB": [
+[
+"n",
+"Rentabilidade Baixa"
+]
+],
+"PE": [
+[
+"u",
+"Cenario Misto"
+]
+],
+"PI": [
+[
+"u",
+"Cenario Misto"
+]
+],
+"PR": [
+[
+"p",
+"Clima Favoravel"
+],
+[
+"p",
+"Credito Forte"
+],
+[
+"p",
+"Rentabilidade Alta"
+],
+[
+"p",
+"Inadimpl. Baixa"
+]
+],
+"RJ": [
+[
+"n",
+"Credito Restrito"
+],
+[
+"n",
+"Rentabilidade Baixa"
+],
+[
+"p",
+"Inadimpl. Baixa"
+]
+],
+"RN": [
+[
+"n",
+"Rentabilidade Baixa"
+]
+],
+"RO": [
+[
+"n",
+"Inadimpl. Critica"
+]
+],
+"RR": [
+[
+"n",
+"Credito Restrito"
+],
+[
+"n",
+"Rentabilidade Baixa"
+],
+[
+"n",
+"Inadimpl. Critica"
+]
+],
+"RS": [
+[
+"p",
+"Clima Favoravel"
+],
+[
+"p",
+"Credito Forte"
+],
+[
+"p",
+"Rentabilidade Alta"
+],
+[
+"p",
+"Inadimpl. Baixa"
+]
+],
+"SC": [
+[
+"p",
+"Clima Favoravel"
+],
+[
+"p",
+"Credito Forte"
+],
+[
+"p",
+"Inadimpl. Baixa"
+]
+],
+"SE": [
+[
+"n",
+"Credito Restrito"
+],
+[
+"n",
+"Rentabilidade Baixa"
+]
+],
+"SP": [
+[
+"p",
+"Rentabilidade Alta"
+],
+[
+"p",
+"Inadimpl. Baixa"
+]
+],
+"TO": [
+[
+"n",
+"Inadimpl. Critica"
+]
+]
+},
+"delta": {
+"AC": [
+-0.0368,
+-0.01,
+0,
+-0.007,
+0,
+0,
+0,
+0,
+0
+],
+"AL": [
+-0.0593,
+-0.0084,
+-0.0053,
+-0.008,
+-0.0267,
+-0.0058,
+0,
+0,
+0
+],
+"AM": [
+-0.0235,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0
+],
+"AP": [
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0,
+0
+],
+"BA": [
+-0.371,
+-0.4766,
+-0.4882,
+-0.3041,
+-0.0898,
+-0.5767,
+-0.1912,
+-0.9253,
+-0.3112
+],
+"CE": [
+-0.2409,
+-0.0095,
+0,
+-0.0727,
+0,
+0,
+0,
+0,
+0
+],
+"DF": [
+-0.1101,
+-0.0077,
+-0.014,
+-0.0415,
+0,
+-0.0084,
+0,
+0,
+-0.0229
+],
+"ES": [
+-0.2171,
+0,
+-0.0026,
+-0.0048,
+0,
+0,
+0,
+0,
+0
+],
+"GO": [
+-0.2174,
+-0.4345,
+-0.2947,
+-0.3735,
+-0.5208,
+-0.1152,
+-0.2674,
+-0.1889,
+0.136
+],
+"MA": [
+-0.177,
+-0.2917,
+-0.2981,
+-0.3577,
+-0.0702,
+-0.3861,
+-0.3335,
+-0.3372,
+-0.3348
+],
+"MG": [
+0.9967,
+0.2277,
+0.3143,
+0.3561,
+0.3432,
+0.1983,
+0.2529,
+0.1008,
+0.1948
+],
+"MS": [
+-0.1837,
+-0.3137,
+-0.2392,
+-0.4625,
+-0.2524,
+-0.1918,
+-0.3947,
+-0.1443,
+-0.1911
+],
+"MT": [
+-0.1754,
+-0.1506,
+0.132,
+-0.2612,
+-0.197,
+1.5089,
+0.6846,
+1.9581,
+1.5111
+],
+"PA": [
+-0.2527,
+-0.2129,
+-0.2745,
+-0.3944,
+-0.2542,
+-0.2663,
+-0.4288,
+-0.1164,
+-0.4368
+],
+"PB": [
+-0.0654,
+0,
+0,
+-0.0094,
+0,
+0,
+0,
+0,
+0
+],
+"PE": [
+-0.1705,
+-0.0033,
+0,
+0,
+0,
+-0.0067,
+0,
+0,
+0
+],
+"PI": [
+-0.0636,
+-0.2584,
+-0.2198,
+-0.2338,
+-0.2171,
+-0.6015,
+-0.2259,
+-0.5267,
+-0.4627
+],
+"PR": [
+0.6933,
+1.4093,
+1.0351,
+1.4419,
+0.5606,
+0.3245,
+0.9869,
+0.1682,
+0.0559
+],
+"RJ": [
+-0.0268,
+-0.0017,
+0,
+0,
+0,
+0,
+0,
+0,
+0
+],
+"RN": [
+-0.1189,
+0,
+0,
+0,
+-0.2322,
+0,
+0,
+0,
+0
+],
+"RO": [
+-0.1646,
+-0.192,
+-0.1061,
+-0.072,
+-0.0875,
+-0.0689,
+-0.3473,
+-0.124,
+-0.1246
+],
+"RR": [
+-0.0323,
+-0.0538,
+-0.0457,
+-0.0326,
+0,
+-0.0234,
+-0.0889,
+0,
+-0.0472
+],
+"RS": [
+0.7088,
+0.7664,
+0.5041,
+0.8857,
+0.659,
+0.3093,
+0.333,
+0.2478,
+0.2717
+],
+"SC": [
+0.1289,
+0.049,
+0.0542,
+0.1205,
+0.0243,
+0.0137,
+0.0378,
+0.0058,
+0.0245
+],
+"SE": [
+-0.1354,
+-0.084,
+-0.0435,
+-0.1127,
+0,
+0,
+0,
+0,
+0
+],
+"SP": [
+0.4208,
+0.2184,
+0.3249,
+0.2105,
+0.5092,
+0.2375,
+0.1587,
+0,
+0.0415
+],
+"TO": [
+-0.1063,
+-0.162,
+-0.3331,
+-0.2668,
+-0.1481,
+-0.3413,
+-0.176,
+-0.118,
+-0.3041
+]
+}
+};
+
+(function(){
+function boot(){
+try{
+var D=window.__IMR__;
+var $=function(s){return document.querySelector(s);};
+var UFS=D.ufs,NM=D.names,RG=D.reg,S27=D.s27,S26=D.s26,DL=D.delta,J=D.just,TG=D.tags;
+function f(x){return x.toFixed(2)+"%";}
+function darrow(d){var c=d>0.03?"up":d<-0.03?"down":"flat",a=d>0.03?"\u25B2":d<-0.03?"\u25BC":"\u25AC";return '<span class="d '+c+'">'+a+" "+(d>0?"+":"")+d.toFixed(2)+"</span>";}
+function badge(d){return d>0.03?'<span class="badge win">+'+d.toFixed(2)+' pp</span>':d<-0.03?'<span class="badge loss">'+d.toFixed(2)+' pp</span>':'<span class="badge flat">estavel</span>';}
+function top(a){return a.slice().sort(function(x,y){return y[1]-x[1];});}
+function cardsHTML(order,idx){var out="";order.forEach(function(u){var d=DL[u][idx],tr=d>0.03?"pos":d<-0.03?"neg":"",dc=d>0.03?"up":d<-0.03?"down":"flat",dt=d>0.03?"+"+d.toFixed(2)+" pp":d<-0.03?d.toFixed(2)+" pp":"estavel";var tg="";TG[u].forEach(function(t){tg+='<span class="tag '+t[0]+'">'+t[1]+"</span>";});out+='<div class="card '+tr+'"><div class="ch"><h3>'+NM[u]+' <span class="cuf">'+u+'</span></h3><span class="cd '+dc+'">'+dt+"</span></div><p class=\"cj\">"+J[u]+'</p><div class="tags">'+tg+"</div></div>";});return out;}
+// MAIN table (SEM coluna inadimplencia)
+var mainIdx=[0,1,2,3],mainLab=["Trat.","Colh.","Pulv.","Plant."];
+var head='<thead><tr><th>UF</th><th>Estado</th>';
+mainLab.forEach(function(l){head+='<th class="c27">'+l+' 27</th><th>&#916; pp</th>';});
+head+='<th>Leitura IMR</th></tr></thead>';
+var rows="";
+UFS.forEach(function(u){
+  rows+='<tr data-r="'+RG[u]+'"><td><span class="chip '+RG[u]+'">'+u+"</span></td><td class=\"nm\">"+NM[u]+" "+badge(DL[u][0])+"</td>";
+  mainIdx.forEach(function(i){rows+='<td class="c27">'+f(S27[u][i])+"</td><td>"+darrow(DL[u][i])+"</td>";});
+  rows+='<td class="just">'+J[u]+"</td></tr>";
+});
+var tot="";mainIdx.forEach(function(i){var s=0;UFS.forEach(function(u){s+=S27[u][i];});tot+='<td class="c27">'+f(s)+"</td><td></td>";});
+rows+='<tr class="total"><td></td><td class="nm">TOTAL BRASIL</td>'+tot+'<td class="just">Cada coluna soma 100,00%.</td></tr>';
+$("#tMain").innerHTML=head+"<tbody>"+rows+"</tbody>";
+var trd=top(UFS.map(function(u){return [u,DL[u][0]];}));
+var t340d=top(UFS.map(function(u){return [u,DL[u][5]];}));
+$("#mNwin").textContent=NM[trd[0][0]]+" +"+trd[0][1].toFixed(2)+" pp";
+$("#mNlead").textContent="MT "+S27["MT"][5].toFixed(1)+"%";
+var mw=trd[0][0],ml=trd[trd.length-1][0];
+$("#kpis").innerHTML=
+'<div class="kpi win"><div class="ico" style="background:var(--up-bg)">&#127942;</div><h3>Maior Ganho - Tratores</h3><div class="val">'+NM[mw]+' <small class="up">+'+trd[0][1].toFixed(2)+' pp</small></div><div class="desc">Momento positivo (5 vetores).</div></div>'+
+'<div class="kpi loss"><div class="ico" style="background:var(--down-bg)">&#9888;</div><h3>Maior Retracao - Tratores</h3><div class="val">'+NM[ml]+' <small class="down">'+trd[trd.length-1][1].toFixed(2)+' pp</small></div><div class="desc">Momento negativo.</div></div>'+
+'<div class="kpi gold"><div class="ico">&#9881;</div><h3>Lider Classe 8+ (2027)</h3><div class="val">Mato Grosso <small>'+S27["MT"][7].toFixed(1)+'%</small></div><div class="desc">Alta potencia de graos pesados.</div></div>'+
+'<div class="kpi win"><div class="ico" style="background:var(--up-bg)">&#127774;</div><h3>Efeito El Nino - Sul</h3><div class="val">RS - PR - SC</div><div class="desc">Clima favoravel + inadimplencia baixa.</div></div>';
+// insights de TODOS os estados (aba principal) - ordenado por delta tratores
+var rkAll=UFS.slice().sort(function(a,b){return DL[b][0]-DL[a][0];});
+$("#allcards").innerHTML=cardsHTML(rkAll,0);
+// premium table (SEM bloco de KPIs)
+var pIdx=[4,5,6,7,8],pGrp=["Trator 260-339","Trator >=340","Colheit. Cl.7","Colheit. Cl.8+","Plantad. >20L"];
+var ph='<thead><tr><th rowspan="2">UF</th><th rowspan="2">Estado</th>';
+pGrp.forEach(function(g){ph+='<th class="grp" colspan="2">'+g+"</th>";});
+ph+='<th rowspan="2">Insight</th></tr><tr>';
+pGrp.forEach(function(){ph+='<th class="c27">27</th><th>&#916;</th>';});
+ph+="</tr></thead>";
+var prows="";
+UFS.forEach(function(u){
+  var any=pIdx.some(function(i){return S27[u][i]>0;});if(!any)return;
+  prows+='<tr data-r="'+RG[u]+'"><td><span class="chip '+RG[u]+'">'+u+"</span></td><td class=\"nm\">"+NM[u]+" "+badge(DL[u][5])+"</td>";
+  pIdx.forEach(function(i){prows+='<td class="c27">'+f(S27[u][i])+"</td><td>"+darrow(DL[u][i])+"</td>";});
+  prows+='<td class="just">'+J[u]+"</td></tr>";
+});
+var pt="";pIdx.forEach(function(i){var s=0;UFS.forEach(function(u){s+=S27[u][i];});pt+='<td class="c27">'+f(s)+"</td><td></td>";});
+prows+='<tr class="total"><td></td><td class="nm">TOTAL BRASIL</td>'+pt+'<td class="just">Cada segmento soma 100,00%.</td></tr>';
+$("#tPrem").innerHTML=ph+"<tbody>"+prows+"</tbody>";
+var rkP=UFS.filter(function(u){return pIdx.some(function(i){return S27[u][i]>0;});}).sort(function(a,b){return DL[b][5]-DL[a][5];});
+$("#pcards").innerHTML=cardsHTML(rkP,5);
+$("#mcards").innerHTML=cardsHTML(rkAll,0);
+var panels={main:$("#main"),premium:$("#premium"),metodologia:$("#metodologia")};
+var fb=document.querySelectorAll(".fbtn");
+for(var i=0;i<fb.length;i++){(function(btn){btn.onclick=function(){
+  var a=document.querySelector(".fbtn.active");if(a)a.classList.remove("active");
+  btn.classList.add("active");var ff=btn.getAttribute("data-f");
+  panels.main.style.display="none";panels.premium.style.display="none";panels.metodologia.style.display="none";
+  if(ff==="premium"){panels.premium.style.display="block";}
+  else if(ff==="metodologia"){panels.metodologia.style.display="block";}
+  else{panels.main.style.display="block";var trs=document.querySelectorAll("#tMain tbody tr");for(var k=0;k<trs.length;k++){var r=trs[k];if(r.className.indexOf("total")>=0)continue;r.style.display=(ff==="todos"||r.getAttribute("data-r")===ff)?"":"none";}
+    // filtrar cards tambem
+    var cds=document.querySelectorAll("#allcards .card");for(var j=0;j<cds.length;j++){var uf=cds[j].querySelector(".cuf");if(!uf)continue;var reg=RG[uf.textContent];cds[j].style.display=(ff==="todos"||reg===ff)?"":"none";}}
+};})(fb[i]);}
+window.expTable=function(sel,name){if(typeof XLSX==="undefined"){alert("XLSX nao carregou.");return;}var t=document.querySelector(sel);if(!t)return;var c=t.cloneNode(true);var hid=c.querySelectorAll('tbody tr[style*="display: none"]');for(var i=0;i<hid.length;i++){hid[i].parentNode.removeChild(hid[i]);}var wb=XLSX.utils.table_to_book(c,{sheet:name});XLSX.writeFile(wb,"AGCO_"+name+".xlsx");};
+}catch(err){var b=document.getElementById("tMain");if(b){b.innerHTML='<tbody><tr><td style="color:#c8102e;padding:16px">Erro: '+err.message+"</td></tr></tbody>";}}
+}
+if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",boot);}else{boot();}
+})();
+
+</script>
+</body>
+</html>
